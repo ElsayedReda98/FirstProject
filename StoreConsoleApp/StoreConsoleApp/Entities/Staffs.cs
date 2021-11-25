@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoreConsoleApp
+namespace ConsoleApp1
 {
     class Staffs
     {
         public int StaffId { get; set; }
-        public string Fname { get; set; }
-        public string Lname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public int Active { get; set; }
