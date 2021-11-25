@@ -1,39 +1,130 @@
-﻿using StoreConsoleApp.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using ConsoleApp1.Interfaces;
 
-namespace StoreConsoleApp.DataAccess
+namespace ConsoleApp1.DataAccess
 {
-    public class BrandsDataAccess : IBrandsDataAccess
+    class BrandsDataAccess : IBrandDataAccess
     {
         SqlConnection connection;
         public BrandsDataAccess()
         {
-            connection = new SqlConnection("Data Source=.;Initial Catalog=BikeStores;Integrated Security=True");
+            connection = new SqlConnection(" Data Source = . ;" +
+                "Initial Catalog =BikeStores ; " +
+                "Integrated Security=True");
         }
-        public bool Add(Brand item)
+
+        public bool AddBrand(Brands brand)
+        {
+            string sqlstm = @"INSERT INTO production.brands
+                    (
+                    barnd_id,
+                    brand_name
+                    )
+                    OUTPUT Inserted.barnd_id
+                    VALUES 
+                    (@BrandId,
+                    @BrandName,
+                    )";
+            var command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            command.Parameters.AddWithValue("@BrandId", brand.BrandId);
+            command.Parameters.AddWithValue("@BrandName", brand.BrandName);
+
+            connection.Open();
+            brand.BrandId = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+            
+            return brand.BrandId > 0;
+
+        }
+        public bool AddBrand_Bad(Brands brand)
+        {
+            // Bad Implementation
+            string sqlstm = @"INSERT INTO production.brands
+                    (
+                    barnd_id,
+                    brand_name
+                    )
+                    OUTPUT Inserted.barnd_id
+                    VALUES 
+                    ('{brand.BrandId}',
+                     '{brand.BrandName}'
+                     )";
+            var command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            brand.BrandId = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+
+            return brand.BrandId > 0;
+
+        }
+
+        public bool DeleteBrand(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public Brands GetBrand(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"SELECT 
+                brand_id,
+                brand_name
+                FROM production.brands
+                WHERE brand_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            Brands brand = null;
+            while (reader.Read())
+            {
+                brand = new Brands()
+                {
+                    BrandId = Convert.ToInt32(reader["brand_id"]),
+                    BrandName = Convert.ToString(reader["brand_name"])
+                };
+            }
+
+            reader.Close();
+            return brand;
         }
 
-        public Brand Get(int id)
+        public List<Brands> GetBrandList()
         {
-            throw new NotImplementedException();
+            string sqlstm = @"SELECT 
+                brand_id,
+                brand_name
+                FROM production.brands";
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            List<Brands> brands = new List<Brands>();
+            while (reader.Read())
+            {
+                brands.Add(new Brands
+                {
+                    BrandId=Convert.ToInt32(reader["brand_id"]),
+                    BrandName=Convert.ToString(reader["brand_name"])
+                });
+            }
+
+            reader.Close();
+            return brands;
         }
 
-        public List<Brand> GetList()
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool Update(Brand item)
+        public bool UpdateBrand(Brands brand)
         {
             throw new NotImplementedException();
         }
