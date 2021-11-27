@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y7NzOUViVo9d7lM8SqR4KviMtHNUbPZCCSY8Oud46hkFtjefldj5ScmodBy7sD7L8u7Gza0oZ7mHgtAXOHXT3w==",
+  "dgSpecHash": "Q9RlqJCUWFYj2ZXrTvgQHUCkeA+oYd4WIZG4ltlyeSxBFvfS4JSEwpPr1XItwPULB+q6khBH3bi1KHw3PnWTTQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Wael\\source\\repos\\FirstProject\\StoreConsoleApp\\StoreConsoleApp\\StoreConsoleApp.csproj",
+  "projectFilePath": "C:\\Users\\Wael\\Source\\Repos\\FirstProject2\\StoreConsoleApp\\StoreConsoleApp\\StoreConsoleApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Wael\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Wael\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

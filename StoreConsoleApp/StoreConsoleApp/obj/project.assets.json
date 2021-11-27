@@ -460,11 +460,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Wael\\source\\repos\\FirstProject\\StoreConsoleApp\\StoreConsoleApp\\StoreConsoleApp.csproj",
+      "projectUniqueName": "C:\\Users\\Wael\\Source\\Repos\\FirstProject2\\StoreConsoleApp\\StoreConsoleApp\\StoreConsoleApp.csproj",
       "projectName": "StoreConsoleApp",
-      "projectPath": "C:\\Users\\Wael\\source\\repos\\FirstProject\\StoreConsoleApp\\StoreConsoleApp\\StoreConsoleApp.csproj",
+      "projectPath": "C:\\Users\\Wael\\Source\\Repos\\FirstProject2\\StoreConsoleApp\\StoreConsoleApp\\StoreConsoleApp.csproj",
       "packagesPath": "C:\\Users\\Wael\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Wael\\source\\repos\\FirstProject\\StoreConsoleApp\\StoreConsoleApp\\obj\\",
+      "outputPath": "C:\\Users\\Wael\\Source\\Repos\\FirstProject2\\StoreConsoleApp\\StoreConsoleApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

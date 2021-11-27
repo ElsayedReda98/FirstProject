@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j/CxNUdHaysMnroxnuqw3aStCbXn0rngYDBwZjOJ9gq9hJbMroMv3htKq4pNnXV6NubU0TSA4FmRxjtxF2y6cQ==",
+  "dgSpecHash": "3g5ejQaT9TrooRWHWAg8hfc1dJhOEZUYDmV7jnk0sVEAmi+G4aykd/FAyew6iKVOqg1BEjMkSeMuUtat4IkbeA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Wael\\source\\repos\\FirstProject\\StoreConsoleApp\\ConsoleAppTestProject\\ConsoleAppTestProject.csproj",
+  "projectFilePath": "C:\\Users\\Wael\\Source\\Repos\\FirstProject2\\StoreConsoleApp\\ConsoleAppTestProject\\ConsoleAppTestProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Wael\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",
     "C:\\Users\\Wael\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",
