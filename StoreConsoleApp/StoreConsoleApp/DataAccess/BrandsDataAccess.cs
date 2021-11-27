@@ -1,14 +1,11 @@
-﻿using System;
+﻿using ConsoleApp1.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleApp1.Interfaces;
 
 namespace ConsoleApp1.DataAccess
 {
-    class BrandsDataAccess : IBrandDataAccess
+    public class BrandsDataAccess : IBrandDataAccess
     {
         SqlConnection connection;
         public BrandsDataAccess()
@@ -29,13 +26,13 @@ namespace ConsoleApp1.DataAccess
                     (@BrandName
                     )";
             var command = connection.CreateCommand();
-            command.CommandText = sqlstm;            
+            command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@BrandName", brand.BrandName);
 
             connection.Open();
             brand.BrandId = Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
-            
+
             return brand.BrandId > 0;
 
         }
@@ -111,8 +108,8 @@ namespace ConsoleApp1.DataAccess
             {
                 brands.Add(new Brands
                 {
-                    BrandId=Convert.ToInt32(reader["brand_id"]),
-                    BrandName=Convert.ToString(reader["brand_name"])
+                    BrandId = Convert.ToInt32(reader["brand_id"]),
+                    BrandName = Convert.ToString(reader["brand_name"])
                 });
             }
 

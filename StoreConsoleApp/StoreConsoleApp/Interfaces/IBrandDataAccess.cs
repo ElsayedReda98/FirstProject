@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface IBrandDataAccess
+    public interface IBrandDataAccess
     {
         List<Brands> GetBrandList();
 

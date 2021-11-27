@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    class Brands
+    public class Brands
     {
         public int BrandId { get; set; }
         public string BrandName { get; set; }
