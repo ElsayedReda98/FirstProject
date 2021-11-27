@@ -15,8 +15,7 @@ namespace StoreConsoleApp
 
             TestBrands();
         }
-        // add comment by elsayed
-
+        
         private static void TestBrands()
         {
             Console.WriteLine("================== Test Brands ===========================");
@@ -26,8 +25,6 @@ namespace StoreConsoleApp
             {
                 BrandName = "Brand to add",
             };
-
-            //Comment by wael
 
             Console.WriteLine("****** Test Add Brand *****");
             bool result = brandDataAccess.AddBrand(newBrand);
