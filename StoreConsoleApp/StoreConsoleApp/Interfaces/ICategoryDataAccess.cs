@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface ICategoryDataAccess
+    public interface ICategoryDataAccess
     {
-        List<Categories> GetCategoryList();
+        List<Category> GetCategoryList();
 
-        Categories GetCategory(int id);
+        Category GetCategory(int id);
 
-        bool AddCategory(Categories category);
+        bool AddCategory(Category category);
 
-        bool UpdateCategory(Categories category);
+        bool UpdateCategory(Category category);
 
         bool DeleteCategory(int id);
 

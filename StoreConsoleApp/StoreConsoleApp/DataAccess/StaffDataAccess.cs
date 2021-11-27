@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    class StaffDataAccess : IStaffDataAccess
+    public class StaffDataAccess : IStaffDataAccess
     {
         SqlConnection connection;
         public StaffDataAccess()
@@ -16,7 +16,7 @@ namespace ConsoleApp1.DataAccess
             connection = new SqlConnection("Data Source =.; Initial Catalog = BikeStores; Integrated Security = True");
 
         }
-        public bool AddStaff(Staffs staff)
+        public bool AddStaff(Staff staff)
         {
             string sqlstmt = $@"INSERT INTO sales.staffs
                 (   
@@ -60,7 +60,7 @@ first_name,
             throw new NotImplementedException();
         }
 
-        public Staffs GetStaff(int id)
+        public Staff GetStaff(int id)
         {
             string sqlstm = @" SELECT
 staff_id,                
@@ -81,10 +81,10 @@ WHERE staff_id=" + id;
 
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            Staffs staff = null;
+            Staff staff = null;
             while (reader.Read())
             {
-                staff = new Staffs()
+                staff = new Staff()
                 {
                     StaffId = Convert.ToInt32(reader["customer_id"]),
                     FirstName = Convert.ToString(reader["first_name"]),
@@ -99,7 +99,7 @@ WHERE staff_id=" + id;
             reader.Close();
             return staff;
         }
-        public List<Staffs> GetStaffsList()
+        public List<Staff> GetStaffsList()
         {
             string sqlstm = @" SELECT
 staff_id,                
@@ -118,10 +118,10 @@ FROM sales.staffs ";
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            List<Staffs> staffs = new List<Staffs>();
+            List<Staff> staffs = new List<Staff>();
             while (reader.Read())
             {
-                staffs.Add(new Staffs()
+                staffs.Add(new Staff()
                 {
                     StaffId = Convert.ToInt32(reader["customer_id"]),
                     FirstName = Convert.ToString(reader["first_name"]),
@@ -138,7 +138,7 @@ FROM sales.staffs ";
         
         }
 
-        public bool UpdateStaff(Staffs staff)
+        public bool UpdateStaff(Staff staff)
         {
             throw new NotImplementedException();
         }

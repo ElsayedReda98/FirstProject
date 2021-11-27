@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface IProductDataAccess
+    public interface IProductDataAccess
     {
-        List<Products> GetProductsList();
+        List<Product> GetProductsList();
 
-        Products GetProduct(int id);
+        Product GetProduct(int id);
         
-        bool AddProduct(Products product);
+        bool AddProduct(Product product);
 
-        bool UpdateProduct(Products product);
+        bool UpdateProduct(Product product);
 
         bool DeleteProduct(int id);
     }

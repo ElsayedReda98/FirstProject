@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    class OrderItemDataAccess : IOrderItemsDataAccess
+    public class OrderItemDataAccess : IOrderItemDataAccess
     {
         SqlConnection connection;
 
@@ -19,7 +19,7 @@ namespace ConsoleApp1.DataAccess
                 "Integrated Security=True");
         }
 
-        public bool AddOrderItems(OrderItems orderItem)
+        public bool AddOrderItems(OrderItem orderItem)
         {
             string sqlstm = @$"INSERT INTO sales.order_items
                 (
@@ -68,7 +68,7 @@ namespace ConsoleApp1.DataAccess
             throw new NotImplementedException();
         }
 
-        public OrderItems GetOrderItems(int id)
+        public OrderItem GetOrderItems(int id)
         {
             string sqlstm = @$"SELECT 
                 (
@@ -87,10 +87,10 @@ namespace ConsoleApp1.DataAccess
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            OrderItems orderItem = null;
+            OrderItem orderItem = null;
             while (reader.Read())
             {
-                orderItem = new OrderItems()
+                orderItem = new OrderItem()
                 {
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     ItemId = Convert.ToInt32(reader["item_id"]),
@@ -105,7 +105,7 @@ namespace ConsoleApp1.DataAccess
             return orderItem;
         }
 
-        public List<OrderItems> GetOrderItemsList()
+        public List<OrderItem> GetOrderItemsList()
         {
             SqlCommand command = connection.CreateCommand();
             command.CommandText= @$"SELECT 
@@ -123,11 +123,11 @@ namespace ConsoleApp1.DataAccess
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
 
-            List<OrderItems> orderItems = new List<OrderItems>();
+            List<OrderItem> orderItems = new List<OrderItem>();
 
             while (reader.Read())
             {
-                orderItems.Add(new OrderItems()
+                orderItems.Add(new OrderItem()
                 {
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     ItemId = Convert.ToInt32(reader["item_id"]),
@@ -142,7 +142,7 @@ namespace ConsoleApp1.DataAccess
             return orderItems;
         }
 
-        public bool UPdateOrderItems(OrderItems orderItem)
+        public bool UPdateOrderItems(OrderItem orderItem)
         {
             throw new NotImplementedException();
         }

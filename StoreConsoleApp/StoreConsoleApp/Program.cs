@@ -1,6 +1,7 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
+using StoreConsoleApp.Interfaces;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,11 +20,11 @@ namespace StoreConsoleApp
         private static void TestBrands()
         {
             Console.WriteLine("================== Test Brands ===========================");
-            IBrandDataAccess brandDataAccess = new BrandsDataAccess();
+            IBrandDataAccess brandDataAccess = new BrandDataAccess();
 
-            var newBrand = new Brands()
+            var newBrand = new Brand()
             {
-                BrandName = "Brand to add",
+                BrandName = "brand to add"
             };
 
             Console.WriteLine("****** Test Add Brand *****");
@@ -36,6 +37,18 @@ namespace StoreConsoleApp
 
             var brandList = brandDataAccess.GetBrandList();
             Console.WriteLine($"Get Brand list with {brandList.Count} Items");
+
+            bool delBrand=brandDataAccess.DeleteBrand(5);
+            Console.WriteLine($"Delete Brand Return: {delBrand}");
+
+            var updateBrand = new Brand()
+            {
+                BrandName = "brand_name"
+            };
+            bool upBrand = brandDataAccess.UpdateBrand(updateBrand );
+            Console.WriteLine($"update Brand Return: {upBrand}");
+
+
         }
     }
 }

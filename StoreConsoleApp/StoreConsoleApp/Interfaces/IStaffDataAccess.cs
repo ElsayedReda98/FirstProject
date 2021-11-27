@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface IStaffDataAccess
+    public interface IStaffDataAccess
     {
-        List<Staffs> GetStaffsList();
+        List<Staff> GetStaffsList();
 
-        Staffs GetStaff(int id);
+        Staff GetStaff(int id);
 
-        bool AddStaff(Staffs staff);
+        bool AddStaff(Staff staff);
 
-        bool UpdateStaff(Staffs staff);
+        bool UpdateStaff(Staff staff);
 
         bool DeleteStaff(int id);
         

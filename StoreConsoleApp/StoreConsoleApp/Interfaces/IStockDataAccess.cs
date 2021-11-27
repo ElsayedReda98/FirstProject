@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface IStockDataAccess
+    public interface IStockDataAccess
     {
-        List<Stocks> GetStocksList();
+        List<Stock> GetStocksList();
 
-        Stocks GetStock(int id);
+        Stock GetStock(int id);
 
-        bool AddStock(Stocks stock);
+        bool AddStock(Stock stock);
 
-        bool UpdateStock(Stocks stock);
+        bool UpdateStock(Stock stock);
 
         bool DeleteStock(int id);
 

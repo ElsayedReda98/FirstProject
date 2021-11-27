@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface IOrderDataAccess
+    public interface IOrderDataAccess
     {
-        List<Orders> GetOrdersList();
+        List<Order> GetOrdersList();
 
-        Orders GetOrder(int id);
+        Order GetOrder(int id);
         
-        bool AddOrder(Orders order);
+        bool AddOrder(Order order);
 
-        bool UpdateOrder(Orders order);
+        bool UpdateOrder(Order order);
 
-        bool DeleteOrder(Orders order);
+        bool DeleteOrder(Order order);
 
     }
 }

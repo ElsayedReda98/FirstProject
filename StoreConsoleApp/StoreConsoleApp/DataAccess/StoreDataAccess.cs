@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    class StoreDataAccess : IStoreDataAccess
+    public class StoreDataAccess : IStoreDataAccess
     {
         SqlConnection connection;
         public StoreDataAccess()
@@ -17,7 +17,7 @@ namespace ConsoleApp1.DataAccess
             connection = new SqlConnection("Data Source =.; Initial Catalog = BikeStores; Integrated Security = True");
 
         }
-        public bool AddStore(Stores store)
+        public bool AddStore(Store store)
         {
             string sqlstmt = $@"INSERT INTO 
                sales.stores
@@ -65,7 +65,7 @@ namespace ConsoleApp1.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<Stores> GetStoresList()
+        public List<Store> GetStoresList()
         {
             string sqlstm= @"SELECT 
                     customer_id,
@@ -84,10 +84,10 @@ namespace ConsoleApp1.DataAccess
             SqlDataReader reader = command.ExecuteReader
                 (System.Data.CommandBehavior.CloseConnection);
 
-            List<Stores> stores = new List<Stores>();
+            List<Store> stores = new List<Store>();
             while (reader.Read())
             {
-                stores.Add(new Stores()
+                stores.Add(new Store()
                 {
                     City = Convert.ToString(reader["city"]),
                     Email = Convert.ToString(reader["email"]),
@@ -103,13 +103,13 @@ namespace ConsoleApp1.DataAccess
             return stores;
         }
 
-        public bool UpdateStore(Stores store)
+        public bool UpdateStore(Store store)
         {
             throw new NotImplementedException();
         }
 
 
-        public Stores GetStore(int id)
+        public Store GetStore(int id)
         {
             string sqlstm = @"SELECT
                 custome_id,
@@ -129,10 +129,10 @@ namespace ConsoleApp1.DataAccess
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            Stores store = null;
+            Store store = null;
             while (reader.Read())
             {
-                store = new Stores()
+                store = new Store()
                 {
                     City = Convert.ToString(reader["city"]),
                     Email = Convert.ToString(reader["email"]),

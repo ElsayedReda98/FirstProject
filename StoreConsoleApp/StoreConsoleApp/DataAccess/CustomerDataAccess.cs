@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    class CustomerDataAccess : ICustomerDataAccess 
+    public class CustomerDataAccess : ICustomerDataAccess 
     {
         SqlConnection connection;
         public CustomerDataAccess()
@@ -135,7 +135,7 @@ namespace ConsoleApp1.DataAccess
                     ZipCode = Convert.ToString(reader["zip_code"])
                 };
             }
-            reader.Close();
+            connection.Close();
             return customer;
         }
 

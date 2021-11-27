@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface ICustomerDataAccess
+   public interface ICustomerDataAccess
     {
         List<Customer> GetCustomerList();
 

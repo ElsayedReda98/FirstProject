@@ -1,20 +1,19 @@
-﻿using System;
+﻿using ConsoleApp1;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApp1.Interfaces
+namespace StoreConsoleApp.Interfaces
 {
     public interface IBrandDataAccess
     {
-        List<Brands> GetBrandList();
+        List<Brand> GetBrandList();
 
-        Brands GetBrand(int id);
-        
-        bool AddBrand(Brands brand);
+        Brand GetBrand(int id);
 
-        bool UpdateBrand(Brands brand);
+        bool AddBrand(Brand item);
+
+        bool UpdateBrand(Brand item);
 
         bool DeleteBrand(int id);
 

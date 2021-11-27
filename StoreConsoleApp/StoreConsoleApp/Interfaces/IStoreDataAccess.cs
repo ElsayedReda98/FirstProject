@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Interfaces
 {
-    interface IStoreDataAccess
+    public interface IStoreDataAccess
     {
-        List<Stores> GetStoresList();
+        List<Store> GetStoresList();
 
-        Stores GetStore(int id);
+        Store GetStore(int id);
 
-        bool AddStore(Stores store);
+        bool AddStore(Store store);
 
-        bool UpdateStore(Stores store);
+        bool UpdateStore(Store store);
 
         bool DeleteStore(int id);
     }

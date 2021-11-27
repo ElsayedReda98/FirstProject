@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    class ProductDataAccess :IProductDataAccess
+    public class ProductDataAccess :IProductDataAccess
 
     {
         SqlConnection connection;
@@ -19,7 +19,7 @@ namespace ConsoleApp1.DataAccess
                 "Integrated Security=True");
         }
 
-        public bool AddProduct(Products product)
+        public bool AddProduct(Product product)
         {
             string sqlstm = @"INSERT INTO production.produtcs
                     (
@@ -83,7 +83,7 @@ VALUES
             throw new NotImplementedException();
         }
 
-        public Products GetProduct(int id)
+        public Product GetProduct(int id)
         {
             string sqlstm = @"SELECT 
 product_id,
@@ -100,10 +100,10 @@ list_price
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            Products product = null;
+            Product product = null;
             while (reader.Read())
             {
-                product = new Products()
+                product = new Product()
                 {
                     ProductId  = Convert.ToInt32(reader["product_id"]),
                     ProductName = Convert.ToString(reader["product_name"]),
@@ -119,7 +119,7 @@ list_price
             return product;
         }
 
-        public List<Products> GetProductsList()
+        public List<Product> GetProductsList()
         {
             string sqlstm = @"SELECT 
 product_id,
@@ -136,10 +136,10 @@ list_price
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            List<Products> products = new List<Products>();
+            List<Product> products = new List<Product>();
             while (reader.Read())
             {
-                products.Add(new Products
+                products.Add(new Product
                 {
                     ProductId = Convert.ToInt32(reader["product_id"]),
                     ProductName = Convert.ToString(reader["product_name"]),
@@ -155,7 +155,7 @@ list_price
             return products;
         }
 
-        public bool UpdateProduct(Products product)
+        public bool UpdateProduct(Product product)
         {
             throw new NotImplementedException();
         }

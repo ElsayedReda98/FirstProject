@@ -11,8 +11,8 @@ namespace ConsoleAppTestProject
         public void Add_Brand_Will_Return_True()
         {
             //Arrange
-            IBrandDataAccess brandDataAccess = new BrandsDataAccess();
-            var newBrand = new Brands()
+            IBrandDataAccess brandDataAccess = new BrandDataAccess();
+            var newBrand = new Brand()
             {
                 BrandName = "Brand to add",
             };
@@ -28,7 +28,7 @@ namespace ConsoleAppTestProject
         public void Get_Brand_With_Valid_Id_Will_Return_Brand()
         {
             //Arrange
-            IBrandDataAccess brandDataAccess = new BrandsDataAccess();
+            IBrandDataAccess brandDataAccess = new BrandDataAccess();
             int id = 1;
             //Act
             var brand = brandDataAccess.GetBrand(id);
@@ -43,7 +43,7 @@ namespace ConsoleAppTestProject
         public void Get_Brand_With_InValid_Id_Will_Null()
         {
             //Arrange
-            IBrandDataAccess brandDataAccess = new BrandsDataAccess();
+            IBrandDataAccess brandDataAccess = new BrandDataAccess();
             int id = -1;
             //Act
             var brand = brandDataAccess.GetBrand(id);
@@ -56,7 +56,7 @@ namespace ConsoleAppTestProject
         public void Get_BrandsList_Will_Return_Collection()
         {
             //Arrange
-            IBrandDataAccess brandDataAccess = new BrandsDataAccess();
+            IBrandDataAccess brandDataAccess = new BrandDataAccess();
             
             //Act
             var brands = brandDataAccess.GetBrandList();
