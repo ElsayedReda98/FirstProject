@@ -48,7 +48,7 @@ namespace ConsoleApp1.DataAccess
             command.CommandText = sqlstmt;
 
             command.Parameters.AddWithValue("@StoreName", store.StoreName);
-            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(store.Phone) ? DBNull.Value : store.Phone);
+            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(store.Phone) ? DBNull.Value : (object)store.Phone);
             command.Parameters.AddWithValue("@Email", store.Email);
             command.Parameters.AddWithValue("@Street", store.Street);
             command.Parameters.AddWithValue("@City", store.City);

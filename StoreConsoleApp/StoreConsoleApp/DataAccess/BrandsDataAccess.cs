@@ -22,17 +22,14 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @"INSERT INTO production.brands
                     (
-                    barnd_id,
                     brand_name
                     )
-                    OUTPUT Inserted.barnd_id
+                    OUTPUT Inserted.brand_id
                     VALUES 
-                    (@BrandId,
-                    @BrandName,
+                    (@BrandName
                     )";
             var command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@BrandId", brand.BrandId);
+            command.CommandText = sqlstm;            
             command.Parameters.AddWithValue("@BrandName", brand.BrandName);
 
             connection.Open();

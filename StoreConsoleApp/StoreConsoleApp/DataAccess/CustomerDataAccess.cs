@@ -49,7 +49,7 @@ namespace ConsoleApp1.DataAccess
             command.CommandText = sqlstmt;
             command.Parameters.AddWithValue("@FirstName", customer.FirstName);
             command.Parameters.AddWithValue("@LastName", customer.LastName);
-            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : customer.Phone );
+            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : (object)customer.Phone );
             command.Parameters.AddWithValue("@Email", customer.Email);
             command.Parameters.AddWithValue("@Street", customer.Street);
             command.Parameters.AddWithValue("@City", customer.City);

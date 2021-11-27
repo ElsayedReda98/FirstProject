@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ConsoleApp1;
+using ConsoleApp1.DataAccess;
+using ConsoleApp1.Interfaces;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -9,19 +12,30 @@ namespace StoreConsoleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-           // // 
-           //  string connectionString = "Data Source = ELSAYED; Initial Catalog = BikeStores; User ID = sa; Password = Admin123456; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = true; " +
-           //     "ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
-           // IDbConnection connection =new SqlConnection("Data Source = ELSAYED; Initial Catalog = BikeStores; User ID = sa; Password = Admin123456; " +
-           //     "Connect Timeout = 30; Encrypt = False; TrustServerCertificate = true; ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
-           // connection.Open();
-           // Console.WriteLine(connection.State);
-           // IDbCommand dbCommand = connection.CreateCommand();
-           // dbCommand.CommandText = "select * from sales.customers";
-           // //connection.Close();
-           // //Console.WriteLine(connection.State);
-           //// Console.Read();
-            
+
+            TestBrands();
+        }
+
+        private static void TestBrands()
+        {
+            Console.WriteLine("================== Test Brands ===========================");
+            IBrandDataAccess brandDataAccess = new BrandsDataAccess();
+
+            var newBrand = new Brands()
+            {
+                BrandName = "Brand to add",
+            };
+
+            Console.WriteLine("****** Test Add Brand *****");
+            bool result = brandDataAccess.AddBrand(newBrand);
+            Console.WriteLine($"Add Brand Return: {result}");
+
+            Console.WriteLine("****** Get Brand *****");
+            var brand = brandDataAccess.GetBrand(1);
+            Console.WriteLine($"Get Brand with name:{brand.BrandName}");
+
+            var brandList = brandDataAccess.GetBrandList();
+            Console.WriteLine($"Get Brand list with {brandList.Count} Items");
         }
     }
 }

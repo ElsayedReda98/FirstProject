@@ -43,7 +43,7 @@ first_name,
             command.CommandText = sqlstmt;
             command.Parameters.AddWithValue("@FirstName", staff.FirstName);
             command.Parameters.AddWithValue("@LastName", staff.LastName);
-            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(staff.Phone) ? DBNull.Value : staff.Phone);
+            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(staff.Phone) ? DBNull.Value : (object)staff.Phone);
             command.Parameters.AddWithValue("@Email", staff.Email);
             command.Parameters.AddWithValue("@Active", staff.Active);
             command.Parameters.AddWithValue("@StaffId", staff.StaffId);
