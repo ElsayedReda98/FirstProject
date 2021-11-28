@@ -128,31 +128,20 @@ namespace ConsoleApp1.DataAccess
             connection.Close();
             return brands;
         }
-
-
-        //public bool UpdateBrand(Brand brand)
-        //{
-        //    string sqlstm = @"
-        //        update production.brands
-        //        set brand_name=''
-        //        where brand_name=" + brand;
-        //    SqlCommand command=connection.CreateCommand();
-        //    command.CommandText=sqlstm;
-        //    connection.Open();
-        //    command.ExecuteNonQuery();
-        //    return brand.BrandId > 0;
-        //}
+        
         public bool UpdateBrand(Brand brand)
         {
-            string sqlstm = @"
-                update production.brands
-               set brand_name=''
-             where brand_name=" + @brand.BrandName;
+            string sqlstm = @"UPDATE production.brands 
+                        SET brand_name = @BrandName
+                        WHERE brand_id = @BrandId";
+
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
+            command.Parameters.AddWithValue("@BrandName", brand.BrandName);
+            command.Parameters.AddWithValue("@BrandId", brand.BrandId);
             connection.Open();
-            command.ExecuteNonQuery();
-            return brand.BrandId > 0;
+            int effectedRows = command.ExecuteNonQuery();
+            return effectedRows > 0;
         }
     }
 }
