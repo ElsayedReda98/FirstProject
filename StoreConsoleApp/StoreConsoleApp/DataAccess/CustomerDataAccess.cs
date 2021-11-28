@@ -188,9 +188,18 @@ namespace ConsoleApp1.DataAccess
             return customers;
         }
 
-        public bool UpdateCustomer(Customer customer)
+        public bool UpdateCustomer(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"
+                update sales.customers
+               set first_name='update first_name',
+                    last_name='update last_name'
+             where customer_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+            return id > 0;
         }
     }
 }

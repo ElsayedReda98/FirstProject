@@ -20,8 +20,7 @@ namespace ConsoleApp1.DataAccess
         public bool AddStore(Store store)
         {
             string sqlstmt = $@"INSERT INTO sales.stores 
-             (
-                store_name,
+             (  store_name,
                 phone,
                 email,
                 street,
@@ -74,7 +73,6 @@ WHERE store_id=" + id;
         {
             string sqlstm= @"SELECT 
                     store_id,
-                   
                     store_name,
                     phone,
                     email,
@@ -118,7 +116,7 @@ WHERE store_id=" + id;
         {
             string sqlstm = @"SELECT
                (
-                store_id
+                
                 store_name,
                 phone,
                 email,

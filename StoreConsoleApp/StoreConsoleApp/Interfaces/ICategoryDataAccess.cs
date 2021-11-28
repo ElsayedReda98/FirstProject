@@ -14,7 +14,7 @@ namespace ConsoleApp1.Interfaces
 
         bool AddCategory(Category category);
 
-        bool UpdateCategory(Category category);
+        bool UpdateCategory(int id);
 
         bool DeleteCategory(int id);
 

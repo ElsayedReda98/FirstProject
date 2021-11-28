@@ -14,10 +14,37 @@ namespace StoreConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            //TestBrands();
+            TestBrands();
             //TestCategory();
             //TestStock();
-            TestStore();
+            //TestStore();
+        }
+        private static void TestOrder()
+        {
+            Console.WriteLine("=========================Test Order ===============");
+            IOrderDataAccess orderDataAccess = new OrderDataAccess();
+
+            var neworder = new Order()
+            {
+
+            };
+            bool result = orderDataAccess.AddOrder(neworder);
+            Console.WriteLine($"Add order Return: {result}");
+            Console.WriteLine("");
+
+            Console.WriteLine("****** Get order *****");
+            // ERROR
+            var order = orderDataAccess.GetOrder(5);
+            Console.WriteLine($"Get store with id:{order.OredrId}");
+            Console.WriteLine("");
+
+            var storeList = storeDataAccess.GetStoresList();
+            Console.WriteLine($"Get store list with {storeList.Count} Items");
+            Console.WriteLine("");
+
+            //bool deleteStore = storeDataAccess.DeleteStore(8);
+            //Console.WriteLine($"Delete  Store Return: {deleteStore}");
+
         }
         private static void TestStore()
         {
@@ -26,7 +53,7 @@ namespace StoreConsoleApp
 
             var newStore = new Store()
             {
-                StoreId =2021,
+                
                 StoreName="ali",
                 Phone ="5040",
                 Email ="ali.com",
@@ -42,7 +69,7 @@ namespace StoreConsoleApp
 
             Console.WriteLine("****** Get Store *****");
             // ERROR
-            var store = storeDataAccess.GetStore(1);
+            var store = storeDataAccess.GetStore(5);
             Console.WriteLine($"Get store with id:{store.StoreId}");
             Console.WriteLine("");
 
@@ -115,7 +142,7 @@ namespace StoreConsoleApp
 
             var newBrand = new Brand()
             {
-                BrandName = "brand to add"
+                BrandName = "brand to add now"
             };
 
             Console.WriteLine("****** Test Add Brand *****");
@@ -132,11 +159,11 @@ namespace StoreConsoleApp
             bool delBrand=brandDataAccess.DeleteBrand(5);
             Console.WriteLine($"Delete Brand Return: {delBrand}");
 
-            var updateBrand = new Brand()
-            {
-                BrandName = "brand_name"
-            };
-            bool upBrand = brandDataAccess.UpdateBrand(updateBrand );
+            //var updateBrand = new Brand()
+            //{
+            //    BrandName = "brand_name"
+            //};
+            bool upBrand = brandDataAccess.UpdateBrand(30 );
             Console.WriteLine($"update Brand Return: {upBrand}");
 
 

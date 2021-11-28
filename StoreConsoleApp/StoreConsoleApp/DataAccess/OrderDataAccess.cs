@@ -150,9 +150,17 @@ FROM sales.orders ";
             return orders;
         }
 
-        public bool UpdateOrder(Order order)
+        public bool UpdateOrder(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"
+                update sales.orders
+               set order_status=0
+             where order_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+            return id > 0;
         }
     }
 }

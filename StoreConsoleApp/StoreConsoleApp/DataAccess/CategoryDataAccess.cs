@@ -105,9 +105,17 @@ WHERE category_id=" + id;
             return categories;
         }
 
-        public bool UpdateCategory(Category category)
+        public bool UpdateCategory(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"
+                update production.category
+               set category_name='updated category'
+             where category_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+            return id > 0;
         }
     }
 }
