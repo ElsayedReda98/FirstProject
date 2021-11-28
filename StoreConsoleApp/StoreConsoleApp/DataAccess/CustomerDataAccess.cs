@@ -95,16 +95,27 @@ namespace ConsoleApp1.DataAccess
             return customer.Id > 0;
         }
 
-         public bool DeleteCustomer(int id)
+        public bool DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+                             FROM sales.customers
+                             WHERE customer_id=" + id;
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            return id > 0;
+
         }
 
         public Customer GetCustomer(int id)
         {
             SqlCommand command = connection.CreateCommand();
             command.CommandText = @"SELECT
-                custome_id,
+                customer_id,
                 first_name,
                 last_name,
                 phone,
@@ -127,7 +138,7 @@ namespace ConsoleApp1.DataAccess
                     City = Convert.ToString(reader["city"]),
                     Email = Convert.ToString(reader["email"]),
                     FirstName = Convert.ToString(reader["first_name"]),
-                    Id = Convert.ToInt32(reader["customer_id"]),
+                     Id= Convert.ToInt32(reader["customer_id"]),
                     LastName = Convert.ToString(reader["last_name"]),
                     Phone = Convert.ToString(reader["phone"]),
                     State = Convert.ToString(reader["state"]),
@@ -173,7 +184,7 @@ namespace ConsoleApp1.DataAccess
                     ZipCode = Convert.ToString(reader["zip_code"]),
                 });
             }
-            reader.Close();
+            connection.Close();
             return customers;
         }
 

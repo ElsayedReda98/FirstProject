@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     public class Store
     {
-        public int storeId { get; set; }
+        public int StoreId { get; set; }
         public string StoreName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }

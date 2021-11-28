@@ -19,10 +19,8 @@ namespace ConsoleApp1.DataAccess
         }
         public bool AddStore(Store store)
         {
-            string sqlstmt = $@"INSERT INTO 
-               sales.stores
-                (
-                store_id,
+            string sqlstmt = $@"INSERT INTO sales.stores 
+             (
                 store_name,
                 phone,
                 email,
@@ -33,8 +31,8 @@ namespace ConsoleApp1.DataAccess
                 )
                 OUTPUT Inserted.store_id
                 VALUES
-                (@FirstName,
-                @LastName,
+                (
+                @StoreName,
                 @Phone,
                 @Email,
                 @Street,
@@ -55,22 +53,29 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@State", store.State);
             command.Parameters.AddWithValue("@ZipCode", store.ZipCode);
             connection.Open();
-            store.storeId = Convert.ToInt32(command.ExecuteScalar());
+            store.StoreId = Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
-            return store.storeId > 0;
+            return store.StoreId > 0;
         }
 
         public bool DeleteStore(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+FROM sales.stores
+WHERE store_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            return id > 0;
         }
-
         public List<Store> GetStoresList()
         {
             string sqlstm= @"SELECT 
-                    customer_id,
-                    first_name,
-                    last_name,
+                    store_id,
+                   
+                    store_name,
                     phone,
                     email,
                     street,
@@ -92,14 +97,14 @@ namespace ConsoleApp1.DataAccess
                     City = Convert.ToString(reader["city"]),
                     Email = Convert.ToString(reader["email"]),
                     StoreName = Convert.ToString(reader["store_name"]),
-                    storeId = Convert.ToInt32(reader["store_id"]),
+                    StoreId = Convert.ToInt32(reader["store_id"]),
                     Phone = Convert.ToString(reader["phone"]),
                     State = Convert.ToString(reader["state"]),
                     Street = Convert.ToString(reader["street"]),
                     ZipCode = Convert.ToString(reader["zip_code"]),
                 });
             }
-            reader.Close();
+            connection.Close();
             return stores;
         }
 
@@ -112,9 +117,9 @@ namespace ConsoleApp1.DataAccess
         public Store GetStore(int id)
         {
             string sqlstm = @"SELECT
-                custome_id,
-                first_name,
-                last_name,
+               (
+                store_id
+                store_name,
                 phone,
                 email,
                 street,
@@ -137,14 +142,14 @@ namespace ConsoleApp1.DataAccess
                     City = Convert.ToString(reader["city"]),
                     Email = Convert.ToString(reader["email"]),
                     StoreName = Convert.ToString(reader["store_name"]),
-                    storeId = Convert.ToInt32(reader["store_id"]),
+                    StoreId = Convert.ToInt32(reader["store_id"]),
                     Phone = Convert.ToString(reader["phone"]),
                     State = Convert.ToString(reader["state"]),
                     Street = Convert.ToString(reader["street"]),
                     ZipCode = Convert.ToString(reader["zip_code"])
                 };
             }
-            reader.Close();
+            connection.Close();
             return store;
 
         }

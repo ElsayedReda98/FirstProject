@@ -22,12 +22,12 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = $@"INSERT INTO production.categories
                 (
-                category_id,
+                
                 category_name
                 )
                 OUTPUT Inserted.category_id
                 VALUES 
-                (@CategoryId,
+                (
                 @CategoryName)";
 
             var command = connection.CreateCommand();
@@ -45,7 +45,15 @@ namespace ConsoleApp1.DataAccess
 
         public bool DeleteCategory(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+FROM production.categories
+WHERE category_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText= sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            return id > 0;
         }
 
         public Category GetCategory(int id)
@@ -70,7 +78,7 @@ namespace ConsoleApp1.DataAccess
                     CategoryName = Convert.ToString(reader["category_name"])
                 };
             }
-            reader.Close();
+            connection.Close();
             return category;
         }
 
@@ -93,7 +101,7 @@ namespace ConsoleApp1.DataAccess
                     CategoryName=Convert.ToString(reader["category_name"])
                 });
             }
-            reader.Close();
+            connection.Close();
             return categories;
         }
 

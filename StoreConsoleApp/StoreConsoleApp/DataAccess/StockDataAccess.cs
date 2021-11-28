@@ -17,35 +17,45 @@ namespace ConsoleApp1.DataAccess
                 "Initial Catalog=BikeStores;" +
                 "Integrated Security=True");
         }
+        // error
         public bool AddStock(Stock stock)
         {
             string sqlstm = @"INSERT INTO production.stocks
 (
-store_id,
-product_id,
+
 quantity
 )
+OUTPUT inserted.store_id
+       
 VALUES
-(@StoreId,
-@ProductId,
+(
+
 @Quantity)";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@StoreId", stock.StoreId);
-            command.Parameters.AddWithValue("@ProductId", stock.ProductId);
+           
             command.Parameters.AddWithValue("@Quantity ", stock.Quantity);
             
             connection.Open();
+            //stock.ProductId = Convert.ToInt32(command.ExecuteScalar());
             stock.StoreId = Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
-            return stock.StoreId > 0;
+            return stock.ProductId > 0;
 
         }
 
         public bool DeleteStock(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+FROM production.stocks
+WHERE product_id=" + id;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            return id > 0;
         }
 
         public Stock GetStock(int id)
@@ -55,8 +65,8 @@ VALUES
 store_id,
 product_id,
 quantity
-FRPM production.stocks
-WHERE store_id=" + id;
+FROM production.stocks
+WHERE product_id=" + id;
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -74,7 +84,7 @@ WHERE store_id=" + id;
                     Quantity = Convert.ToInt32(reader["quantity"])
                 };
             }
-            reader.Close();
+            connection.Close();
             return stock;
 
         }
@@ -85,7 +95,7 @@ WHERE store_id=" + id;
 store_id,
 product_id,
 quantity
-FRPM production.stocks";
+FROM production.stocks";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -104,7 +114,7 @@ FRPM production.stocks";
                     Quantity = Convert.ToInt32(reader["quantity"])
                 });
             }
-            reader.Close();
+            connection.Close();
             return stocks;
         }
 

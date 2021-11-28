@@ -16,7 +16,7 @@ namespace ConsoleApp1.Interfaces
 
         bool UpdateOrder(Order order);
 
-        bool DeleteOrder(Order order);
+        bool DeleteOrder(int id);
 
     }
 }

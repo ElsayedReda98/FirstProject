@@ -22,7 +22,6 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = $@"INSERT INTO sales.orders
 (
-order_id,
 customer_id,
 order_status,
 order_date,
@@ -33,7 +32,7 @@ staff_id
 )
 OUTPUT Inserted.order_id
 VALUES
-(@OrderId,
+(
 @CustomerId,
 @OrderStatus,
 @OrderDate,
@@ -44,7 +43,7 @@ VALUES
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@OrderId", order.OredrId);
+           // command.Parameters.AddWithValue("@OrderId", order.OredrId);
             command.Parameters.AddWithValue("@customerId", order.CustomerId);
             command.Parameters.AddWithValue("@OrderStatus", order.OrderStatus);
             command.Parameters.AddWithValue("@OrdeDate", order.OrderDate);
@@ -60,9 +59,20 @@ VALUES
             return order.OredrId > 0;
         }
 
-        public bool DeleteOrder(Order order)
+        public bool DeleteOrder(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+                             FROM sales.orders
+                             WHERE order_id=" + id;
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            return id > 0;
+
         }
 
         public Order GetOrder(int id)
@@ -99,7 +109,7 @@ WHERE  order_id="+id;
                     
                 };
             }
-            reader.Close();
+            connection.Close();
             return order;
         }
 
@@ -136,7 +146,7 @@ FROM sales.orders ";
                     StaffId = Convert.ToInt32(reader["staff_id"])
                 });
             }
-            reader.Close();
+            connection.Close();
             return orders;
         }
 

@@ -57,7 +57,18 @@ first_name,
 
         public bool DeleteStaff(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+                             FROM sales.staff
+                             WHERE staff_id=" + id;
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            return id > 0;
+
         }
 
         public Staff GetStaff(int id)
@@ -96,7 +107,7 @@ WHERE staff_id=" + id;
                     ManagerId = Convert.ToInt32(reader["manager_id"])
                 };
             }
-            reader.Close();
+            connection.Close();
             return staff;
         }
         public List<Staff> GetStaffsList()
@@ -133,7 +144,7 @@ FROM sales.staffs ";
                     ManagerId = Convert.ToInt32(reader["manager_id"])
                 });
             }
-            reader.Close();
+            connection.Close();
             return staffs;
         
         }

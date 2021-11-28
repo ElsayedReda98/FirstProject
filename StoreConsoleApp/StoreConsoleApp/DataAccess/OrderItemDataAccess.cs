@@ -23,8 +23,8 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @$"INSERT INTO sales.order_items
                 (
-                order_id,
-                item_id,
+                
+                
                 product_id,
                 quantity,
                 list_price,
@@ -33,8 +33,8 @@ namespace ConsoleApp1.DataAccess
                 OUTPUT Inserted.order_id,
                        Inserted.item_id
                 VALUES
-                (@OrderId,
-                @ItemId,
+                (
+                
                 @ProductId,
                 @Quantity,
                 @ListPrice,
@@ -43,8 +43,8 @@ namespace ConsoleApp1.DataAccess
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@OrderId", orderItem.OrderId);
-            command.Parameters.AddWithValue("@ItemId", orderItem.ItemId);
+            //command.Parameters.AddWithValue("@OrderId", orderItem.OrderId);
+           // command.Parameters.AddWithValue("@ItemId", orderItem.ItemId);
             command.Parameters.AddWithValue("@ProductId", orderItem.ProductId);
             command.Parameters.AddWithValue("@Quantity", orderItem.Quantity);
             command.Parameters.AddWithValue("@ListPrice", orderItem.ListPrice);
@@ -65,7 +65,18 @@ namespace ConsoleApp1.DataAccess
 
         public bool DeleteOrderItem(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+                             FROM sales.order_items
+                             WHERE item_id=" + id;
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            return id > 0;
+
         }
 
         public OrderItem GetOrderItems(int id)
@@ -101,7 +112,7 @@ namespace ConsoleApp1.DataAccess
                 };
             }
 
-            reader.Close();
+            connection.Close();
             return orderItem;
         }
 
@@ -138,7 +149,7 @@ namespace ConsoleApp1.DataAccess
                 });
           
             }
-            reader.Close();
+            connection.Close();
             return orderItems;
         }
 

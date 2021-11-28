@@ -23,7 +23,7 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @"INSERT INTO production.produtcs
                     (
-product_id,
+
 product_name,
 brand_id,
 category_id,
@@ -32,7 +32,7 @@ list_price
 )
 OUTPUT Inserted.product_id
 VALUES 
-(@ProductID,
+(
 @ProductName
 @BrandId
 @CategoryId,
@@ -41,7 +41,7 @@ VALUES
  )";
             var command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@ProductId", product.ProductId);
+            
             command.Parameters.AddWithValue("@ProductName", product.ProductName);
             command.Parameters.AddWithValue("@BrandId", product.BrandId);
             command.Parameters.AddWithValue("@CategoryId", product.CategoryId);
@@ -80,7 +80,18 @@ VALUES
 
         public bool DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"DELETE 
+                             FROM production.products
+                             WHERE product_id=" + id;
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            return id > 0;
+
         }
 
         public Product GetProduct(int id)
@@ -115,7 +126,7 @@ list_price
                 };
             }
 
-            reader.Close();
+            connection.Close();
             return product;
         }
 
@@ -151,7 +162,7 @@ list_price
                 });
             }
 
-            reader.Close();
+            connection.Close();
             return products;
         }
 

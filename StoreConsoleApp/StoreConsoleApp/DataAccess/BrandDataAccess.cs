@@ -72,7 +72,7 @@ namespace ConsoleApp1.DataAccess
             command.ExecuteNonQuery();
 
             connection.Close();
-            return id > 0; ;
+            return id > 0; 
 
         }
 
