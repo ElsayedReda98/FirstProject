@@ -105,17 +105,21 @@ WHERE category_id=" + id;
             return categories;
         }
 
-        public bool UpdateCategory(int id)
+        public bool UpdateCategory(Category category)
         {
             string sqlstm = @"
-                update production.category
-               set category_name='updated category'
-             where category_id=" + id;
+                update production.categories
+               set category_name=@CategoryName
+             where category_id=@CategoryId";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
+            command.Parameters.AddWithValue("@CategoryName", category.CategoryName);
+            command.Parameters.AddWithValue("@CategoryId", category.CategoryId);
             connection.Open();
-            command.ExecuteNonQuery();
-            return id > 0;
+            int effectedRows= command.ExecuteNonQuery();
+            
+            connection.Close();
+            return effectedRows > 0;
         }
     }
 }

@@ -22,19 +22,23 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @"INSERT INTO production.stocks
 (
-
+store_id,
+product_id,
 quantity
 )
 OUTPUT inserted.store_id
        
 VALUES
 (
-
+@StoreId,
+@ProductId,
 @Quantity)";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-           
+
+            command.Parameters.AddWithValue("@StoreId", stock.StoreId);
+            command.Parameters.AddWithValue("@ProductId", stock.ProductId);
             command.Parameters.AddWithValue("@Quantity ", stock.Quantity);
             
             connection.Open();
@@ -120,7 +124,22 @@ FROM production.stocks";
 
         public bool UpdateStock(Stock stock)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"
+               update sales.stocks
+               set 
+                    quantity=@Quantity,
+             where store_id =@StoreId,
+                    &product_id=@ProductId";
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            command.Parameters.AddWithValue("@Quantity", stock.Quantity);
+            command.Parameters.AddWithValue("@storeId",stock.StoreId);
+            command.Parameters.AddWithValue("@ProductId", stock.ProductId);
+            connection.Open();
+            int effectedRows = command.ExecuteNonQuery();
+            
+            connection.Close();
+            return effectedRows > 0;
         }
     }
 }

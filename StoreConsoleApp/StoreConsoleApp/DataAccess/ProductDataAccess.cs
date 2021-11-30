@@ -21,7 +21,7 @@ namespace ConsoleApp1.DataAccess
 
         public bool AddProduct(Product product)
         {
-            string sqlstm = @"INSERT INTO production.produtcs
+            string sqlstm = @"INSERT INTO production.products
                     (
 
 product_name,
@@ -33,10 +33,10 @@ list_price
 OUTPUT Inserted.product_id
 VALUES 
 (
-@ProductName
-@BrandId
+@ProductName,
+@BrandId,
 @CategoryId,
-@ModelYear
+@ModelYear,
 @ListPrice
  )";
             var command = connection.CreateCommand();
@@ -45,7 +45,7 @@ VALUES
             command.Parameters.AddWithValue("@ProductName", product.ProductName);
             command.Parameters.AddWithValue("@BrandId", product.BrandId);
             command.Parameters.AddWithValue("@CategoryId", product.CategoryId);
-            command.Parameters.AddWithValue("@ModeYear", product.ModelYear);
+            command.Parameters.AddWithValue("@ModelYear", product.ModelYear);
             command.Parameters.AddWithValue("@ListPrice", product.ListPrice);
 
             connection.Open();
@@ -103,8 +103,9 @@ brand_id,
 category_id,
 model_year,
 list_price
-                FROM production.products
-               ";
+FROM production.products
+where product_id=" + id;
+               
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -168,7 +169,18 @@ list_price
 
         public bool UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"
+update production.products
+set product_name=@ProductName
+where product_id=@ProductId";
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText= sqlstm;
+            command.Parameters.AddWithValue("@ProductName", product.ProductName);
+            command.Parameters.AddWithValue("@ProductId", product.ProductId);
+            connection.Open();
+            int effectedRows=command.ExecuteNonQuery();
+            connection.Close();
+            return effectedRows > 0;
         }
     }
 }

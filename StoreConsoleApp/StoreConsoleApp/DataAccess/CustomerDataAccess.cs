@@ -188,18 +188,22 @@ namespace ConsoleApp1.DataAccess
             return customers;
         }
 
-        public bool UpdateCustomer(int id)
+        public bool UpdateCustomer(Customer customer)
         {
             string sqlstm = @"
                 update sales.customers
-               set first_name='update first_name',
-                    last_name='update last_name'
-             where customer_id=" + id;
+               set first_name=@FirstName,
+                    last_name=@LastName
+             where customer_id=@Id";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
+            command.Parameters.AddWithValue("@FirstName", customer.FirstName);
+            command.Parameters.AddWithValue("@LastName",customer.LastName);
+            command.Parameters.AddWithValue("@Id", customer.Id);
             connection.Open();
-            command.ExecuteNonQuery();
-            return id > 0;
+           int effectedRows= command.ExecuteNonQuery();
+            connection.Close();
+            return effectedRows > 0;
         }
     }
 }

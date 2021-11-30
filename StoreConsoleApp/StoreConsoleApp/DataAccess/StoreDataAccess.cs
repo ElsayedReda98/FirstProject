@@ -108,16 +108,25 @@ WHERE store_id=" + id;
 
         public bool UpdateStore(Store store)
         {
-            throw new NotImplementedException();
+            string sqlstm = @"
+update sales.stores
+set store_name=@StoreName
+where store_id=@StoreId";
+            SqlCommand command=connection.CreateCommand();
+            command.CommandText=sqlstm;
+            command.Parameters.AddWithValue("@StoreName", store.StoreName);
+            command.Parameters.AddWithValue("@StoreId",store.StoreId);
+            connection.Open();
+            int effectedRows = command.ExecuteNonQuery();
+            return effectedRows > 0;
         }
 
 
         public Store GetStore(int id)
         {
             string sqlstm = @"SELECT
-               (
-                
-                store_name,
+store_id,                
+store_name,
                 phone,
                 email,
                 street,
@@ -137,13 +146,16 @@ WHERE store_id=" + id;
             {
                 store = new Store()
                 {
-                    City = Convert.ToString(reader["city"]),
-                    Email = Convert.ToString(reader["email"]),
-                    StoreName = Convert.ToString(reader["store_name"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
+                    StoreName = Convert.ToString(reader["store_name"]),
                     Phone = Convert.ToString(reader["phone"]),
-                    State = Convert.ToString(reader["state"]),
+                    
+                    Email = Convert.ToString(reader["email"]),
+
                     Street = Convert.ToString(reader["street"]),
+                    City = Convert.ToString(reader["city"]),
+                    State = Convert.ToString(reader["state"]),
+                    
                     ZipCode = Convert.ToString(reader["zip_code"])
                 };
             }

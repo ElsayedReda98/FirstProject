@@ -145,16 +145,18 @@ namespace ConsoleApp1.DataAccess
         public bool UpdateBrand(Brand brand)
         {
             string sqlstm = @"
-                update production.brands
-               set brand_name=''
-             where brand_name=" + @brand.BrandName;
+               update production.brands
+               set brand_name=@BrandName
+             where brand_id =@BrandId";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@BrandName", brand.BrandName);
             command.Parameters.AddWithValue("@BrandId", brand.BrandId);
             connection.Open();
-            command.ExecuteNonQuery();
-            return brand.BrandId > 0;
+             int effectedRows=command.ExecuteNonQuery();
+            
+            connection.Close();
+            return effectedRows > 0;
         }
     }
 }

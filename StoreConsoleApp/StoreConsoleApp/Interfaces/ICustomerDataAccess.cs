@@ -14,7 +14,7 @@ namespace ConsoleApp1.Interfaces
 
         bool AddCustomer(Customer customer);
 
-        bool UpdateCustomer( int id);
+        bool UpdateCustomer(Customer customer);
 
         bool DeleteCustomer(int id);
     }

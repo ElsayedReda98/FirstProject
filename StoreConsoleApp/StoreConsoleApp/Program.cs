@@ -14,11 +14,16 @@ namespace StoreConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            TestBrands();
+            //TestBrands();
             //TestCategory();
             //TestStock();
             //TestStore();
+            //TestOrder();
         }
+        private static void TestOrderItem()
+        {
+
+        } 
         private static void TestOrder()
         {
             Console.WriteLine("=========================Test Order ===============");
@@ -27,6 +32,13 @@ namespace StoreConsoleApp
             var neworder = new Order()
             {
 
+                CustomerId = 100,
+                OrderDate = DateTime.Now,
+                OrderStatus = 1,
+                RequiredDate = DateTime.Now,
+                ShippedDate = DateTime.Now,
+                StaffId = 1,
+                StoreId = 1
             };
             bool result = orderDataAccess.AddOrder(neworder);
             Console.WriteLine($"Add order Return: {result}");
@@ -34,16 +46,16 @@ namespace StoreConsoleApp
 
             Console.WriteLine("****** Get order *****");
             // ERROR
-            var order = orderDataAccess.GetOrder(5);
-            Console.WriteLine($"Get store with id:{order.OredrId}");
+            var order = orderDataAccess.GetOrder(100);
+           Console.WriteLine($"Get Order with id:{order.CustomerId}");
             Console.WriteLine("");
 
-            var storeList = storeDataAccess.GetStoresList();
-            Console.WriteLine($"Get store list with {storeList.Count} Items");
+            var orderList = orderDataAccess.GetOrdersList();
+            Console.WriteLine($"Get Order list with {orderList.Count} Items");
             Console.WriteLine("");
 
-            //bool deleteStore = storeDataAccess.DeleteStore(8);
-            //Console.WriteLine($"Delete  Store Return: {deleteStore}");
+            //bool deleteOrder = orderDataAccess.DeleteOrder(8);
+            //Console.WriteLine($"Delete  Order Return: {deleteOrder}");
 
         }
         private static void TestStore()
@@ -114,7 +126,7 @@ namespace StoreConsoleApp
 
             var newCategory = new Category()
             {
-                CategoryName= "category to add3"
+                CategoryName= "category to add11"
             };
             Console.WriteLine("****** Test Add Category *****");
             //bool result = categoryDataAccess.AddCategory(newCategory);
@@ -122,16 +134,25 @@ namespace StoreConsoleApp
             Console.WriteLine("");
 
             Console.WriteLine("****** Get Category *****");
-            var category = categoryDataAccess.GetCategory(8);
-            Console.WriteLine($"Get Category with name:{category.CategoryName}");
+            //var category = categoryDataAccess.GetCategory(1);
+            //Console.WriteLine($"Get Category with name:{category.CategoryName}");
             Console.WriteLine("");
 
             var categoryList = categoryDataAccess.GetCategoryList();
-            Console.WriteLine($"Get category list with {categoryList.Count} Items");
-            Console.WriteLine("");
+            //Console.WriteLine($"Get category list with {categoryList.Count} Items");
+           //Console.WriteLine("");
 
-            bool deletecategory = categoryDataAccess.DeleteCategory(8);
-            Console.WriteLine($"Delete Category Return: {deletecategory}");
+            //bool deletecategory = categoryDataAccess.DeleteCategory(12);
+            //Console.WriteLine($"Delete Category Return: {deletecategory}");
+            var updateCat = new Category()
+            {
+                CategoryName = "ahmed",
+                CategoryId =11
+            };
+            Console.WriteLine("****** Test update Category *****");
+            bool result2 = categoryDataAccess.UpdateCategory(updateCat);
+            Console.WriteLine($"update Category Return: {result2}");
+            Console.WriteLine("");
 
 
         }
@@ -142,7 +163,7 @@ namespace StoreConsoleApp
 
             var newBrand = new Brand()
             {
-                BrandName = "brand to add now"
+                BrandName = "brand adding "
             };
 
             Console.WriteLine("****** Test Add Brand *****");
@@ -150,20 +171,21 @@ namespace StoreConsoleApp
             Console.WriteLine($"Add Brand Return: {result}");
 
             Console.WriteLine("****** Get Brand *****");
-            var brand = brandDataAccess.GetBrand(1);
+            var brand = brandDataAccess.GetBrand(35);
             Console.WriteLine($"Get Brand with name:{brand.BrandName}");
 
             var brandList = brandDataAccess.GetBrandList();
             Console.WriteLine($"Get Brand list with {brandList.Count} Items");
 
-            bool delBrand=brandDataAccess.DeleteBrand(5);
-            Console.WriteLine($"Delete Brand Return: {delBrand}");
+            //bool delBrand=brandDataAccess.DeleteBrand(5);
+            //Console.WriteLine($"Delete Brand Return: {delBrand}");
 
-            //var updateBrand = new Brand()
-            //{
-            //    BrandName = "brand_name"
-            //};
-            bool upBrand = brandDataAccess.UpdateBrand(30 );
+            var updateBrand = new Brand()
+            {
+                BrandName = "updated brand",
+                BrandId=1
+            };
+            bool upBrand = brandDataAccess.UpdateBrand(updateBrand);
             Console.WriteLine($"update Brand Return: {upBrand}");
 
 

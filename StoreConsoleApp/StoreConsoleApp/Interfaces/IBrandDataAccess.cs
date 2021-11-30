@@ -13,7 +13,7 @@ namespace StoreConsoleApp.Interfaces
 
         bool AddBrand(Brand item);
 
-        bool UpdateBrand(int id);
+        bool UpdateBrand(Brand item);
 
         bool DeleteBrand(int id);
 

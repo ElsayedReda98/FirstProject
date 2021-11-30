@@ -8,13 +8,13 @@ namespace ConsoleApp1.Interfaces
 {
     public interface IOrderItemDataAccess
     {
-        List<OrderItem> GetOrderItemsList();
+        List<OrderItem> GetOrderItemList();
 
-        OrderItem GetOrderItems(int id);
+        OrderItem GetOrderItem(int id);
 
-        bool AddOrderItems(OrderItem oredrItem);
+        bool AddOrderItem(OrderItem orderItem);
 
-        bool UPdateOrderItems(OrderItem orderItem);
+        bool UPdateOrderItem(OrderItem orderItem);
 
         bool DeleteOrderItem(int id);
     }

@@ -18,7 +18,7 @@ namespace ConsoleApp1
         public string State { get; set; }
         public string ZipCode { get; set; }
 
-        public string Street { get; internal set; }
+        public string Street { get;  set; }
 
         public override string ToString()
         {
