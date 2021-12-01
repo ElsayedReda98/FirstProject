@@ -106,7 +106,7 @@ order_id,
                     ItemId = Convert.ToInt32(reader["item_id"]),
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     
-                    ProductId = Convert.ToInt32(reader["porduct_id"]),
+                    ProductId = Convert.ToInt32(reader["product_id"]),
                     Quantity = Convert.ToInt32(reader["quantity"]),
                     ListPrice = Convert.ToInt32(reader["list_price"]),
                     Discount = Convert.ToInt32(reader["discount"])
@@ -121,14 +121,14 @@ order_id,
         {
             SqlCommand command = connection.CreateCommand();
             command.CommandText= @"SELECT 
-                (
+                
                 order_id,
                 item_id,
                 product_id,
                 quantity,
                 list_price,
                 discount
-                )
+                
                 FROM sales.order_items 
                 ";
             connection.Open();
@@ -143,7 +143,7 @@ order_id,
                 {
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     ItemId = Convert.ToInt32(reader["item_id"]),
-                    ProductId = Convert.ToInt32(reader["porduct_id"]),
+                    ProductId = Convert.ToInt32(reader["product_id"]),
                     Quantity = Convert.ToInt32(reader["quantity"]),
                     ListPrice = Convert.ToInt32(reader["list_price"]),
                     Discount = Convert.ToInt32(reader["discount"])

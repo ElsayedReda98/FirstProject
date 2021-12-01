@@ -91,7 +91,7 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
-            var orderItem = orderItemDataAccess.GetOrderItem(1);
+            var orderItem = orderItemDataAccess.GetOrderItem(5);
             //Act
             var result = orderItemDataAccess.UPdateOrderItem(orderItem);
 

@@ -25,7 +25,7 @@ namespace ConsoleApp1.DataAccess
                     email,
                     phone,
                     active,
-                    s.store_id,
+                    store_id,
                     manager_id
                 )
                 OUTPUT Inserted.staff_id
@@ -76,6 +76,7 @@ namespace ConsoleApp1.DataAccess
         public Staff GetStaff(int id)
         {
             string sqlstm = @" SELECT
+
 staff_id,                
 first_name,
                     last_name,
@@ -99,7 +100,7 @@ WHERE staff_id=" + id;
             {
                 staff = new Staff()
                 {
-                    StaffId = Convert.ToInt32(reader["customer_id"]),
+                    StaffId = Convert.ToInt32(reader["staff_id"]),
                     FirstName = Convert.ToString(reader["first_name"]),
                     LastName = Convert.ToString(reader["last_name"]),
                     Email = Convert.ToString(reader["email"]),

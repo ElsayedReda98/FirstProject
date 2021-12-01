@@ -22,30 +22,30 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @"INSERT INTO production.stocks
 (
-store_id,
-product_id,
+--store_id,
+--product_id,
 quantity
 )
 OUTPUT inserted.store_id
        
 VALUES
 (
-@StoreId,
-@ProductId,
+--@StoreId,
+--@ProductId,
 @Quantity)";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
-            command.Parameters.AddWithValue("@StoreId", stock.StoreId);
-            command.Parameters.AddWithValue("@ProductId", stock.ProductId);
+            //command.Parameters.AddWithValue("@StoreId", stock.StoreId);
+            //command.Parameters.AddWithValue("@ProductId", stock.ProductId);
             command.Parameters.AddWithValue("@Quantity ", stock.Quantity);
             
             connection.Open();
-            //stock.ProductId = Convert.ToInt32(command.ExecuteScalar());
+            stock.ProductId = Convert.ToInt32(command.ExecuteScalar());
             stock.StoreId = Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
-            return stock.ProductId > 0;
+            return stock.StoreId > 0;
 
         }
 
@@ -53,7 +53,7 @@ VALUES
         {
             string sqlstm = @"DELETE 
 FROM production.stocks
-WHERE product_id=" + id;
+WHERE store_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
@@ -70,7 +70,7 @@ store_id,
 product_id,
 quantity
 FROM production.stocks
-WHERE product_id=" + id;
+WHERE store_id=" + id;
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -125,11 +125,11 @@ FROM production.stocks";
         public bool UpdateStock(Stock stock)
         {
             string sqlstm = @"
-               update sales.stocks
+               update production.stocks
                set 
-                    quantity=@Quantity,
-             where store_id =@StoreId,
-                    &product_id=@ProductId";
+                    quantity=@Quantity
+             where store_id =@StoreId
+                    ";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@Quantity", stock.Quantity);

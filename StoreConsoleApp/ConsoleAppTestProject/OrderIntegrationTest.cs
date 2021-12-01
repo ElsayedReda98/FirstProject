@@ -68,7 +68,7 @@ namespace ConsoleAppTestProject
         }
 
         [Fact]
-        public void Get_Brand_With_InValid_Id_Will_Null()
+        public void Get_Order_With_InValid_Id_Will_Null()
         {
             //Arrange
             IOrderDataAccess orderDataAccess = new OrderDataAccess();
