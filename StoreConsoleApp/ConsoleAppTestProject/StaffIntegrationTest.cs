@@ -19,7 +19,7 @@ namespace ConsoleAppTestProject
                 FirstName = "Elsayed",
                 LastName = "Reda",
                 Phone = "01008927985",
-                Email = "sayed.com",
+                Email = $"{Guid.NewGuid()}@sayed.com",
                 Active = 2,
                 ManagerId = 1,
                 StoreId = 1
