@@ -45,10 +45,8 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@LastName", staff.LastName);
             command.Parameters.AddWithValue("@Email", staff.Email);
             command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(staff.Phone) ? DBNull.Value : (object)staff.Phone);
-            
             command.Parameters.AddWithValue("@Active", staff.Active);
             command.Parameters.AddWithValue("@StoreId", staff.StoreId);
-            //
             command.Parameters.AddWithValue("@ManagerId",staff.ManagerId );
             connection.Open();
             staff.StaffId = Convert.ToInt32(command.ExecuteScalar());
