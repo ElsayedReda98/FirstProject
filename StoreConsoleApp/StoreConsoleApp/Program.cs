@@ -108,9 +108,9 @@ namespace StoreConsoleApp
 
             Console.WriteLine("****** Get Category *****");
             // ERROR
-            var stock = stockDataAccess.GetStock(5);
-            Console.WriteLine($"Get stock with quantity:{stock.Quantity}");
-            Console.WriteLine("");
+            //var stock = stockDataAccess.GetStock(5);
+            //Console.WriteLine($"Get stock with quantity:{stock.Quantity}");
+            //Console.WriteLine("");
 
             var stockllist = stockDataAccess.GetStocksList();
             Console.WriteLine($"Get stock list with {stockllist.Count} Items");

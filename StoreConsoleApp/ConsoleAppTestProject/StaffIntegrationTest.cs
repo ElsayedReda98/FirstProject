@@ -39,7 +39,7 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "01008927985",
                 // must change
-                Email = "hhhhfff.com",
+                Email = $"{Guid.NewGuid()}@sayed.com",
                 Active = 1,
                 ManagerId = 1,
                 // must change every cycle

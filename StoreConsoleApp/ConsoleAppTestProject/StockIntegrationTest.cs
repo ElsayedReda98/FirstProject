@@ -14,13 +14,13 @@ namespace ConsoleAppTestProject
         public void Add_Stock_Will()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
+            var product =  AddProduct();
 
             var newStock = new Stock()
             {
-                
                StoreId = 4,
-               ProductId = 5,
-                Quantity = 500
+               ProductId = product.ProductId,
+               Quantity = 500
             };
 
             bool result = stockDataAccess.AddStock(newStock);
@@ -31,36 +31,22 @@ namespace ConsoleAppTestProject
         public void Get_Stock_With()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
+            var product = AddProduct();
 
-            var stock = new Stock()
+            var newStock = new Stock()
             {
-
-                StoreId = 5,
-                ProductId = 5,
+                StoreId = 4,
+                ProductId = product.ProductId,
                 Quantity = 500
             };
 
-            var result = stockDataAccess.AddStock(stock);
+            stockDataAccess.AddStock(newStock);
 
-            Assert.True(result);
-            Assert.NotEqual(0,stock.StoreId);
-            int id = stock.StoreId;
+            var stock =stockDataAccess.GetStock(newStock.StoreId, newStock.ProductId);
 
-            stock=stockDataAccess.GetStock(id);
-
-            Assert.NotNull(stock);
-            Assert.Equal(id,stock.StoreId);
+            Assert.NotNull(stock);            
         }
-        [Fact]
-        public void Get_Stock_With_Invalid()
-        {
-            IStockDataAccess stockDataAccess = new StockDataAccess();
-            int id = -1;
-            
-            var stock = stockDataAccess.GetStock(id);
-
-            Assert.Null(stock);
-        }
+        
         [Fact]
         public void Get_StockList_Will()
         {
@@ -76,11 +62,19 @@ namespace ConsoleAppTestProject
         public void Update_Stock_Will()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
+            var product = AddProduct();
+            var newStock = new Stock()
+            {
+                StoreId = 4,
+                ProductId = product.ProductId,
+                Quantity = 500
+            };
 
-            var stock = stockDataAccess.GetStock(1);
+            stockDataAccess.AddStock(newStock);
 
-
-            var result = stockDataAccess.UpdateStock(stock);
+            //Act
+            newStock.Quantity = 300;
+            var result = stockDataAccess.UpdateStock(newStock);
 
             Assert.True(result);
         }
@@ -88,12 +82,12 @@ namespace ConsoleAppTestProject
         public void Delete_Stock_Will()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
+            var product = AddProduct();
 
             var stock = new Stock()
             {
                 StoreId = 4,
-                ProductId = 6,
-
+                ProductId = product.ProductId,
                 Quantity = 500
             };
 
@@ -103,10 +97,27 @@ namespace ConsoleAppTestProject
             Assert.NotEqual(0,stock.StoreId);
             Assert.NotEqual(0,stock.ProductId);
 
-            result = stockDataAccess.DeleteStock(stock.StoreId);
+            result = stockDataAccess.DeleteStock(stock.StoreId, stock.ProductId);
 
             Assert.True(result);
 
         }
+
+        private  Product AddProduct()
+        {
+            IProductDataAccess productDataAccess = new ProductDataAccess();
+            var newProduct = new Product()
+            {
+                ProductName = "sayed",
+                BrandId = 7,
+                CategoryId = 7,
+                ModelYear = 2021,
+                ListPrice = 1300
+            };
+
+            productDataAccess.AddProduct(newProduct);
+            return newProduct;
+        }
+
     }
 }

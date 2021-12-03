@@ -10,13 +10,14 @@ namespace ConsoleApp1.Interfaces
     {
         List<Stock> GetStocksList();
 
-        Stock GetStock(int id);
+        Stock GetStock(int storeId, int productId);
+
+        List<Stock> GetStock(int storeId);
 
         bool AddStock(Stock stock);
 
         bool UpdateStock(Stock stock);
 
-        bool DeleteStock(int id);
-
+        bool DeleteStock(int id, int productId);
     }
 }

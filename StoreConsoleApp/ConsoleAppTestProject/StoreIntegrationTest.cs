@@ -86,7 +86,18 @@ namespace ConsoleAppTestProject
         public void Update_Store_Will()
         {
             IStoreDataAccess storedDataAccess = new StoreDataAccess();
-            var store = storedDataAccess.GetStore(12);
+            var store = new Store()
+            {
+                StoreName = "super",
+                Phone = "012",
+                Email = "le.com",
+                State = "s",
+                Street = "main street",
+                City = "egypt",
+                ZipCode = "015"
+            };
+
+            storedDataAccess.AddStore(store);
 
             var result= storedDataAccess.UpdateStore(store);
 
@@ -108,13 +119,9 @@ namespace ConsoleAppTestProject
                 ZipCode = "015"
             };
 
-            var result =storeDataAccess.AddStore(store);
-            Assert.True(result);
-            Assert.NotEqual(0,store.StoreId);
-
-
-            result = storeDataAccess.DeleteStore(store.StoreId);
-
+            storeDataAccess.AddStore(store);
+            
+            var result = storeDataAccess.DeleteStore(store.StoreId);
 
             //assert
             Assert.True(result);
