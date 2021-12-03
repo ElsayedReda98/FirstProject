@@ -10,25 +10,19 @@ namespace ConsoleApp1.DataAccess
         SqlConnection connection;
         public StockDataAccess()
         {
-            connection = new SqlConnection("Data Source = .;" +
-                "Initial Catalog=BikeStores;" +
-                "Integrated Security=True");
+            connection = new SqlConnection("Data Source = .;Initial Catalog=BikeStores;Integrated Security=True");
         }
         // error
         public bool AddStock(Stock stock)
         {
             string sqlstm = @"INSERT INTO production.stocks
-                    (
-                        store_id,
+                    (   store_id,
                         product_id,
-                        quantity
-                    )                    
+                        quantity )                    
                     VALUES
-                    (
-                        @StoreId,
+                    (  @StoreId,
                         @ProductId,
-                        @Quantity
-                    )";
+                        @Quantity )";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -41,33 +35,16 @@ namespace ConsoleApp1.DataAccess
             var effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
-
-        }
-
-        public bool DeleteStock(int storeId, int productId)
-        {
-            string sqlstm = @$"DELETE 
-                            FROM production.stocks
-                            WHERE store_id={storeId}
-                             AND product_id = {productId}";
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            int effectedRows = command.ExecuteNonQuery();
-            connection.Close();
-            return effectedRows > 0;
-        }
-
+        }    
         public Stock GetStock(int storeId, int productId)
         {
-
-            string sqlstm = @"SELECT 
+            string sqlstm = @$"SELECT 
                 store_id,
                 product_id,
                 quantity
                 FROM production.stocks
-                WHERE store_id=" + storeId;
+                WHERE store_id= {storeId}
+                AND   product_id={productId}";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -86,22 +63,17 @@ namespace ConsoleApp1.DataAccess
                     Quantity = Convert.ToInt32(reader["quantity"])
                 };
             }
-
             connection.Close();
             return stock;
-
         }
-
-        public List<Stock> GetStock(int storeId)
+        
+        public List<Stock> GetStockList()
         {
-
             string sqlstm = @"SELECT 
                 store_id,
                 product_id,
                 quantity
-                FROM production.stocks
-                WHERE store_id=" + storeId;
-
+                FROM production.stocks";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -118,49 +90,16 @@ namespace ConsoleApp1.DataAccess
                     Quantity = Convert.ToInt32(reader["quantity"])
                 });
             }
-
-            connection.Close();
-            return stocks;
-
-        }
-
-        public List<Stock> GetStocksList()
-        {
-            string sqlstm = @"SELECT 
-                store_id,
-                product_id,
-                quantity
-                FROM production.stocks";
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader
-                (System.Data.CommandBehavior.CloseConnection);
-
-            List<Stock> stocks = new List<Stock>();
-            while (reader.Read())
-            {
-                stocks.Add(new Stock()
-                {
-                    StoreId = Convert.ToInt32(reader["store_id"]),
-                    ProductId = Convert.ToInt32(reader["product_id"]),
-                    Quantity = Convert.ToInt32(reader["quantity"])
-                });
-            }
             connection.Close();
             return stocks;
         }
-
         public bool UpdateStock(Stock stock)
         {
             string sqlstm = @"
                update production.stocks
-               set 
-                    quantity=@Quantity
-             where store_id =@StoreId
-                    AND product_id = @ProductId";
+               SET    quantity=@Quantity
+               WHERE  store_id =@StoreId
+               AND    product_id = @ProductId";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@Quantity", stock.Quantity);
@@ -168,7 +107,20 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@ProductId", stock.ProductId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
+            connection.Close();
+            return effectedRows > 0;
+        }
+        public bool DeleteStock(int storeId, int productId)
+        {
+            string sqlstm = @$"DELETE 
+                            FROM  production.stocks
+                            WHERE store_id={storeId}
+                             AND  product_id = {productId}";
 
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            int effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
         }

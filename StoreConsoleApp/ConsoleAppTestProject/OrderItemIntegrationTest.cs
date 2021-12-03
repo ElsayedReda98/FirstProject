@@ -1,6 +1,7 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
+using System;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -14,7 +15,7 @@ namespace ConsoleAppTestProject
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
             var newOrderItem = new OrderItem()
             {
-                ItemId = 21,
+                ItemId = 1,
                 OrderId = 10,
                 ProductId = 1,
                 Quantity = 1,
@@ -53,7 +54,8 @@ namespace ConsoleAppTestProject
 
             //assert
             Assert.NotNull(orderItem);
-            //Assert.NotEmpty(orderItem.OrderId);
+            
+
             Assert.Equal(id, orderItem.ItemId);
         }
         [Fact]
@@ -76,7 +78,7 @@ namespace ConsoleAppTestProject
 
             //Act
             var orderItems = orderItemDataAccess.GetOrderItemList();
-            // if(orders != null)
+           
 
 
             //Assert

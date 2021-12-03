@@ -31,7 +31,7 @@ namespace ConsoleAppTestProject
             IBrandDataAccess brandDataAccess = new BrandDataAccess();
             var brand = new Brand()
             {
-                BrandName = "Brand To Delete",
+                BrandName = "Brand To get",
             };
 
             var result = brandDataAccess.AddBrand(brand);

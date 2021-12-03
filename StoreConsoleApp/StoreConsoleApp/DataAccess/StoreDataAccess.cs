@@ -12,32 +12,26 @@ namespace ConsoleApp1.DataAccess
         public StoreDataAccess()
         {
             connection = new SqlConnection("Data Source =.; Initial Catalog = BikeStores; Integrated Security = True");
-
         }
         public bool AddStore(Store store)
         {
-            string sqlstmt = $@"INSERT INTO sales.stores 
+            string sqlstmt = @"INSERT INTO sales.stores 
              (  store_name,
                 phone,
                 email,
                 street,
                 city,
                 state,
-                zip_code
-                )
+                zip_code )
                 OUTPUT Inserted.store_id
                 VALUES
-                (
-                @StoreName,
+              ( @StoreName,
                 @Phone,
                 @Email,
                 @Street,
                 @City,
                 @State,
-                @ZipCode
-                )";
-
-
+                @ZipCode )";
             var command = connection.CreateCommand();
             command.CommandText = sqlstmt;
 
@@ -49,22 +43,44 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@State", store.State);
             command.Parameters.AddWithValue("@ZipCode", store.ZipCode);
             connection.Open();
-            store.StoreId = Convert.ToInt32(command.ExecuteScalar());
+            store.StoreId=Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
             return store.StoreId > 0;
         }
-
-        public bool DeleteStore(int id)
+        public Store GetStore(int id)
         {
-            string sqlstm = @"DELETE 
-FROM sales.stores
-WHERE store_id=" + id;
+            string sqlstm = @"SELECT
+                        store_id,                
+                        store_name,
+                        phone,
+                        email,
+                        street,
+                        city,
+                        state,
+                        zip_code
+                   FROM sales.stores
+                   WHERE store_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
+            SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+            Store store = null;
+            while (reader.Read())
+            {
+                store = new Store()
+                {
+                    StoreId = Convert.ToInt32(reader["store_id"]),
+                    StoreName = Convert.ToString(reader["store_name"]),
+                    Phone = Convert.ToString(reader["phone"]),
+                    Email = Convert.ToString(reader["email"]),
+                    Street = Convert.ToString(reader["street"]),
+                    City = Convert.ToString(reader["city"]),
+                    State = Convert.ToString(reader["state"]),
+                    ZipCode = Convert.ToString(reader["zip_code"])
+                };
+            }
             connection.Close();
-            return id > 0;
+            return store;
         }
         public List<Store> GetStoresList()
         {
@@ -76,13 +92,13 @@ WHERE store_id=" + id;
                     street,
                     city,
                     state,
-                    zip_code FROM sales.stores";
+                    zip_code 
+               FROM sales.stores";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
             connection.Open();
-            SqlDataReader reader = command.ExecuteReader
-                (System.Data.CommandBehavior.CloseConnection);
+            SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
             List<Store> stores = new List<Store>();
             while (reader.Read())
@@ -102,13 +118,12 @@ WHERE store_id=" + id;
             connection.Close();
             return stores;
         }
-
         public bool UpdateStore(Store store)
         {
             string sqlstm = @"
-update sales.stores
-set store_name=@StoreName
-where store_id=@StoreId";
+                UPDATE sales.stores
+                SET store_name=@StoreName
+                WHERE store_id=@StoreId";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@StoreName", store.StoreName);
@@ -117,50 +132,17 @@ where store_id=@StoreId";
             int effectedRows = command.ExecuteNonQuery();
             return effectedRows > 0;
         }
-
-
-        public Store GetStore(int id)
+        public bool DeleteStore(int id)
         {
-            string sqlstm = @"SELECT
-store_id,                
-store_name,
-                phone,
-                email,
-                street,
-                city,
-                state,
-                zip_code
-                FROM sales.stores
-                WHERE store_id=" + id;
+            string sqlstm = @"DELETE 
+                    FROM  sales.stores
+                    WHERE store_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-
             connection.Open();
-            SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-
-            Store store = null;
-            while (reader.Read())
-            {
-                store = new Store()
-                {
-                    StoreId = Convert.ToInt32(reader["store_id"]),
-                    StoreName = Convert.ToString(reader["store_name"]),
-                    Phone = Convert.ToString(reader["phone"]),
-
-                    Email = Convert.ToString(reader["email"]),
-
-                    Street = Convert.ToString(reader["street"]),
-                    City = Convert.ToString(reader["city"]),
-                    State = Convert.ToString(reader["state"]),
-
-                    ZipCode = Convert.ToString(reader["zip_code"])
-                };
-            }
+            int effectedRows=command.ExecuteNonQuery();
             connection.Close();
-            return store;
-
+            return effectedRows > 0;
         }
-
-
     }
 }

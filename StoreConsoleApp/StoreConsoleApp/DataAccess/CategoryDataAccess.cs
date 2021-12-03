@@ -18,14 +18,10 @@ namespace ConsoleApp1.DataAccess
         public bool AddCategory(Category category)
         {
             string sqlstm = $@"INSERT INTO production.categories
-                (
-                
-                category_name
-                )
+                (category_name)
                 OUTPUT Inserted.category_id
                 VALUES 
-                (
-                @CategoryName)";
+                (@CategoryName)";
 
             var command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -37,22 +33,7 @@ namespace ConsoleApp1.DataAccess
             connection.Close();
 
             return category.CategoryId > 0;
-
         }
-
-        public bool DeleteCategory(int id)
-        {
-            string sqlstm = @"DELETE 
-FROM production.categories
-WHERE category_id=" + id;
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-            return id > 0;
-        }
-
         public Category GetCategory(int id)
         {
             string sqlstm = @"SELECT 
@@ -78,7 +59,6 @@ WHERE category_id=" + id;
             connection.Close();
             return category;
         }
-
         public List<Category> GetCategoryList()
         {
             SqlCommand command = connection.CreateCommand();
@@ -86,6 +66,7 @@ WHERE category_id=" + id;
                 category_id,
                 category_name
                 FROM production.categories";
+
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
@@ -101,10 +82,9 @@ WHERE category_id=" + id;
             connection.Close();
             return categories;
         }
-
         public bool UpdateCategory(Category category)
         {
-            string sqlstm = @"
+            string sqlstm = @$"
                 update production.categories
                set category_name=@CategoryName
              where category_id=@CategoryId";
@@ -114,9 +94,20 @@ WHERE category_id=" + id;
             command.Parameters.AddWithValue("@CategoryId", category.CategoryId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
-
             connection.Close();
             return effectedRows > 0;
+        }
+        public bool DeleteCategory(int categoryId)
+        {
+            string sqlstm = @$"DELETE 
+                FROM production.categories
+                WHERE category_id={categoryId}" ;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            int effectedRows =command.ExecuteNonQuery();
+            connection.Close();
+            return  effectedRows > 0;
         }
     }
 }

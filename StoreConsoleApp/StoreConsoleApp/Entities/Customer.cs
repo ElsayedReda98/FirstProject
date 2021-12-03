@@ -2,7 +2,7 @@
 {
     public class Customer
     {
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
@@ -16,7 +16,7 @@
 
         public override string ToString()
         {
-            return $"ID :{Id} Name :{FirstName},{LastName}" +
+            return $"ID :{CustomerId} Name :{FirstName},{LastName}" +
                 $" Phone :{Phone} Email :{Email}";
         }
     }

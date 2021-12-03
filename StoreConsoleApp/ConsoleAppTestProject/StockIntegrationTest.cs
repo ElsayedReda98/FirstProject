@@ -8,7 +8,7 @@ namespace ConsoleAppTestProject
     public class StockIntegrationTest
     {
         [Fact]
-        public void Add_Stock_Will()
+        public void Add_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
             var product = AddProduct();
@@ -25,7 +25,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Get_Stock_With()
+        public void Get_Stock_With_Valid_Id_Will_Return_Stock()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
             var product = AddProduct();
@@ -45,18 +45,18 @@ namespace ConsoleAppTestProject
         }
 
         [Fact]
-        public void Get_StockList_Will()
+        public void Get_Stock_With_InValid_Id_Will_Return_Null()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
 
 
-            var stock = stockDataAccess.GetStocksList();
+            var stock = stockDataAccess.GetStockList();
 
             Assert.NotNull(stock);
         }
         [Fact]
-        public void Update_Stock_Will()
+        public void Update_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
             var product = AddProduct();
@@ -76,7 +76,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Delete_Stock_Will()
+        public void Delete_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
             var product = AddProduct();
