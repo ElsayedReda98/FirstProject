@@ -1,11 +1,8 @@
 ﻿
 using ConsoleApp1.Interfaces;
-using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace ConsoleApp1.DataAccess
 {
@@ -71,7 +68,7 @@ WHERE store_id=" + id;
         }
         public List<Store> GetStoresList()
         {
-            string sqlstm= @"SELECT 
+            string sqlstm = @"SELECT 
                     store_id,
                     store_name,
                     phone,
@@ -79,7 +76,7 @@ WHERE store_id=" + id;
                     street,
                     city,
                     state,
-                    zip_code FROM sales.stores"; 
+                    zip_code FROM sales.stores";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -112,10 +109,10 @@ WHERE store_id=" + id;
 update sales.stores
 set store_name=@StoreName
 where store_id=@StoreId";
-            SqlCommand command=connection.CreateCommand();
-            command.CommandText=sqlstm;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@StoreName", store.StoreName);
-            command.Parameters.AddWithValue("@StoreId",store.StoreId);
+            command.Parameters.AddWithValue("@StoreId", store.StoreId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
             return effectedRows > 0;
@@ -149,13 +146,13 @@ store_name,
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     StoreName = Convert.ToString(reader["store_name"]),
                     Phone = Convert.ToString(reader["phone"]),
-                    
+
                     Email = Convert.ToString(reader["email"]),
 
                     Street = Convert.ToString(reader["street"]),
                     City = Convert.ToString(reader["city"]),
                     State = Convert.ToString(reader["state"]),
-                    
+
                     ZipCode = Convert.ToString(reader["zip_code"])
                 };
             }
@@ -163,7 +160,7 @@ store_name,
             return store;
 
         }
-         
-        
+
+
     }
 }

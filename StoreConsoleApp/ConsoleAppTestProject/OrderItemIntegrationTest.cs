@@ -1,9 +1,6 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -16,7 +13,7 @@ namespace ConsoleAppTestProject
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
             var newOrderItem = new OrderItem()
-            {   
+            {
                 ItemId = 21,
                 OrderId = 10,
                 ProductId = 1,
@@ -38,8 +35,8 @@ namespace ConsoleAppTestProject
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
             var orderItem = new OrderItem()
             {
-                ItemId= 5,
-                OrderId=10,
+                ItemId = 5,
+                OrderId = 10,
                 ProductId = 1,
                 Quantity = 1,
                 ListPrice = 600,
@@ -66,7 +63,7 @@ namespace ConsoleAppTestProject
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
             int id = -1;
             //Act
-            var orderItem =orderItemDataAccess.GetOrderItem(id);
+            var orderItem = orderItemDataAccess.GetOrderItem(id);
 
             //Assert
             Assert.Null(orderItem);

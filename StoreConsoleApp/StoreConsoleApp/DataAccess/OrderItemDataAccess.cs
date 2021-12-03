@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
@@ -14,7 +11,7 @@ namespace ConsoleApp1.DataAccess
 
         public OrderItemDataAccess()
         {
-            connection=new SqlConnection(" Data Source = . ;" +
+            connection = new SqlConnection(" Data Source = . ;" +
                 "Initial Catalog =BikeStores ; " +
                 "Integrated Security=True");
         }
@@ -105,7 +102,7 @@ order_id,
                 {
                     ItemId = Convert.ToInt32(reader["item_id"]),
                     OrderId = Convert.ToInt32(reader["order_id"]),
-                    
+
                     ProductId = Convert.ToInt32(reader["product_id"]),
                     Quantity = Convert.ToInt32(reader["quantity"]),
                     ListPrice = Convert.ToInt32(reader["list_price"]),
@@ -120,7 +117,7 @@ order_id,
         public List<OrderItem> GetOrderItemList()
         {
             SqlCommand command = connection.CreateCommand();
-            command.CommandText= @"SELECT 
+            command.CommandText = @"SELECT 
                 
                 order_id,
                 item_id,
@@ -148,7 +145,7 @@ order_id,
                     ListPrice = Convert.ToInt32(reader["list_price"]),
                     Discount = Convert.ToInt32(reader["discount"])
                 });
-          
+
             }
             connection.Close();
             return orderItems;

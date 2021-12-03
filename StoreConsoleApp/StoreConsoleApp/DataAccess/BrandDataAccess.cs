@@ -1,5 +1,4 @@
-﻿using ConsoleApp1.Interfaces;
-using StoreConsoleApp.Interfaces;
+﻿using StoreConsoleApp.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -64,15 +63,15 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @"DELETE 
                              FROM production.brands
-                             WHERE brand_id="+id;
+                             WHERE brand_id=" + id;
 
-            SqlCommand command= connection.CreateCommand();
-            command.CommandText= sqlstm;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
             connection.Open();
             command.ExecuteNonQuery();
 
             connection.Close();
-            return id > 0; 
+            return id > 0;
 
         }
 
@@ -153,8 +152,8 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@BrandName", brand.BrandName);
             command.Parameters.AddWithValue("@BrandId", brand.BrandId);
             connection.Open();
-             int effectedRows=command.ExecuteNonQuery();
-            
+            int effectedRows = command.ExecuteNonQuery();
+
             connection.Close();
             return effectedRows > 0;
         }

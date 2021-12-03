@@ -1,6 +1,5 @@
 using ConsoleApp1;
 using ConsoleApp1.DataAccess;
-using ConsoleApp1.Interfaces;
 using StoreConsoleApp.Interfaces;
 using Xunit;
 
@@ -37,9 +36,9 @@ namespace ConsoleAppTestProject
 
             var result = brandDataAccess.AddBrand(brand);
             Assert.True(result);
-            Assert.NotEqual(0, brand.BrandId);            
+            Assert.NotEqual(0, brand.BrandId);
             int id = brand.BrandId;
-            
+
             //Act
             brand = brandDataAccess.GetBrand(id);
 
@@ -67,13 +66,13 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IBrandDataAccess brandDataAccess = new BrandDataAccess();
-            
+
             //Act
             var brands = brandDataAccess.GetBrandList();
 
             //Assert
             Assert.NotEmpty(brands);
-            
+
         }
 
         [Fact]
@@ -81,7 +80,7 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IBrandDataAccess brandDataAccess = new BrandDataAccess();
-            var brand =  brandDataAccess.GetBrand(1);
+            var brand = brandDataAccess.GetBrand(1);
             //Act
             var result = brandDataAccess.UpdateBrand(brand);
 
@@ -94,14 +93,15 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IBrandDataAccess brandDataAccess = new BrandDataAccess();
-            var brand = new Brand() { 
+            var brand = new Brand()
+            {
                 BrandName = "Brand To Delete",
             };
 
             var result = brandDataAccess.AddBrand(brand);
             Assert.True(result);
             Assert.NotEqual(0, brand.BrandId);
-            
+
             //Act
             result = brandDataAccess.DeleteBrand(brand.BrandId);
 

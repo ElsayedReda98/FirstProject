@@ -1,9 +1,6 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -45,10 +42,10 @@ namespace ConsoleAppTestProject
             };
             var result = storeDataAccess.AddStore(store);
             Assert.True(result);
-            Assert.NotEqual(0,store.StoreId);
+            Assert.NotEqual(0, store.StoreId);
             int id = store.StoreId;
 
-            store = storeDataAccess.GetStore(id);    
+            store = storeDataAccess.GetStore(id);
 
             Assert.NotNull(store);
             Assert.NotEmpty(store.StoreName);
@@ -58,7 +55,7 @@ namespace ConsoleAppTestProject
             Assert.NotEmpty(store.Street);
             Assert.NotEmpty(store.City);
             Assert.NotEmpty(store.ZipCode);
-            Assert.Equal(id,store.StoreId);
+            Assert.Equal(id, store.StoreId);
 
         }
         [Fact]
@@ -78,7 +75,7 @@ namespace ConsoleAppTestProject
         {
             IStoreDataAccess storeDataAccess = new StoreDataAccess();
 
-            var stores=storeDataAccess.GetStoresList();
+            var stores = storeDataAccess.GetStoresList();
 
             Assert.NotEmpty(stores);
         }
@@ -99,7 +96,7 @@ namespace ConsoleAppTestProject
 
             storedDataAccess.AddStore(store);
 
-            var result= storedDataAccess.UpdateStore(store);
+            var result = storedDataAccess.UpdateStore(store);
 
             Assert.True(result);
 
@@ -107,7 +104,7 @@ namespace ConsoleAppTestProject
         [Fact]
         public void Delete_Store_Will()
         {
-            IStoreDataAccess storeDataAccess=new StoreDataAccess();
+            IStoreDataAccess storeDataAccess = new StoreDataAccess();
             var store = new Store()
             {
                 StoreName = "super",
@@ -120,12 +117,12 @@ namespace ConsoleAppTestProject
             };
 
             storeDataAccess.AddStore(store);
-            
+
             var result = storeDataAccess.DeleteStore(store.StoreId);
 
             //assert
             Assert.True(result);
-            
+
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ConsoleApp1.Interfaces
 {
@@ -11,7 +7,7 @@ namespace ConsoleApp1.Interfaces
         List<Product> GetProductsList();
 
         Product GetProduct(int id);
-        
+
         bool AddProduct(Product product);
 
         bool UpdateProduct(Product product);

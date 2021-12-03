@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    public class CustomerDataAccess : ICustomerDataAccess 
+    public class CustomerDataAccess : ICustomerDataAccess
     {
         SqlConnection connection;
         public CustomerDataAccess()
@@ -16,8 +13,8 @@ namespace ConsoleApp1.DataAccess
             connection = new SqlConnection("Data Source =.; Initial Catalog = BikeStores; Integrated Security = True");
 
         }
-        
-        
+
+
         public bool AddCustomer(Customer customer)
         {
             string sqlstmt = $@"INSERT INTO 
@@ -49,7 +46,7 @@ namespace ConsoleApp1.DataAccess
             command.CommandText = sqlstmt;
             command.Parameters.AddWithValue("@FirstName", customer.FirstName);
             command.Parameters.AddWithValue("@LastName", customer.LastName);
-            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : (object)customer.Phone );
+            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : (object)customer.Phone);
             command.Parameters.AddWithValue("@Email", customer.Email);
             command.Parameters.AddWithValue("@Street", customer.Street);
             command.Parameters.AddWithValue("@City", customer.City);
@@ -138,7 +135,7 @@ namespace ConsoleApp1.DataAccess
                     City = Convert.ToString(reader["city"]),
                     Email = Convert.ToString(reader["email"]),
                     FirstName = Convert.ToString(reader["first_name"]),
-                     Id= Convert.ToInt32(reader["customer_id"]),
+                    Id = Convert.ToInt32(reader["customer_id"]),
                     LastName = Convert.ToString(reader["last_name"]),
                     Phone = Convert.ToString(reader["phone"]),
                     State = Convert.ToString(reader["state"]),
@@ -153,7 +150,7 @@ namespace ConsoleApp1.DataAccess
         public List<Customer> GetCustomerList()
         {
             SqlCommand command = connection.CreateCommand();
-            command.CommandText= @"SELECT 
+            command.CommandText = @"SELECT 
                     customer_id,
                     first_name,
                     last_name,
@@ -163,7 +160,7 @@ namespace ConsoleApp1.DataAccess
                     city,
                     state,
                     zip_code FROM sales.customers";
-            
+
             connection.Open();
             SqlDataReader reader = command.ExecuteReader
                 (System.Data.CommandBehavior.CloseConnection);
@@ -198,10 +195,10 @@ namespace ConsoleApp1.DataAccess
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@FirstName", customer.FirstName);
-            command.Parameters.AddWithValue("@LastName",customer.LastName);
+            command.Parameters.AddWithValue("@LastName", customer.LastName);
             command.Parameters.AddWithValue("@Id", customer.Id);
             connection.Open();
-           int effectedRows= command.ExecuteNonQuery();
+            int effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
         }

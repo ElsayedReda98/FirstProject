@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    public class ProductDataAccess :IProductDataAccess
+    public class ProductDataAccess : IProductDataAccess
 
     {
         SqlConnection connection;
@@ -41,7 +38,7 @@ VALUES
  )";
             var command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            
+
             command.Parameters.AddWithValue("@ProductName", product.ProductName);
             command.Parameters.AddWithValue("@BrandId", product.BrandId);
             command.Parameters.AddWithValue("@CategoryId", product.CategoryId);
@@ -105,7 +102,7 @@ model_year,
 list_price
 FROM production.products
 where product_id=" + id;
-               
+
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -117,7 +114,7 @@ where product_id=" + id;
             {
                 product = new Product()
                 {
-                    ProductId  = Convert.ToInt32(reader["product_id"]),
+                    ProductId = Convert.ToInt32(reader["product_id"]),
                     ProductName = Convert.ToString(reader["product_name"]),
                     BrandId = Convert.ToInt32(reader["product_id"]),
                     CategoryId = Convert.ToInt32(reader["product_id"]),
@@ -159,7 +156,7 @@ list_price
                     CategoryId = Convert.ToInt32(reader["product_id"]),
                     ModelYear = Convert.ToInt32(reader["product_id"]),
                     ListPrice = Convert.ToInt32(reader["product_id"]),
-                    
+
                 });
             }
 
@@ -174,11 +171,11 @@ update production.products
 set product_name=@ProductName
 where product_id=@ProductId";
             SqlCommand command = connection.CreateCommand();
-            command.CommandText= sqlstm;
+            command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@ProductName", product.ProductName);
             command.Parameters.AddWithValue("@ProductId", product.ProductId);
             connection.Open();
-            int effectedRows=command.ExecuteNonQuery();
+            int effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
         }

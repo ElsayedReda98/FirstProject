@@ -1,9 +1,6 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -21,10 +18,10 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "01008927985",
                 Email = "sayed.com",
-                State ="s",
-                Street ="abo ouf",
-                City ="misr",
-                ZipCode ="05040"
+                State = "s",
+                Street = "abo ouf",
+                City = "misr",
+                ZipCode = "05040"
             };
             //
             bool result = customerDataAccess.AddCustomer(newCustomer);
@@ -40,13 +37,13 @@ namespace ConsoleAppTestProject
             var customer = new Customer()
             {
                 FirstName = "first name to get",
-                LastName= "last name to get",
+                LastName = "last name to get",
                 Phone = "0100",
-                Email="email to get",
-                Street ="street",
-                City ="egypt",
-                State ="s",
-                ZipCode ="050"
+                Email = "email to get",
+                Street = "street",
+                City = "egypt",
+                State = "s",
+                ZipCode = "050"
             };
 
             var result = customDataAccess.AddCustomer(customer);
@@ -73,7 +70,7 @@ namespace ConsoleAppTestProject
         public void Get_Customer_With_Invalid_Id_Will_Null()
         {
             // arrange
-            ICustomerDataAccess customerDataAccess=new CustomerDataAccess();
+            ICustomerDataAccess customerDataAccess = new CustomerDataAccess();
 
             int id = -1;
 
@@ -100,13 +97,13 @@ namespace ConsoleAppTestProject
         public void Update_Customer_Will_Return_True()
         {
             //arrange
-            ICustomerDataAccess customerDataAccess=new CustomerDataAccess();
+            ICustomerDataAccess customerDataAccess = new CustomerDataAccess();
 
             var customer = customerDataAccess.GetCustomer(1);
-            
+
             //ACT
             var result = customerDataAccess.UpdateCustomer(customer);
-            
+
             //assert
             Assert.True(result);
         }
@@ -127,15 +124,15 @@ namespace ConsoleAppTestProject
                 ZipCode = "050"
             };
 
-            var result= customerDataAccess.AddCustomer(customer);
+            var result = customerDataAccess.AddCustomer(customer);
             Assert.True(result);
             Assert.NotEqual(0, customer.Id);
 
             //act
-            result= customerDataAccess.DeleteCustomer(customer.Id);
+            result = customerDataAccess.DeleteCustomer(customer.Id);
 
             //assert
             Assert.True(result);
         }
-    }    
+    }
 }

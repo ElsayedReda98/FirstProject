@@ -2,8 +2,6 @@
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -49,10 +47,10 @@ namespace ConsoleAppTestProject
 
             var result = staffDataAccess.AddStaff(staff);
             Assert.True(result);
-            Assert.NotEqual(0,staff.StaffId);
+            Assert.NotEqual(0, staff.StaffId);
             int id = staff.StaffId;
 
-            staff=staffDataAccess.GetStaff(id);
+            staff = staffDataAccess.GetStaff(id);
 
             Assert.NotNull(staff);
             Assert.NotEmpty(staff.FirstName);

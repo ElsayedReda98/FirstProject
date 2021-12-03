@@ -1,10 +1,7 @@
 ﻿using ConsoleApp1.Interfaces;
-using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace ConsoleApp1.DataAccess
 {
@@ -47,10 +44,10 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(staff.Phone) ? DBNull.Value : (object)staff.Phone);
             command.Parameters.AddWithValue("@Active", staff.Active);
             command.Parameters.AddWithValue("@StoreId", staff.StoreId);
-            command.Parameters.AddWithValue("@ManagerId",staff.ManagerId );
+            command.Parameters.AddWithValue("@ManagerId", staff.ManagerId);
             connection.Open();
             staff.StaffId = Convert.ToInt32(command.ExecuteScalar());
-           // staff.StoreId=Convert.ToInt32(command.ExecuteScalar());
+            // staff.StoreId=Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
             return staff.StaffId > 0;
         }
@@ -147,7 +144,7 @@ FROM sales.staffs ";
             }
             connection.Close();
             return staffs;
-        
+
         }
 
         public bool UpdateStaff(Staff staff)
@@ -157,12 +154,12 @@ update sales.staffs
 set first_name=@FirstName,
     last_name=@LastName
 where satff_id=@StaffId";
-            SqlCommand command1 = connection.CreateCommand();   
-            command1.CommandText=sqlstm;
+            SqlCommand command1 = connection.CreateCommand();
+            command1.CommandText = sqlstm;
             command1.Parameters.AddWithValue("@FirstName", staff.FirstName);
-            command1.Parameters.AddWithValue("@LastName",staff.LastName);
+            command1.Parameters.AddWithValue("@LastName", staff.LastName);
             connection.Open();
-            int effectedRows=command1.ExecuteNonQuery();
+            int effectedRows = command1.ExecuteNonQuery();
             return effectedRows > 0;
         }
     }

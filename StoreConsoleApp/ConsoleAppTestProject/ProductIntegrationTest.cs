@@ -1,9 +1,6 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -69,25 +66,25 @@ namespace ConsoleAppTestProject
         {
             ProductDataAccess productDataAccess = new ProductDataAccess();
 
-            var products=productDataAccess.GetProductsList();
+            var products = productDataAccess.GetProductsList();
 
             Assert.NotEmpty(products);
         }
         [Fact]
         public void Update_Product_Will()
         {
-            IProductDataAccess productDataAccess = new ProductDataAccess();    
+            IProductDataAccess productDataAccess = new ProductDataAccess();
 
-            var product=productDataAccess.GetProduct(1);
-            
-            var result= productDataAccess.UpdateProduct(product); 
+            var product = productDataAccess.GetProduct(1);
+
+            var result = productDataAccess.UpdateProduct(product);
 
             Assert.True(result);
         }
         [Fact]
         public void Delete_Product_Will()
         {
-            IProductDataAccess productDataAccess= new ProductDataAccess();
+            IProductDataAccess productDataAccess = new ProductDataAccess();
             var product = new Product()
             {
                 ProductName = "sayed",
@@ -97,9 +94,9 @@ namespace ConsoleAppTestProject
                 ListPrice = 1300
             };
 
-            var result =productDataAccess.AddProduct(product);
+            var result = productDataAccess.AddProduct(product);
             Assert.True(result);
-            Assert.NotEqual(0,product.ProductId);
+            Assert.NotEqual(0, product.ProductId);
 
             //act
             result = productDataAccess.DeleteProduct(product.ProductId);

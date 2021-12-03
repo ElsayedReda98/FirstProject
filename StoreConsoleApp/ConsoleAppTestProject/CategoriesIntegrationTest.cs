@@ -1,9 +1,6 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -52,7 +49,7 @@ namespace ConsoleAppTestProject
         public void Get_Category_With_Invalid_Id_Will_Null()
         {
             //Arrange
-            ICategoryDataAccess categoryDataAccess=new CategoryDataAccess();
+            ICategoryDataAccess categoryDataAccess = new CategoryDataAccess();
             int id = -1;
 
             //Act
@@ -64,9 +61,9 @@ namespace ConsoleAppTestProject
 
         [Fact]
         public void Get_BrandList_Will_Return_Collection()
-        { 
-                //Arrange 
-                ICategoryDataAccess categoryDataAccess =new CategoryDataAccess();
+        {
+            //Arrange 
+            ICategoryDataAccess categoryDataAccess = new CategoryDataAccess();
 
 
             //ACt
@@ -94,13 +91,13 @@ namespace ConsoleAppTestProject
         public void Delete_Category_Will_Return_True()
         {
             //Arrange 
-            ICategoryDataAccess categoryDataAccess= new CategoryDataAccess();
+            ICategoryDataAccess categoryDataAccess = new CategoryDataAccess();
             var category = new Category()
             {
                 CategoryName = "category to delete "
             };
 
-            var result= categoryDataAccess.AddCategory(category);
+            var result = categoryDataAccess.AddCategory(category);
             Assert.True(result);
             Assert.NotEqual(0, category.CategoryId);
 

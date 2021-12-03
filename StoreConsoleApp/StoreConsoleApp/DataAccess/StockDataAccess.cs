@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
@@ -39,8 +36,8 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@StoreId", stock.StoreId);
             command.Parameters.AddWithValue("@ProductId", stock.ProductId);
             command.Parameters.AddWithValue("@Quantity ", stock.Quantity);
-            
-            connection.Open();           
+
+            connection.Open();
             var effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
@@ -114,7 +111,7 @@ namespace ConsoleApp1.DataAccess
             List<Stock> stocks = new List<Stock>();
             while (reader.Read())
             {
-                stocks.Add( new Stock()
+                stocks.Add(new Stock()
                 {
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     ProductId = Convert.ToInt32(reader["product_id"]),
@@ -145,7 +142,7 @@ namespace ConsoleApp1.DataAccess
             List<Stock> stocks = new List<Stock>();
             while (reader.Read())
             {
-                stocks.Add(  new Stock()
+                stocks.Add(new Stock()
                 {
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     ProductId = Convert.ToInt32(reader["product_id"]),
@@ -167,11 +164,11 @@ namespace ConsoleApp1.DataAccess
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@Quantity", stock.Quantity);
-            command.Parameters.AddWithValue("@storeId",stock.StoreId);
+            command.Parameters.AddWithValue("@storeId", stock.StoreId);
             command.Parameters.AddWithValue("@ProductId", stock.ProductId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
-            
+
             connection.Close();
             return effectedRows > 0;
         }

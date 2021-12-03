@@ -3,8 +3,6 @@ using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
 using StoreConsoleApp.Interfaces;
 using System;
-using System.Data;
-using System.Data.SqlClient;
 
 namespace StoreConsoleApp
 {
@@ -23,7 +21,7 @@ namespace StoreConsoleApp
         private static void TestOrderItem()
         {
 
-        } 
+        }
         private static void TestOrder()
         {
             Console.WriteLine("=========================Test Order ===============");
@@ -47,7 +45,7 @@ namespace StoreConsoleApp
             Console.WriteLine("****** Get order *****");
             // ERROR
             var order = orderDataAccess.GetOrder(100);
-           Console.WriteLine($"Get Order with id:{order.CustomerId}");
+            Console.WriteLine($"Get Order with id:{order.CustomerId}");
             Console.WriteLine("");
 
             var orderList = orderDataAccess.GetOrdersList();
@@ -65,14 +63,14 @@ namespace StoreConsoleApp
 
             var newStore = new Store()
             {
-                
-                StoreName="ali",
-                Phone ="5040",
-                Email ="ali.com",
-                State ="s",
-                Street ="101ali",
-                City ="york",
-                ZipCode ="050"
+
+                StoreName = "ali",
+                Phone = "5040",
+                Email = "ali.com",
+                State = "s",
+                Street = "101ali",
+                City = "york",
+                ZipCode = "050"
 
             };
             bool result = storeDataAccess.AddStore(newStore);
@@ -120,13 +118,14 @@ namespace StoreConsoleApp
             //Console.WriteLine($"Delete  Stock Return: {deleteStock}");
 
         }
-        private static void TestCategory() {
+        private static void TestCategory()
+        {
             Console.WriteLine("================== Test Category ===========================");
-            ICategoryDataAccess  categoryDataAccess = new CategoryDataAccess();
+            ICategoryDataAccess categoryDataAccess = new CategoryDataAccess();
 
             var newCategory = new Category()
             {
-                CategoryName= "category to add11"
+                CategoryName = "category to add11"
             };
             Console.WriteLine("****** Test Add Category *****");
             //bool result = categoryDataAccess.AddCategory(newCategory);
@@ -140,14 +139,14 @@ namespace StoreConsoleApp
 
             var categoryList = categoryDataAccess.GetCategoryList();
             //Console.WriteLine($"Get category list with {categoryList.Count} Items");
-           //Console.WriteLine("");
+            //Console.WriteLine("");
 
             //bool deletecategory = categoryDataAccess.DeleteCategory(12);
             //Console.WriteLine($"Delete Category Return: {deletecategory}");
             var updateCat = new Category()
             {
                 CategoryName = "ahmed",
-                CategoryId =11
+                CategoryId = 11
             };
             Console.WriteLine("****** Test update Category *****");
             bool result2 = categoryDataAccess.UpdateCategory(updateCat);
@@ -183,7 +182,7 @@ namespace StoreConsoleApp
             var updateBrand = new Brand()
             {
                 BrandName = "updated brand",
-                BrandId=1
+                BrandId = 1
             };
             bool upBrand = brandDataAccess.UpdateBrand(updateBrand);
             Console.WriteLine($"update Brand Return: {upBrand}");

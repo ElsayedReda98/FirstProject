@@ -2,22 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApp1.DataAccess 
+namespace ConsoleApp1.DataAccess
 {
     public class OrderDataAccess : IOrderDataAccess
     {
         SqlConnection connection;
         public OrderDataAccess()
         {
-            connection=new SqlConnection("Data Source=.;" +
+            connection = new SqlConnection("Data Source=.;" +
                 "Initial Catalog=BikeStores;" +
                 "Integrated Security=True");
         }
-        
+
         public bool AddOrder(Order order)
         {
             string sqlstm = $@"INSERT INTO sales.orders
@@ -43,7 +40,7 @@ VALUES
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-           
+
             command.Parameters.AddWithValue("@customerId", order.CustomerId);
             command.Parameters.AddWithValue("@OrderStatus", order.OrderStatus);
             command.Parameters.AddWithValue("@OrderDate", order.OrderDate);
@@ -88,7 +85,7 @@ shipped_date,
 store_id,
 staff_id
 FROM sales.orders 
-WHERE  order_id="+id;
+WHERE  order_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -104,12 +101,12 @@ WHERE  order_id="+id;
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
                     OrderStatus = Convert.ToInt32(reader["order_status"]),
-                    OrderDate=Convert.ToDateTime(reader["order_date"]),
-                    RequiredDate=Convert.ToDateTime(reader["required_date"]),
-                    ShippedDate=Convert.ToDateTime(reader["shipped_date"]),
-                    StoreId=Convert.ToInt32(reader["store_id"]),
-                    StaffId=Convert.ToInt32(reader["staff_id"])
-                    
+                    OrderDate = Convert.ToDateTime(reader["order_date"]),
+                    RequiredDate = Convert.ToDateTime(reader["required_date"]),
+                    ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
+                    StoreId = Convert.ToInt32(reader["store_id"]),
+                    StaffId = Convert.ToInt32(reader["staff_id"])
+
                 };
             }
             connection.Close();
@@ -118,7 +115,7 @@ WHERE  order_id="+id;
 
         public List<Order> GetOrdersList()
         {
-            string sqlstm= @"SELECT
+            string sqlstm = @"SELECT
  order_id,
  customer_id,
  order_status,
@@ -142,18 +139,18 @@ FROM sales.orders
                 orders.Add(new Order()
                 {
                     //
-                    OrderId=Convert.ToInt32(reader["order_id"]),
+                    OrderId = Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
                     OrderStatus = Convert.ToInt32(reader["order_status"]),
                     OrderDate = Convert.ToDateTime(reader["order_date"]),
                     RequiredDate = Convert.ToDateTime(reader["required_date"]),
-                   // ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
+                    // ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     StaffId = Convert.ToInt32(reader["staff_id"])
-                    
-                    
+
+
                 });
-                
+
             }
             connection.Close();
             return orders;
@@ -175,17 +172,17 @@ staff_id=@StaffId
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@CustomerId", order.CustomerId);
-            command.Parameters.AddWithValue("@OrderDate",order.OrderDate);
+            command.Parameters.AddWithValue("@OrderDate", order.OrderDate);
             command.Parameters.AddWithValue("@OrderStatus", order.OrderStatus);
             command.Parameters.AddWithValue("@Requireddate", order.RequiredDate);
-            command.Parameters.AddWithValue("@ShippedDate",order.ShippedDate);
-            command.Parameters.AddWithValue("@StoreId",order.StoreId);
-            command.Parameters.AddWithValue("@StaffId",order.StaffId);
+            command.Parameters.AddWithValue("@ShippedDate", order.ShippedDate);
+            command.Parameters.AddWithValue("@StoreId", order.StoreId);
+            command.Parameters.AddWithValue("@StaffId", order.StaffId);
             command.Parameters.AddWithValue("@OrderId", order.OrderId);
             //command.Parameters.AddWithValue("@OrderDate", order.OrderDate);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
-            
+
             connection.Close();
             return effectedRows > 0;
         }

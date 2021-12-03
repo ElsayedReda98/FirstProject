@@ -2,8 +2,6 @@
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -63,8 +61,8 @@ namespace ConsoleAppTestProject
             //Assert.NotEmpty(order.StoreId);
             //Assert.NotEmpty(order.RequiredDate);
             Assert.Equal(id, order.OrderId);
-            
-            
+
+
         }
 
         [Fact]
@@ -88,8 +86,8 @@ namespace ConsoleAppTestProject
 
             //Act
             var order = orderDataAccess.GetOrdersList();
-           // if(orders != null)
-                
+            // if(orders != null)
+
 
             //Assert
             Assert.NotNull(order);

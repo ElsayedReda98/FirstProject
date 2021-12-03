@@ -1,9 +1,6 @@
 ﻿using ConsoleApp1;
 using ConsoleApp1.DataAccess;
 using ConsoleApp1.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleAppTestProject
@@ -14,13 +11,13 @@ namespace ConsoleAppTestProject
         public void Add_Stock_Will()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
-            var product =  AddProduct();
+            var product = AddProduct();
 
             var newStock = new Stock()
             {
-               StoreId = 4,
-               ProductId = product.ProductId,
-               Quantity = 500
+                StoreId = 4,
+                ProductId = product.ProductId,
+                Quantity = 500
             };
 
             bool result = stockDataAccess.AddStock(newStock);
@@ -42,17 +39,17 @@ namespace ConsoleAppTestProject
 
             stockDataAccess.AddStock(newStock);
 
-            var stock =stockDataAccess.GetStock(newStock.StoreId, newStock.ProductId);
+            var stock = stockDataAccess.GetStock(newStock.StoreId, newStock.ProductId);
 
-            Assert.NotNull(stock);            
+            Assert.NotNull(stock);
         }
-        
+
         [Fact]
         public void Get_StockList_Will()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
-           
+
 
             var stock = stockDataAccess.GetStocksList();
 
@@ -94,8 +91,8 @@ namespace ConsoleAppTestProject
             var result = stockDataAccess.AddStock(stock);
 
             Assert.True(result);
-            Assert.NotEqual(0,stock.StoreId);
-            Assert.NotEqual(0,stock.ProductId);
+            Assert.NotEqual(0, stock.StoreId);
+            Assert.NotEqual(0, stock.ProductId);
 
             result = stockDataAccess.DeleteStock(stock.StoreId, stock.ProductId);
 
@@ -103,7 +100,7 @@ namespace ConsoleAppTestProject
 
         }
 
-        private  Product AddProduct()
+        private Product AddProduct()
         {
             IProductDataAccess productDataAccess = new ProductDataAccess();
             var newProduct = new Product()

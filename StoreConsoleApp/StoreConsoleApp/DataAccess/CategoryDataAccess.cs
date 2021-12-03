@@ -1,11 +1,8 @@
 ﻿
-using ConsoleApp1.Interfaces; 
+using ConsoleApp1.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
@@ -49,7 +46,7 @@ namespace ConsoleApp1.DataAccess
 FROM production.categories
 WHERE category_id=" + id;
             SqlCommand command = connection.CreateCommand();
-            command.CommandText= sqlstm;
+            command.CommandText = sqlstm;
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
@@ -97,8 +94,8 @@ WHERE category_id=" + id;
             {
                 categories.Add(new Category()
                 {
-                    CategoryId=Convert.ToInt32(reader["category_id"]),
-                    CategoryName=Convert.ToString(reader["category_name"])
+                    CategoryId = Convert.ToInt32(reader["category_id"]),
+                    CategoryName = Convert.ToString(reader["category_name"])
                 });
             }
             connection.Close();
@@ -116,8 +113,8 @@ WHERE category_id=" + id;
             command.Parameters.AddWithValue("@CategoryName", category.CategoryName);
             command.Parameters.AddWithValue("@CategoryId", category.CategoryId);
             connection.Open();
-            int effectedRows= command.ExecuteNonQuery();
-            
+            int effectedRows = command.ExecuteNonQuery();
+
             connection.Close();
             return effectedRows > 0;
         }
