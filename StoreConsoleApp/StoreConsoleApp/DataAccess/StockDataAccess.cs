@@ -22,27 +22,28 @@ namespace ConsoleApp1.DataAccess
         {
             string sqlstm = @"INSERT INTO production.stocks
 (
---store_id,
---product_id,
+store_id,
+product_id,
 quantity
 )
 OUTPUT inserted.store_id
        
 VALUES
 (
---@StoreId,
---@ProductId,
-@Quantity)";
+@StoreId,
+@ProductId,
+@Quantity
+)";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
-            //command.Parameters.AddWithValue("@StoreId", stock.StoreId);
-            //command.Parameters.AddWithValue("@ProductId", stock.ProductId);
+            command.Parameters.AddWithValue("@StoreId", stock.StoreId);
+            command.Parameters.AddWithValue("@ProductId", stock.ProductId);
             command.Parameters.AddWithValue("@Quantity ", stock.Quantity);
             
             connection.Open();
-            stock.ProductId = Convert.ToInt32(command.ExecuteScalar());
+           // stock.ProductId = Convert.ToInt32(command.ExecuteScalar());
             stock.StoreId = Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
             return stock.StoreId > 0;

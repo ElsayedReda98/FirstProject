@@ -18,11 +18,12 @@ namespace ConsoleAppTestProject
             {
                 FirstName = "Elsayed",
                 LastName = "Reda",
-                Phone = "01008927985",
-                Email = "sayed.com",
-                Active = 2,
+                Phone = "0100897985",
+                // must change
+                Email = "sayed.com2",
+                Active = 1,
                 ManagerId = 1,
-                StoreId = 1
+                StoreId = 2
             };
 
             bool result = staffDataAccess.AddStaff(newStaff);
@@ -39,7 +40,7 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "01008927985",
                 // must change
-                Email = "hhhhhhhh.com",
+                Email = "hhhhfff.com",
                 Active = 1,
                 ManagerId = 1,
                 // must change every cycle

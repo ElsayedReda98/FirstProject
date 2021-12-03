@@ -18,8 +18,8 @@ namespace ConsoleAppTestProject
             var newStock = new Stock()
             {
                 
-                StoreId = 1,
-                ProductId = 1,
+               StoreId = 4,
+               ProductId = 5,
                 Quantity = 500
             };
 
@@ -35,8 +35,8 @@ namespace ConsoleAppTestProject
             var stock = new Stock()
             {
 
-                StoreId = 1,
-                ProductId = 1,
+                StoreId = 5,
+                ProductId = 5,
                 Quantity = 500
             };
 
@@ -91,8 +91,8 @@ namespace ConsoleAppTestProject
 
             var stock = new Stock()
             {
-                //StoreId = 1,
-                //ProductId = 1,
+                StoreId = 4,
+                ProductId = 6,
 
                 Quantity = 500
             };
