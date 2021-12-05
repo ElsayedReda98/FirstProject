@@ -35,6 +35,7 @@ namespace ConsoleApp1.DataAccess
             var effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
+
         }    
         public Stock GetStock(int storeId, int productId)
         {
