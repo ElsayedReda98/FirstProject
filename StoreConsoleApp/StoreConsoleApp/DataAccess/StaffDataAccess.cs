@@ -42,13 +42,15 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@StoreId", staff.StoreId);
             command.Parameters.AddWithValue("@ManagerId", staff.ManagerId);
             connection.Open();
-            staff.StaffId = Convert.ToInt32(command.ExecuteScalar());
+            
+            //staff.StaffId = Convert.ToInt32(command.ExecuteScalar());
+            var effectedRows = command.ExecuteNonQuery();
             connection.Close();
-            return staff.StaffId > 0;
+            return effectedRows > 0;
         }
         public Staff GetStaff(int id)
         {
-            string sqlstm = @" SELECT
+            string sqlstm = @$"SELECT
                     staff_id,                
                     first_name,
                     last_name,
@@ -58,7 +60,7 @@ namespace ConsoleApp1.DataAccess
                     store_id,
                     manager_id
                 FROM sales.staffs 
-                WHERE staff_id=" + id;
+                WHERE staff_id={id} ";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -68,7 +70,7 @@ namespace ConsoleApp1.DataAccess
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
             Staff staff = null;
-            while (reader.Read())
+            if (reader.Read())
             {
                 staff = new Staff()
                 {
@@ -133,26 +135,29 @@ phone=@Phone,
 active=@Active,
 store_id=@StoreId,
 manager_id=@ManagerId
-                    WHERE satff_id=@StaffId";
+                    WHERE satff_id = @StaffId";
+
             SqlCommand command1 = connection.CreateCommand();
             command1.CommandText = sqlstm;
+            
             command1.Parameters.AddWithValue("@FirstName", staff.FirstName);
             command1.Parameters.AddWithValue("@LastName", staff.LastName);
-            command1.Parameters.AddWithValue("Email",staff.Email);
-            command1.Parameters.AddWithValue("Phone", staff.Phone);
-            command1.Parameters.AddWithValue("Active",staff.Active);
-            command1.Parameters.AddWithValue("StoreId", staff.StoreId);
-            command1.Parameters.AddWithValue("ManagerId", staff.ManagerId);
-            command1.Parameters.AddWithValue("StaffId",staff.StaffId);
+            command1.Parameters.AddWithValue("@Email",staff.Email);
+            command1.Parameters.AddWithValue("@Phone", staff.Phone);
+            command1.Parameters.AddWithValue("@Active",staff.Active);
+            command1.Parameters.AddWithValue("@StoreId", staff.StoreId);
+            command1.Parameters.AddWithValue("@ManagerId", staff.ManagerId);
+            command1.Parameters.AddWithValue("@StaffId", staff.StaffId);
 
             connection.Open();
             int effectedRows = command1.ExecuteNonQuery();
+            connection.Close();
             return effectedRows > 0;
         }
         public bool DeleteStaff(int id)
         {
             string sqlstm = @"DELETE 
-                             FROM sales.staff
+                             FROM sales.staffs
                              WHERE staff_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -161,5 +166,6 @@ manager_id=@ManagerId
             connection.Close();
             return effectedRows > 0;
         }
+        
     }
 }

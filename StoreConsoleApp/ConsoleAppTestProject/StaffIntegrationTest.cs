@@ -83,13 +83,39 @@ namespace ConsoleAppTestProject
         {
             IStaffDataAccess staffDataAccess = new StaffDataAccess();
 
-            var staff = staffDataAccess.GetStaff(1);
+            var staff = staffDataAccess.GetStaff(2);
 
             var result=staffDataAccess.UpdateStaff(staff);
 
             Assert.True(result);
 
 
+        }
+        [Fact]
+        public void Delete_Staff_Will_Return_True()
+        {
+            IStaffDataAccess staffDataAccess=new StaffDataAccess();
+
+            var staff = new Staff()
+            {
+                FirstName = "sayed",
+                LastName = "Reda",
+                Phone = "01008927985",
+                // must change
+                Email = $"{Guid.NewGuid()}@sayed.com",
+                Active = 1,
+                ManagerId = 1,
+                // must change every cycle
+                StoreId = 3
+            };
+            var result =staffDataAccess.AddStaff(staff);
+
+            Assert.True(result);
+            Assert.NotEqual(0, staff.StaffId);
+
+            result= staffDataAccess.DeleteStaff(staff.StaffId);
+
+            Assert.True(result);
         }
     }
 }
