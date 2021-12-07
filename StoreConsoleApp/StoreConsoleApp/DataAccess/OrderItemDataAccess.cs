@@ -11,33 +11,25 @@ namespace ConsoleApp1.DataAccess
 
         public OrderItemDataAccess()
         {
-            connection = new SqlConnection(" Data Source = . ;" +
-                "Initial Catalog =BikeStores ; " +
-                "Integrated Security=True");
+            connection = new SqlConnection(" Data Source = . ;Initial Catalog =BikeStores ; Integrated Security=True");
         }
-
         public bool AddOrderItem(OrderItem orderItem)
         {
-            string sqlstm = $@"INSERT INTO 
-sales.order_items
-                (
-                item_id,
+            string sqlstm = @"INSERT INTO sales.order_items
+              ( item_id,
                 order_id,
                 product_id,
                 quantity,
                 list_price,
-                discount
-                )
-
+                discount )
+                --output inserted.item_id
                 VALUES
-                (
-                @itemId,
-@orderId,
+              ( @ItemId,
+                @OrderId,
                 @ProductId,
                 @Quantity,
                 @ListPrice,
-                @Discount
-                )";
+                @Discount )";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -47,46 +39,25 @@ sales.order_items
             command.Parameters.AddWithValue("@Quantity", orderItem.Quantity);
             command.Parameters.AddWithValue("@ListPrice", orderItem.ListPrice);
             command.Parameters.AddWithValue("@discount", orderItem.Discount);
-
-            // open a connection
+             // open a connection
             connection.Open();
             //orderItem.OrderId = Convert.ToInt32(command.ExecuteScalar());
             //orderItem.ItemId = Convert.ToInt32(command.ExecuteScalar());
+            var effectedRows = command.ExecuteNonQuery();
             //close connnection
             connection.Close();
-
-            return orderItem.ItemId > 0;
-
-
+            return effectedRows > 0;
         }
-
-        public bool DeleteOrderItem(int id)
-        {
-            string sqlstm = @"DELETE 
-                             FROM sales.order_items
-                             WHERE item_id=" + id;
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            command.ExecuteNonQuery();
-
-            connection.Close();
-            return id > 0;
-
-        }
-
         public OrderItem GetOrderItem(int id)
         {
             string sqlstm = @"SELECT 
                 
-item_id,                
-order_id,
+                item_id,                
+                order_id,
                 product_id,
                 quantity,
                 list_price,
-                discount
-                
+                discount    
                 FROM sales.order_items 
                 WHERE item_id=" + id;
             SqlCommand command = connection.CreateCommand();
@@ -109,28 +80,22 @@ order_id,
                     Discount = Convert.ToInt32(reader["discount"])
                 };
             }
-
             connection.Close();
             return orderItem;
         }
-
         public List<OrderItem> GetOrderItemList()
         {
             SqlCommand command = connection.CreateCommand();
             command.CommandText = @"SELECT 
-                
                 order_id,
                 item_id,
                 product_id,
                 quantity,
                 list_price,
-                discount
-                
-                FROM sales.order_items 
-                ";
+                discount   
+                FROM sales.order_items ";
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-
 
             List<OrderItem> orderItems = new List<OrderItem>();
 
@@ -145,27 +110,38 @@ order_id,
                     ListPrice = Convert.ToInt32(reader["list_price"]),
                     Discount = Convert.ToInt32(reader["discount"])
                 });
-
             }
             connection.Close();
             return orderItems;
         }
-
-        public bool UPdateOrderItem(OrderItem orderItem)
+        public bool UPdateOrderItem(OrderItem item)
         {
-            string sqlstm = @"
+            string sqlstm = @$"
                update sales.order_items
-               set discount=@Discount
-             where item_id =@ItemId";
+               set discount={item.Discount}
+             where item_id ={item.ItemId}";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@Discount", orderItem.Discount);
-            command.Parameters.AddWithValue("@ItemId", orderItem.ItemId);
+            command.Parameters.AddWithValue("@Discount", item.Discount);
+            command.Parameters.AddWithValue("@ItemId", item.ItemId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
-            //brand.BrandName = Convert.ToString(command.ExecuteNonQuery());
             connection.Close();
             return effectedRows > 0;
+        }
+        public bool DeleteOrderItem(int id)
+        {
+            string sqlstm = @"DELETE 
+                             FROM sales.order_items
+                             WHERE item_id=" + id;
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+             int effectedRows = command.ExecuteNonQuery();
+            connection.Close();
+            return effectedRows > 0;
+
         }
     }
 }

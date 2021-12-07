@@ -4,11 +4,9 @@ namespace ConsoleApp1.Interfaces
 {
     public interface IStockDataAccess
     {
-        List<Stock> GetStocksList();
+        List<Stock> GetStockList();
 
         Stock GetStock(int storeId, int productId);
-
-        List<Stock> GetStock(int storeId);
 
         bool AddStock(Stock stock);
 

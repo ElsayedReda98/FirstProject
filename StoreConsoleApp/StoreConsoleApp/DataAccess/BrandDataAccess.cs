@@ -14,7 +14,6 @@ namespace ConsoleApp1.DataAccess
                 "Initial Catalog =BikeStores ; " +
                 "Integrated Security=True");
         }
-
         public bool AddBrand(Brand brand)
         {
             string sqlstm = @"INSERT INTO production.brands
@@ -34,47 +33,7 @@ namespace ConsoleApp1.DataAccess
             connection.Close();
 
             return brand.BrandId > 0;
-
         }
-        public bool AddBrand_Bad(Brand brand)
-        {
-            // Bad Implementation
-            string sqlstm = @"INSERT INTO production.brands
-                    (
-                    barnd_id,
-                    brand_name
-                    )
-                    OUTPUT Inserted.barnd_id
-                    VALUES 
-                    ('{brand.BrandId}',
-                     '{brand.BrandName}'
-                     )";
-            var command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            brand.BrandId = Convert.ToInt32(command.ExecuteScalar());
-            connection.Close();
-
-            return brand.BrandId > 0;
-
-        }
-
-        public bool DeleteBrand(int id)
-        {
-            string sqlstm = @"DELETE 
-                             FROM production.brands
-                             WHERE brand_id=" + id;
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            command.ExecuteNonQuery();
-
-            connection.Close();
-            return id > 0;
-
-        }
-
         public Brand GetBrand(int id)
         {
             string sqlstm = @"SELECT 
@@ -101,7 +60,6 @@ namespace ConsoleApp1.DataAccess
             connection.Close();
             return brand;
         }
-
         public List<Brand> GetBrandList()
         {
             string sqlstm = @"SELECT 
@@ -123,24 +81,9 @@ namespace ConsoleApp1.DataAccess
                     BrandName = Convert.ToString(reader["brand_name"])
                 });
             }
-
             connection.Close();
             return brands;
         }
-
-
-        //public bool UpdateBrand(Brand brand)
-        //{
-        //    string sqlstm = @"
-        //        update production.brands
-        //        set brand_name=''
-        //        where brand_name=" + brand;
-        //    SqlCommand command=connection.CreateCommand();
-        //    command.CommandText=sqlstm;
-        //    connection.Open();
-        //    command.ExecuteNonQuery();
-        //    return brand.BrandId > 0;
-        //}
         public bool UpdateBrand(Brand brand)
         {
             string sqlstm = @"
@@ -153,9 +96,20 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@BrandId", brand.BrandId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
-
             connection.Close();
             return effectedRows > 0;
+        }
+        public bool DeleteBrand(int brandId)
+        {
+            string sqlstm = @$"DELETE 
+                             FROM production.brands
+                             WHERE brand_id={brandId}";
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            int effecctedRows = command.ExecuteNonQuery();
+            connection.Close();
+            return effecctedRows > 0;
         }
     }
 }

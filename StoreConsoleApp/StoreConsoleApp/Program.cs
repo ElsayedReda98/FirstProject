@@ -110,7 +110,7 @@ namespace StoreConsoleApp
             //Console.WriteLine($"Get stock with quantity:{stock.Quantity}");
             //Console.WriteLine("");
 
-            var stockllist = stockDataAccess.GetStocksList();
+            var stockllist = stockDataAccess.GetStockList();
             Console.WriteLine($"Get stock list with {stockllist.Count} Items");
             Console.WriteLine("");
 

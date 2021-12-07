@@ -57,9 +57,6 @@ namespace ConsoleAppTestProject
 
             //Assert
             Assert.NotNull(order);
-            //Assert.NotEmpty(order.OrderStatus);
-            //Assert.NotEmpty(order.StoreId);
-            //Assert.NotEmpty(order.RequiredDate);
             Assert.Equal(id, order.OrderId);
 
 
@@ -86,7 +83,7 @@ namespace ConsoleAppTestProject
 
             //Act
             var order = orderDataAccess.GetOrdersList();
-            // if(orders != null)
+            
 
 
             //Assert

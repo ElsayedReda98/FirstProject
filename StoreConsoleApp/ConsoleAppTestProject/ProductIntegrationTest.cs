@@ -8,7 +8,7 @@ namespace ConsoleAppTestProject
     public class ProductIntegrationTest
     {
         [Fact]
-        public void Add_Product_Will()
+        public void Add_Product_Will_Return_True()
         {
             IProductDataAccess productDataAccess = new ProductDataAccess();
             var newProduct = new Product()
@@ -25,7 +25,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Get_Product_With()
+        public void Get_Product_With_Valid_Id_Will_Return_Product()
         {
             IProductDataAccess productsDataAccess = new ProductDataAccess();
             var product = new Product()
@@ -51,7 +51,7 @@ namespace ConsoleAppTestProject
         }
         [Fact]
         //error
-        public void Get_Product_With_Invalid()
+        public void Get_Product_With_Invalid_Will_Return_Null()
         {
             IProductDataAccess productsDataAccess = new ProductDataAccess();
 
@@ -62,7 +62,7 @@ namespace ConsoleAppTestProject
             Assert.Null(product);
         }
         [Fact]
-        public void Get_ProductList_Will()
+        public void Get_ProductList_Will_Return_Collection()
         {
             ProductDataAccess productDataAccess = new ProductDataAccess();
 
@@ -71,7 +71,7 @@ namespace ConsoleAppTestProject
             Assert.NotEmpty(products);
         }
         [Fact]
-        public void Update_Product_Will()
+        public void Update_Product_Will_Return_True()
         {
             IProductDataAccess productDataAccess = new ProductDataAccess();
 
@@ -82,7 +82,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Delete_Product_Will()
+        public void Delete_Product_Will_Return_True()
         {
             IProductDataAccess productDataAccess = new ProductDataAccess();
             var product = new Product()

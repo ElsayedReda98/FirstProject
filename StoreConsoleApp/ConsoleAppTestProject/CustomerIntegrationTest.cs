@@ -33,7 +33,7 @@ namespace ConsoleAppTestProject
         [Fact]
         public void Get_Customer_With_Valid_Id_Will_Return_Customer()
         {
-            ICustomerDataAccess customDataAccess = new CustomerDataAccess();
+            ICustomerDataAccess customerDataAccess = new CustomerDataAccess();
             var customer = new Customer()
             {
                 FirstName = "first name to get",
@@ -46,13 +46,13 @@ namespace ConsoleAppTestProject
                 ZipCode = "050"
             };
 
-            var result = customDataAccess.AddCustomer(customer);
+            var result = customerDataAccess.AddCustomer(customer);
             Assert.True(result);
-            Assert.NotEqual(0, customer.Id);
-            int id = customer.Id;
+            Assert.NotEqual(0, customer.CustomerId);
+            int id = customer.CustomerId;
 
             //act 
-            customer = customDataAccess.GetCustomer(id);
+            customer = customerDataAccess.GetCustomer(id);
 
             //assert
             Assert.NotNull(customer);
@@ -63,7 +63,7 @@ namespace ConsoleAppTestProject
             Assert.NotEmpty(customer.City);
             Assert.NotEmpty(customer.State);
             Assert.NotEmpty(customer.ZipCode);
-            Assert.Equal(id, customer.Id);
+            Assert.Equal(id, customer.CustomerId);
         }
         [Fact]
 
@@ -99,7 +99,7 @@ namespace ConsoleAppTestProject
             //arrange
             ICustomerDataAccess customerDataAccess = new CustomerDataAccess();
 
-            var customer = customerDataAccess.GetCustomer(1);
+            var customer = customerDataAccess.GetCustomer(2);
 
             //ACT
             var result = customerDataAccess.UpdateCustomer(customer);
@@ -126,10 +126,10 @@ namespace ConsoleAppTestProject
 
             var result = customerDataAccess.AddCustomer(customer);
             Assert.True(result);
-            Assert.NotEqual(0, customer.Id);
+            Assert.NotEqual(0, customer.CustomerId);
 
             //act
-            result = customerDataAccess.DeleteCustomer(customer.Id);
+            result = customerDataAccess.DeleteCustomer(customer.CustomerId);
 
             //assert
             Assert.True(result);

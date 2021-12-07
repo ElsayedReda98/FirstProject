@@ -9,7 +9,7 @@ namespace ConsoleAppTestProject
     public class StaffIntegrationTest
     {
         [Fact]
-        public void Add_Staff_Will()
+        public void Add_Staff_Will_Return_True()
         {
             IStaffDataAccess staffDataAccess = new StaffDataAccess();
             var newStaff = new Staff()
@@ -28,7 +28,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Get_Staff_With()
+        public void Get_Staff_With_Valid_Id_Will_Return_True()
         {
             IStaffDataAccess staffDataAccess = new StaffDataAccess();
             var staff = new Staff()
@@ -60,7 +60,7 @@ namespace ConsoleAppTestProject
             Assert.Equal(id, staff.StaffId);
         }
         [Fact]
-        public void Get_Staff_With_Invalid()
+        public void Get_Staff_With_Invalid_Id_Will_Return_Null()
         {
             IStaffDataAccess staffDataAccess = new StaffDataAccess();
             int id = -1;
@@ -68,6 +68,54 @@ namespace ConsoleAppTestProject
 
             Assert.Null(staff);
 
+        }
+        [Fact]
+        public void Get_StaffList_Will_Return_Collection()
+        {
+            IStaffDataAccess staffDataAccess = new StaffDataAccess();
+
+            var staffList = staffDataAccess.GetStaffsList();
+
+            Assert.NotEmpty(staffList);
+        }
+        [Fact]
+        public void Update_Staff_Will_Return_True()
+        {
+            IStaffDataAccess staffDataAccess = new StaffDataAccess();
+
+            var staff = staffDataAccess.GetStaff(2);
+
+            var result=staffDataAccess.UpdateStaff(staff);
+
+            Assert.True(result);
+
+
+        }
+        [Fact]
+        public void Delete_Staff_Will_Return_True()
+        {
+            IStaffDataAccess staffDataAccess=new StaffDataAccess();
+
+            var staff = new Staff()
+            {
+                FirstName = "sayed",
+                LastName = "Reda",
+                Phone = "01008927985",
+                // must change
+                Email = $"{Guid.NewGuid()}@sayed.com",
+                Active = 1,
+                ManagerId = 1,
+                // must change every cycle
+                StoreId = 3
+            };
+            var result =staffDataAccess.AddStaff(staff);
+
+            Assert.True(result);
+            Assert.NotEqual(0, staff.StaffId);
+
+            result= staffDataAccess.DeleteStaff(staff.StaffId);
+
+            Assert.True(result);
         }
     }
 }

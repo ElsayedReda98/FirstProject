@@ -10,33 +10,27 @@ namespace ConsoleApp1.DataAccess
         SqlConnection connection;
         public OrderDataAccess()
         {
-            connection = new SqlConnection("Data Source=.;" +
-                "Initial Catalog=BikeStores;" +
-                "Integrated Security=True");
+            connection = new SqlConnection("Data Source=.;Initial Catalog=BikeStores;Integrated Security=True");
         }
-
         public bool AddOrder(Order order)
         {
             string sqlstm = $@"INSERT INTO sales.orders
-(
-customer_id,
-order_status,
-order_date,
-required_date,
-shipped_date,
-store_id,
-staff_id
-)
-OUTPUT Inserted.order_id
-VALUES
-(
-@CustomerId,
-@OrderStatus,
-@OrderDate,
-@RequiredDate,
-@ShippedDate,
-@StoreId,
-@StaffId)";
+                (customer_id,
+                order_status,
+                order_date,
+                required_date,
+                shipped_date,
+                store_id,
+                staff_id)
+                OUTPUT Inserted.order_id
+                VALUES
+                (@CustomerId,
+                @OrderStatus,
+                @OrderDate,
+                @RequiredDate,
+                @ShippedDate,
+                @StoreId,
+                @StaffId)";
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -51,31 +45,12 @@ VALUES
 
             connection.Open();
             order.OrderId = Convert.ToInt32(command.ExecuteScalar());
-            //order.OrderDate = Convert.ToDateTime(command.ExecuteScalar());
             connection.Close();
-
             return order.OrderId > 0;
         }
-
-        public bool DeleteOrder(int id)
+        public Order GetOrder(int orderId)
         {
-            string sqlstm = @"DELETE 
-                             FROM sales.orders
-                             WHERE order_id=" + id;
-
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            command.ExecuteNonQuery();
-
-            connection.Close();
-            return id > 0;
-
-        }
-
-        public Order GetOrder(int id)
-        {
-            string sqlstm = @"SELECT 
+            string sqlstm = @$"SELECT 
 order_id,
 customer_id,
 order_status,
@@ -85,10 +60,9 @@ shipped_date,
 store_id,
 staff_id
 FROM sales.orders 
-WHERE  order_id=" + id;
+WHERE  order_id={orderId}";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
-
             connection.Open();
             SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
@@ -97,7 +71,6 @@ WHERE  order_id=" + id;
             {
                 order = new Order()
                 {
-                    //
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
                     OrderStatus = Convert.ToInt32(reader["order_status"]),
@@ -106,13 +79,11 @@ WHERE  order_id=" + id;
                     ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     StaffId = Convert.ToInt32(reader["staff_id"])
-
                 };
             }
             connection.Close();
             return order;
         }
-
         public List<Order> GetOrdersList()
         {
             string sqlstm = @"SELECT
@@ -124,9 +95,7 @@ WHERE  order_id=" + id;
  shipped_date,
  store_id,
  staff_id
-FROM sales.orders 
-";
-
+FROM sales.orders ";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -138,36 +107,30 @@ FROM sales.orders
             {
                 orders.Add(new Order()
                 {
-                    //
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
                     OrderStatus = Convert.ToInt32(reader["order_status"]),
                     OrderDate = Convert.ToDateTime(reader["order_date"]),
                     RequiredDate = Convert.ToDateTime(reader["required_date"]),
-                    // ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     StaffId = Convert.ToInt32(reader["staff_id"])
-
-
                 });
 
             }
             connection.Close();
             return orders;
         }
-
         public bool UpdateOrder(Order order)
         {
             string sqlstm = @"
                 update sales.orders
-               set 
-customer_id=@CustomerId,
-order_status=@OrderStatus,
-order_date=@OrderDate,
-required_date=@RequiredDate,
-Shipped_date=@ShippedDate,
-store_id=@StoreId,
-staff_id=@StaffId
+               set  customer_id=@CustomerId,
+                    order_status=@OrderStatus,
+                    order_date=@OrderDate,
+                    required_date=@RequiredDate,
+                    Shipped_date=@ShippedDate,
+                    store_id=@StoreId,
+                    staff_id=@StaffId
              where order_id=@OrderId";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -179,10 +142,21 @@ staff_id=@StaffId
             command.Parameters.AddWithValue("@StoreId", order.StoreId);
             command.Parameters.AddWithValue("@StaffId", order.StaffId);
             command.Parameters.AddWithValue("@OrderId", order.OrderId);
-            //command.Parameters.AddWithValue("@OrderDate", order.OrderDate);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
+            connection.Close();
+            return effectedRows > 0;
+        }
+        public bool DeleteOrder(int orderId)
+        {
+            string sqlstm = @$"DELETE 
+                             FROM sales.orders
+                             WHERE order_id= {orderId}";
 
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = sqlstm;
+            connection.Open();
+            int effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
         }
