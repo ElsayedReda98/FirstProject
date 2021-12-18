@@ -1,10 +1,5 @@
 ﻿using ConsoleApp1;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StoreConsoleApp
 {
@@ -12,10 +7,17 @@ namespace StoreConsoleApp
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=StoreDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=BikeStores;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Brand>(builder =>
+            {
+                builder.ToTable("Brands", "production");
+                builder.Property(c => c.BrandId).HasColumnName("brand_id");
+                builder.Property(c => c.BrandName).HasColumnName("brand_name");                
+            });
+
             // one to many rshp between to order & customer
             modelBuilder.Entity<Order>()
                 .HasOne<Customer>(o => o.Customer)
