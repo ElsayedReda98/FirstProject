@@ -17,5 +17,20 @@ namespace ConsoleApp1
         public string State { get; set; }
         public string ZipCode { get; set; }
 
+
+        //one to many relationship between orders and stores
+        // stores is one & ordres is many 
+        public ICollection<Order> Orders { get; set; }
+
+        //one to many relationship between staffs and stores
+        //store is one & staff is many
+        public ICollection<Staff> Staffs { get; set; }
+
+        //one to many rshp between to stores & stocks
+        //
+        public ICollection<Stock> Stocks { get; set; }
+
+
+
     }
 }
