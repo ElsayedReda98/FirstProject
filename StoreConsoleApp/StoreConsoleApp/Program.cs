@@ -5,6 +5,7 @@ using StoreConsoleApp.Interfaces;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace StoreConsoleApp
 {
@@ -14,12 +15,49 @@ namespace StoreConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            //TestBrands();
-            //TestCategory();
-            //TestStock();
-            //TestStore();
-            //TestOrder();
+            //InsertCustomer();
+            //UpdateCustomer();
+            //DeleteCustomer();
+
         }
+
+        private static void DeleteCustomer()
+        {
+            using (var context = new StoreContext())
+            {
+                var customer = context.Customers.First<Customer>();
+                context.Customers.Remove(customer);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void UpdateCustomer()
+        {
+            using (var context = new StoreContext())
+            {
+                var customer = context.Customers.First<Customer>();
+                customer.Email = "Updated";
+                context.SaveChanges();
+            }
+        }
+
+        private static void InsertCustomer()
+        {
+            using (var context = new StoreContext())
+            {
+                var customer = new Customer()
+                {
+                    FirstName = "Sayed",
+                    LastName = "Reda",
+                    Phone = "01008927985"
+
+                };
+                context.Customers.Add(customer);
+                context.SaveChanges();
+            }
+        }
+
         private static void TestOrderItem()
         {
 

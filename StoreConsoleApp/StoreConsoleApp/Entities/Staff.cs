@@ -14,8 +14,19 @@ namespace ConsoleApp1
         public string Email { get; set; }
         public string Phone { get; set; }
         public int Active { get; set; }
-        public int StoreId { get; set; }
+        //public int StoreId { get; set; }
         public int ManagerId { get; set; }
+
+        //one to many relationship between  orders and staffs
+        // staff is one and ordres is many
+        public ICollection<Order> Orders { get; set; }
+
+
+        //one to many relationship between staffs and stores
+        //staff is many and stores is one
+        public int StoreId { get; set; }
+        public Store Store { get; set; }
+
 
 
     }

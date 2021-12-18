@@ -20,6 +20,10 @@ namespace ConsoleApp1
 
         public string Street { get;  set; }
 
+        //one to many relationship between customer and orders
+        //Orders is many and customer is one
+        public ICollection<Order> Orders { get; set; }
+
         public override string ToString()
         {
             return $"ID :{Id} Name :{FirstName},{LastName}" +
