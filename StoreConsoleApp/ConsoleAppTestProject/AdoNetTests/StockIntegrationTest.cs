@@ -11,15 +11,15 @@ namespace ConsoleAppTestProject
     public class StockIntegrationTest
     {
         [Fact]
-        public void Add_Stock_Will()
+        public void Add_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
             var newStock = new Stock()
             {
-                
-               StoreId = 4,
-               ProductId = 5,
+
+                StoreId = 4,
+                ProductId = 5,
                 Quantity = 500
             };
 
@@ -28,56 +28,57 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Get_Stock_With()
+        public void Get_Stock_With_Valid_Id_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
-
+            Random random = new();
             var stock = new Stock()
             {
-
-                StoreId = 5,
-                ProductId = 5,
+                
+                StoreId = 1 ,
+                ProductId = 3,
                 Quantity = 500
             };
 
             var result = stockDataAccess.AddStock(stock);
 
             Assert.True(result);
-            Assert.NotEqual(0,stock.StoreId);
-            int id = stock.StoreId;
+            Assert.NotEqual(0, stock.StoreId);
+            int storeId = stock.StoreId,productId =stock.ProductId;
 
-            stock=stockDataAccess.GetStock(id);
+            stock = stockDataAccess.GetStock(storeId,productId);
 
             Assert.NotNull(stock);
-            Assert.Equal(id,stock.StoreId);
+            Assert.Equal(storeId, stock.StoreId);
+            Assert.Equal(productId, stock.ProductId);
         }
         [Fact]
-        public void Get_Stock_With_Invalid()
+        public void Get_Stock_With_Invalid_Id_Will_Null()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
-            int id = -1;
-            
-            var stock = stockDataAccess.GetStock(id);
+            int storeId = -1,productId = -1;
+
+            var stock = stockDataAccess.GetStock(storeId,productId);
 
             Assert.Null(stock);
         }
         [Fact]
-        public void Get_StockList_Will()
+        public void Get_StockList_Will_Return_Collection()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
-           
+
 
             var stock = stockDataAccess.GetStocksList();
 
             Assert.NotNull(stock);
         }
         [Fact]
-        public void Update_Stock_Will()
+        public void Update_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
-            var stock = stockDataAccess.GetStock(1);
+            var stock = stockDataAccess.GetStock(3,3);
 
 
             var result = stockDataAccess.UpdateStock(stock);
@@ -85,7 +86,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Delete_Stock_Will()
+        public void Delete_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
@@ -100,10 +101,10 @@ namespace ConsoleAppTestProject
             var result = stockDataAccess.AddStock(stock);
 
             Assert.True(result);
-            Assert.NotEqual(0,stock.StoreId);
-            Assert.NotEqual(0,stock.ProductId);
+            Assert.NotEqual(0, stock.StoreId);
+            Assert.NotEqual(0, stock.ProductId);
 
-            result = stockDataAccess.DeleteStock(stock.StoreId);
+            result = stockDataAccess.DeleteStock(stock.StoreId,stock.ProductId);
 
             Assert.True(result);
 

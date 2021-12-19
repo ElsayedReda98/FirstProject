@@ -54,7 +54,6 @@ VALUES
 
             connection.Open();
             order.OrderId = Convert.ToInt32(command.ExecuteScalar());
-            //order.OrderDate = Convert.ToDateTime(command.ExecuteScalar());
             connection.Close();
 
             return order.OrderId > 0;
@@ -69,10 +68,9 @@ VALUES
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
-
+            var affectedRows = command.ExecuteNonQuery();
             connection.Close();
-            return id > 0;
+            return affectedRows > 0;
 
         }
 
@@ -100,7 +98,7 @@ WHERE  order_id="+id;
             {
                 order = new Order()
                 {
-                    //
+                    
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
                     OrderStatus = Convert.ToInt32(reader["order_status"]),
@@ -141,13 +139,13 @@ FROM sales.orders
             {
                 orders.Add(new Order()
                 {
-                    //
+                    
                     OrderId=Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
                     OrderStatus = Convert.ToInt32(reader["order_status"]),
                     OrderDate = Convert.ToDateTime(reader["order_date"]),
                     RequiredDate = Convert.ToDateTime(reader["required_date"]),
-                   // ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
+                    ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     StaffId = Convert.ToInt32(reader["staff_id"])
                     
@@ -182,7 +180,6 @@ staff_id=@StaffId
             command.Parameters.AddWithValue("@StoreId",order.StoreId);
             command.Parameters.AddWithValue("@StaffId",order.StaffId);
             command.Parameters.AddWithValue("@OrderId", order.OrderId);
-            //command.Parameters.AddWithValue("@OrderDate", order.OrderDate);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
             

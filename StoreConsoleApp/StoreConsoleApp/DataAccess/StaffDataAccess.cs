@@ -19,15 +19,13 @@ namespace ConsoleApp1.DataAccess
         public bool AddStaff(Staff staff)
         {
             string sqlstmt = @"INSERT INTO sales.staffs 
-                (   
-                    first_name,
+                (first_name,
                     last_name,
                     email,
                     phone,
                     active,
                     store_id,
-                    manager_id
-                )
+                    manager_id )
                 OUTPUT Inserted.staff_id
                 VALUES
                 (@FirstName,
@@ -50,7 +48,6 @@ namespace ConsoleApp1.DataAccess
             command.Parameters.AddWithValue("@ManagerId",staff.ManagerId );
             connection.Open();
             staff.StaffId = Convert.ToInt32(command.ExecuteScalar());
-           // staff.StoreId=Convert.ToInt32(command.ExecuteScalar());
             connection.Close();
             return staff.StaffId > 0;
         }
@@ -58,33 +55,32 @@ namespace ConsoleApp1.DataAccess
         public bool DeleteStaff(int id)
         {
             string sqlstm = @"DELETE 
-                             FROM sales.staff
+                             FROM sales.staffs
                              WHERE staff_id=" + id;
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
+            var affectedRows = command.ExecuteNonQuery();
 
             connection.Close();
-            return id > 0;
+            return affectedRows > 0;
 
         }
 
         public Staff GetStaff(int id)
         {
             string sqlstm = @" SELECT
-
-staff_id,                
-first_name,
+                    staff_id,                
+                    first_name,
                     last_name,
                     email,
                     phone,
                     active,
                     store_id,
                     manager_id
-FROM sales.staffs 
-WHERE staff_id=" + id;
+                FROM sales.staffs 
+                WHERE staff_id=" + id;
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -135,14 +131,14 @@ FROM sales.staffs ";
             {
                 staffs.Add(new Staff()
                 {
-                    StaffId = Convert.ToInt32(reader["customer_id"]),
+                    StaffId = Convert.ToInt32(reader["staff_id"]),
                     FirstName = Convert.ToString(reader["first_name"]),
                     LastName = Convert.ToString(reader["last_name"]),
                     Email = Convert.ToString(reader["email"]),
                     Phone = Convert.ToString(reader["phone"]),
                     Active = Convert.ToInt32(reader["active"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
-                    ManagerId = Convert.ToInt32(reader["manager_id"])
+                    //ManagerId = Convert.ToInt32(reader["manager_id"])
                 });
             }
             connection.Close();
@@ -152,13 +148,14 @@ FROM sales.staffs ";
 
         public bool UpdateStaff(Staff staff)
         {
-            string sqlstm = @"
-update sales.staffs
-set first_name=@FirstName,
-    last_name=@LastName
-where satff_id=@StaffId";
+            string sqlstm = @$"
+                update sales.staffs
+                set first_name=@FirstName,
+                    last_name=@LastName
+                where staff_id={staff.StaffId}";
             SqlCommand command1 = connection.CreateCommand();   
             command1.CommandText=sqlstm;
+            command1.Parameters.AddWithValue("@StaffId", staff.StaffId);
             command1.Parameters.AddWithValue("@FirstName", staff.FirstName);
             command1.Parameters.AddWithValue("@LastName",staff.LastName);
             connection.Open();

@@ -21,18 +21,14 @@ namespace ConsoleApp1.DataAccess
         public bool AddCategory(Category category)
         {
             string sqlstm = $@"INSERT INTO production.categories
-                (
-                
-                category_name
-                )
+                (category_name)
                 OUTPUT Inserted.category_id
                 VALUES 
-                (
-                @CategoryName)";
+                (@CategoryName)";
 
             var command = connection.CreateCommand();
             command.CommandText = sqlstm;
-            command.Parameters.AddWithValue("@CategoryId", category.CategoryId);
+            //command.Parameters.AddWithValue("@CategoryId", category.CategoryId);
             command.Parameters.AddWithValue("@CategoryName", category.CategoryName);
 
             connection.Open();
@@ -46,14 +42,14 @@ namespace ConsoleApp1.DataAccess
         public bool DeleteCategory(int id)
         {
             string sqlstm = @"DELETE 
-FROM production.categories
-WHERE category_id=" + id;
+                            FROM production.categories
+                            WHERE category_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText= sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
+            var affectedRows = command.ExecuteNonQuery();
             connection.Close();
-            return id > 0;
+            return affectedRows > 0;
         }
 
         public Category GetCategory(int id)

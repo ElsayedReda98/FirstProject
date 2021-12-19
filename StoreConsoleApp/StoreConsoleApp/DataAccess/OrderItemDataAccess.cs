@@ -22,7 +22,7 @@ namespace ConsoleApp1.DataAccess
         public bool AddOrderItem(OrderItem orderItem)
         {
             string sqlstm = $@"INSERT INTO 
-sales.order_items
+                sales.order_items
                 (
                 item_id,
                 order_id,
@@ -31,11 +31,10 @@ sales.order_items
                 list_price,
                 discount
                 )
-
                 VALUES
                 (
                 @itemId,
-@orderId,
+                @orderId,
                 @ProductId,
                 @Quantity,
                 @ListPrice,
@@ -53,8 +52,9 @@ sales.order_items
 
             // open a connection
             connection.Open();
-            //orderItem.OrderId = Convert.ToInt32(command.ExecuteScalar());
-            //orderItem.ItemId = Convert.ToInt32(command.ExecuteScalar());
+            orderItem.OrderId = Convert.ToInt32(command.ExecuteScalar());
+            orderItem.ItemId = Convert.ToInt32(command.ExecuteScalar());
+            
             //close connnection
             connection.Close();
 
@@ -72,10 +72,10 @@ sales.order_items
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
+            var affectedRows = command.ExecuteNonQuery();
 
             connection.Close();
-            return id > 0;
+            return affectedRows > 0;
 
         }
 
@@ -83,8 +83,8 @@ sales.order_items
         {
             string sqlstm = @"SELECT 
                 
-item_id,                
-order_id,
+                item_id,                
+                order_id,
                 product_id,
                 quantity,
                 list_price,
@@ -166,7 +166,6 @@ order_id,
             command.Parameters.AddWithValue("@ItemId", orderItem.ItemId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
-            //brand.BrandName = Convert.ToString(command.ExecuteNonQuery());
             connection.Close();
             return effectedRows > 0;
         }

@@ -65,9 +65,9 @@ WHERE store_id=" + id;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
+            var affectedRows = command.ExecuteNonQuery();
             connection.Close();
-            return id > 0;
+            return affectedRows > 0;
         }
         public List<Store> GetStoresList()
         {

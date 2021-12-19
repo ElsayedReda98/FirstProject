@@ -146,7 +146,7 @@ namespace StoreConsoleApp
 
             Console.WriteLine("****** Get Category *****");
             // ERROR
-            var stock = stockDataAccess.GetStock(5);
+            var stock = stockDataAccess.GetStock(1,1);
             Console.WriteLine($"Get stock with quantity:{stock.Quantity}");
             Console.WriteLine("");
 

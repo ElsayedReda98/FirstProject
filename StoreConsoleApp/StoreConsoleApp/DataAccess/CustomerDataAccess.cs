@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.DataAccess
 {
-    public class CustomerDataAccess : ICustomerDataAccess 
+    public class CustomerDataAccess : ICustomerDataAccess
     {
         SqlConnection connection;
         public CustomerDataAccess()
         {
             connection = new SqlConnection("Data Source =.; Initial Catalog = BikeStores; Integrated Security = True");
-
         }
-        
-        
+
         public bool AddCustomer(Customer customer)
         {
             string sqlstmt = $@"INSERT INTO 
@@ -49,7 +47,7 @@ namespace ConsoleApp1.DataAccess
             command.CommandText = sqlstmt;
             command.Parameters.AddWithValue("@FirstName", customer.FirstName);
             command.Parameters.AddWithValue("@LastName", customer.LastName);
-            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : (object)customer.Phone );
+            command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(customer.Phone) ? DBNull.Value : (object)customer.Phone);
             command.Parameters.AddWithValue("@Email", customer.Email);
             command.Parameters.AddWithValue("@Street", customer.Street);
             command.Parameters.AddWithValue("@City", customer.City);
@@ -60,41 +58,7 @@ namespace ConsoleApp1.DataAccess
             connection.Close();
             return customer.Id > 0;
         }
-        // Bad
-        public bool AddCustomer_Bad(Customer customer)
-        {
-            //Bad Implementation
-            string sqlstm = @"INSERT INTO sales.customers
-                            (
-                            first_name,
-                            last_name,
-                            phone,
-                            email,
-                            street,
-                            city,
-                            state,
-                            zip_code
-                            )
-                            OUTPUT Inserted.customer_id
-                            VALUES
-                            ('{customer.FirstName}',
-                            '{customer.LastName}',
-                            '{customer.Phone}',
-                            '{customer.Email}',
-                            '{customer.Street}',
-                            '{customer.City}',
-                            '{customer.State}'
-                            '{customer.ZipCode}'
-                            )";
-
-            var command = connection.CreateCommand();
-            command.CommandText = sqlstm;
-            connection.Open();
-            customer.Id = Convert.ToInt32(command.ExecuteScalar());
-            connection.Close();
-            return customer.Id > 0;
-        }
-
+       
         public bool DeleteCustomer(int id)
         {
             string sqlstm = @"DELETE 
@@ -104,10 +68,10 @@ namespace ConsoleApp1.DataAccess
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();
-            command.ExecuteNonQuery();
+            var affectedRowwss = command.ExecuteNonQuery();
 
             connection.Close();
-            return id > 0;
+            return affectedRowwss > 0;
 
         }
 
@@ -135,14 +99,14 @@ namespace ConsoleApp1.DataAccess
             {
                 customer = new Customer()
                 {
-                    City = Convert.ToString(reader["city"]),
-                    Email = Convert.ToString(reader["email"]),
+                    Id = Convert.ToInt32(reader["customer_id"]),  
                     FirstName = Convert.ToString(reader["first_name"]),
-                     Id= Convert.ToInt32(reader["customer_id"]),
                     LastName = Convert.ToString(reader["last_name"]),
                     Phone = Convert.ToString(reader["phone"]),
-                    State = Convert.ToString(reader["state"]),
+                    Email = Convert.ToString(reader["email"]),
                     Street = Convert.ToString(reader["street"]),
+                    City = Convert.ToString(reader["city"]),
+                    State = Convert.ToString(reader["state"]),
                     ZipCode = Convert.ToString(reader["zip_code"])
                 };
             }
@@ -153,7 +117,7 @@ namespace ConsoleApp1.DataAccess
         public List<Customer> GetCustomerList()
         {
             SqlCommand command = connection.CreateCommand();
-            command.CommandText= @"SELECT 
+            command.CommandText = @"SELECT 
                     customer_id,
                     first_name,
                     last_name,
@@ -163,7 +127,7 @@ namespace ConsoleApp1.DataAccess
                     city,
                     state,
                     zip_code FROM sales.customers";
-            
+
             connection.Open();
             SqlDataReader reader = command.ExecuteReader
                 (System.Data.CommandBehavior.CloseConnection);
@@ -198,10 +162,10 @@ namespace ConsoleApp1.DataAccess
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@FirstName", customer.FirstName);
-            command.Parameters.AddWithValue("@LastName",customer.LastName);
+            command.Parameters.AddWithValue("@LastName", customer.LastName);
             command.Parameters.AddWithValue("@Id", customer.Id);
             connection.Open();
-           int effectedRows= command.ExecuteNonQuery();
+            int effectedRows = command.ExecuteNonQuery();
             connection.Close();
             return effectedRows > 0;
         }

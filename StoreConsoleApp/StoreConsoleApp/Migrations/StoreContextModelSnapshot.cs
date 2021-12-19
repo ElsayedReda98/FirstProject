@@ -221,7 +221,7 @@ namespace StoreConsoleApp.Migrations
 
                     b.HasKey("StaffId");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Staffs");
                 });
@@ -347,8 +347,8 @@ namespace StoreConsoleApp.Migrations
                 {
                     b.HasOne("ConsoleApp1.Store", "Store")
                         .WithMany("Staffs")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Store");

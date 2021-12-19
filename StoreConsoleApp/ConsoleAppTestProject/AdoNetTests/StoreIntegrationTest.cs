@@ -11,7 +11,7 @@ namespace ConsoleAppTestProject
     public class StoreIntegrationTest
     {
         [Fact]
-        public void Add_Store_will()
+        public void Add_Store_will_Return_True()
         {
             IStoreDataAccess storeDataAccess = new StoreDataAccess();
             var newStore = new Store()
@@ -30,7 +30,7 @@ namespace ConsoleAppTestProject
             Assert.True(result);
         }
         [Fact]
-        public void Get_Store_With_Valid()
+        public void Get_Store_With_Valid_Id_Will_Return_Store()
         {
             IStoreDataAccess storeDataAccess = new StoreDataAccess();
             var store = new Store()
@@ -62,7 +62,7 @@ namespace ConsoleAppTestProject
 
         }
         [Fact]
-        public void Get_Store_With_Invalid()
+        public void Get_Store_With_Invalid_Id_Will_Null()
         {
             IStoreDataAccess storeDataAccess = new StoreDataAccess();
 
@@ -74,7 +74,7 @@ namespace ConsoleAppTestProject
 
         }
         [Fact]
-        public void Get_StoreList()
+        public void Get_StoreList_Will_Return_Collection()
         {
             IStoreDataAccess storeDataAccess = new StoreDataAccess();
 
@@ -83,7 +83,7 @@ namespace ConsoleAppTestProject
             Assert.NotEmpty(stores);
         }
         [Fact]
-        public void Update_Store_Will()
+        public void Update_Store_Will_Return_True()
         {
             IStoreDataAccess storedDataAccess = new StoreDataAccess();
             var store = storedDataAccess.GetStore(12);
@@ -94,7 +94,7 @@ namespace ConsoleAppTestProject
 
         }
         [Fact]
-        public void Delete_Store_Will()
+        public void Delete_Store_Will_Return_True()
         {
             IStoreDataAccess storeDataAccess=new StoreDataAccess();
             var store = new Store()
