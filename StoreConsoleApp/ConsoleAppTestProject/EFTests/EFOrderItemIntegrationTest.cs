@@ -15,10 +15,13 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
+            
             var newOrderItem = new OrderItem()
-            {   
-                ItemId = 21,
-                OrderId = 10,
+            
+            {
+                //ItemId =Convert.ToInt32({Guid.NewGuid()}),
+                OrderId =30,
+                ItemId = 50,
                 ProductId = 1,
                 Quantity = 1,
                 ListPrice = 600,
@@ -49,24 +52,26 @@ namespace ConsoleAppTestProject
             var result = orderItemDataAccess.AddOrderItem(orderItem);
             Assert.True(result);
             Assert.NotEqual(0, orderItem.ItemId);
-            int id = orderItem.ItemId;
-
+            int orderId = orderItem.OrderId ;
+            int itemId = orderItem.ItemId;
             //act
-            orderItem = orderItemDataAccess.GetOrderItem(id);
+            orderItem = orderItemDataAccess.GetOrderItem(orderId,itemId);
 
             //assert
             Assert.NotNull(orderItem);
             //Assert.NotEmpty(orderItem.OrderId);
-            Assert.Equal(id, orderItem.ItemId);
+            Assert.Equal(itemId, orderItem.ItemId);
+            Assert.Equal(orderId, orderItem.OrderId);
         }
         [Fact]
         public void Get_OrdereItem_With_InValid_Id_Will_Null()
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
-            int id = -1;
+            int orderId = -1;
+            int itemId = -1;
             //Act
-            var orderItem =orderItemDataAccess.GetOrderItem(id);
+            var orderItem =orderItemDataAccess.GetOrderItem(orderId,itemId);
 
             //Assert
             Assert.Null(orderItem);
@@ -91,7 +96,7 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
-            var orderItem = orderItemDataAccess.GetOrderItem(5);
+            var orderItem = orderItemDataAccess.GetOrderItem(1,2);
             //Act
             var result = orderItemDataAccess.UPdateOrderItem(orderItem);
 
@@ -119,7 +124,7 @@ namespace ConsoleAppTestProject
             Assert.NotEqual(0, orderItem.ItemId);
 
             //Act
-            result = orderItemDataAccess.DeleteOrderItem(orderItem.ItemId);
+            result = orderItemDataAccess.DeleteOrderItem(orderItem.ItemId,orderItem.OrderId);
 
             //Assert
             Assert.True(result);

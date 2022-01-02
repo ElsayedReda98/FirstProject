@@ -40,9 +40,9 @@ namespace ConsoleApp1.DataAccess
         {
             return _dbContext.Staffs.Find(id);
         }
-        public List<Staff> GetStaffsList()
-        {   
-            return _dbContext.Staffs.ToList();
+        public List<Staff> GetStaffsList(int id)
+        {
+            return _dbContext.Staffs.Where(s => s.StaffId ==id).ToList();
         }
 
         public bool UpdateStaff(Staff staff)

@@ -27,11 +27,11 @@ namespace ConsoleApp1.DataAccess
 
         }
 
-        public bool DeleteOrderItem(int id)
+        public bool DeleteOrderItem(int orderId,int itemId)
         {
-            var orderItem = _dbContext.OrderItems.Find(id);
+            var orderItem = _dbContext.OrderItems.Find(orderId,itemId);
             if (orderItem == null)
-                throw new ArgumentOutOfRangeException("id", $"There is no orderItem with id '{id}'");
+                throw new ArgumentOutOfRangeException("id", $"There is no orderItem with id '{orderId} or {itemId}'");
 
             _dbContext.OrderItems.Remove(orderItem);
             var affectedRows = _dbContext.SaveChanges();
@@ -39,9 +39,9 @@ namespace ConsoleApp1.DataAccess
 
         }
 
-        public OrderItem GetOrderItem(int id)
+        public OrderItem GetOrderItem(int orderId,int itemId)
         {
-            return _dbContext.OrderItems.Find(id);
+            return _dbContext.OrderItems.Find(orderId,itemId);
         }
 
         public List<OrderItem> GetOrderItemList()

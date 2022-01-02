@@ -16,7 +16,7 @@ namespace ConsoleAppTestProject
             IProductDataAccess productDataAccess = new EFProductDataAccess();
             var newProduct = new Product()
             {
-                ProductName = "sayed",
+                ProductName = "ergdfgdfgsayed",
                 BrandId = 7,
                 CategoryId = 7,
                 ModelYear = 2021,
@@ -69,7 +69,7 @@ namespace ConsoleAppTestProject
         {
             IProductDataAccess productDataAccess = new EFProductDataAccess();
 
-            var products = productDataAccess.GetProductsList();
+            var products = productDataAccess.GetProductList();
 
             Assert.NotEmpty(products);
         }
@@ -78,9 +78,9 @@ namespace ConsoleAppTestProject
         {
             IProductDataAccess productDataAccess = new EFProductDataAccess();    
 
-            var product=productDataAccess.GetProduct(5);
+            var product = productDataAccess.GetProduct(1);
             
-            var result= productDataAccess.UpdateProduct(product); 
+            var result = productDataAccess.UpdateProduct(product); 
 
             Assert.True(result);
         }

@@ -99,7 +99,7 @@ namespace ConsoleApp1.DataAccess
                     LastName = Convert.ToString(reader["last_name"]),
                     Email = Convert.ToString(reader["email"]),
                     Phone = Convert.ToString(reader["phone"]),
-                    Active = Convert.ToInt32(reader["active"]),
+                    Active = Convert.ToByte(reader["active"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     ManagerId = Convert.ToInt32(reader["manager_id"])
                 };
@@ -107,7 +107,7 @@ namespace ConsoleApp1.DataAccess
             connection.Close();
             return staff;
         }
-        public List<Staff> GetStaffsList()
+        public List<Staff> GetStaffsList(int id)
         {
             string sqlstm = @" SELECT
 staff_id,                
@@ -136,7 +136,7 @@ FROM sales.staffs ";
                     LastName = Convert.ToString(reader["last_name"]),
                     Email = Convert.ToString(reader["email"]),
                     Phone = Convert.ToString(reader["phone"]),
-                    Active = Convert.ToInt32(reader["active"]),
+                    Active = Convert.ToByte(reader["active"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     //ManagerId = Convert.ToInt32(reader["manager_id"])
                 });

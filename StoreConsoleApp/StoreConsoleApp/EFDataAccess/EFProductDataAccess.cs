@@ -45,7 +45,7 @@ namespace ConsoleApp1.DataAccess
             return _dbContext.Products.Find(id);
         }
 
-        public   List<Product> GetProductsList()
+        public   List<Product> GetProductList()
         {
             return  _dbContext.Products.ToList();
         }

@@ -8,7 +8,7 @@ namespace ConsoleApp1.Interfaces
 {
     public interface IProductDataAccess
     {
-        List<Product> GetProductsList();
+        List<Product> GetProductList();
 
         Product GetProduct(int id);
         

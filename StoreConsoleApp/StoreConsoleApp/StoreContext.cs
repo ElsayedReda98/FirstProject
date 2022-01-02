@@ -1,5 +1,6 @@
 ﻿using ConsoleApp1;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +32,12 @@ namespace StoreConsoleApp
             modelBuilder.Entity<Product>(builder =>
             {
                 builder.ToTable("products", "production");
-                builder.Property(c => c.ProductId).HasColumnName("product_id");
-                builder.Property(c => c.ProductName).HasColumnName("product_name");
-                builder.Property(c => c.BrandId).HasColumnName("brand_id");
-                builder.Property(c => c.CategoryId).HasColumnName("category_id");
-                builder.Property(c => c.ModelYear).HasColumnName("model_year");
-                builder.Property(c => c.ListPrice).HasColumnName("list_price");
+                builder.Property(p => p.ProductId).HasColumnName("product_id");
+                builder.Property(p => p.ProductName).HasColumnName("product_name");
+                builder.Property(p => p.BrandId).HasColumnName("brand_id");
+                builder.Property(p => p.CategoryId).HasColumnName("category_id");
+                builder.Property(p => p.ModelYear).HasColumnName("model_year");
+                builder.Property(p => p.ListPrice).HasColumnName("list_price");
                
             });
             modelBuilder.Entity<Stock>(builder =>
@@ -72,14 +73,26 @@ namespace StoreConsoleApp
                 builder.Property(o => o.StaffId).HasColumnName("staff_id");
 
             });
+            // pk for orderitem
+            modelBuilder.Entity<OrderItem>()
+                .HasKey(oi => new { oi.OrderId, oi.ItemId });
+
             modelBuilder.Entity<OrderItem>(builder =>
             {
                 builder.ToTable("order_items", "sales");
-                builder.Property(oi => oi.ItemId).HasColumnName("item_id");
+                builder.Property(oi => oi.ItemId).HasColumnName("item_id")
+                    ;//.UseIdentityColumn(seed :200,increment :5);    
+                //.ValueGeneratedOnAddOrUpdate()
+                    //.Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
+                // .HasDefaultValue(Guid.NewGuid());
                 builder.Property(oi => oi.Quantity).HasColumnName("quantity");
                 builder.Property(oi => oi.Discount).HasColumnName("discount");
                 builder.Property(oi => oi.ListPrice).HasColumnName("list_price");
-                builder.Property(oi => oi.OrderId).HasColumnName("order_id");
+                builder.Property(oi => oi.OrderId).HasColumnName("order_id")
+                    //.UseIdentityColumn(seed: 111, increment: 10)    
+                //.ValueGeneratedOnAddOrUpdate()
+                   // .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
+                .HasDefaultValue(201);
                 builder.Property(oi => oi.ProductId).HasColumnName("product_id"); 
             });
             modelBuilder.Entity<Store>(builder =>
@@ -201,9 +214,7 @@ namespace StoreConsoleApp
             //     .WithOne(sf => sf.Store)
             //     .HasForeignKey(sf => sf.StoreId);
 
-            // pk for orderitem
-            modelBuilder.Entity<OrderItem>()
-                .HasKey(oi => new { oi.OrderId, oi.ItemId });
+            
             // pk for stock
             modelBuilder.Entity<Stock>()
                 .HasKey(sk => new { sk.ProductId, sk.StoreId });

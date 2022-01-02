@@ -80,9 +80,9 @@ namespace ConsoleAppTestProject
         {
             //arrange
             IStaffDataAccess staffDataAccess = new StaffDataAccess();
-
+            int id = 1;
             //act
-            var staffs = staffDataAccess.GetStaffsList();
+            var staffs = staffDataAccess.GetStaffsList(id);
 
             //assert
             Assert.NotEmpty(staffs);

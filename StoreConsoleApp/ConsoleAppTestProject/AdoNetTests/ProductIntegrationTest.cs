@@ -69,7 +69,7 @@ namespace ConsoleAppTestProject
         {
             IProductDataAccess productDataAccess = new ProductDataAccess();
 
-            var products=productDataAccess.GetProductsList();
+            var products=productDataAccess.GetProductList();
 
             Assert.NotEmpty(products);
         }

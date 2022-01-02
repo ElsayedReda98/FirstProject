@@ -8,7 +8,7 @@ namespace ConsoleApp1.Interfaces
 {
     public interface IStaffDataAccess
     {
-        List<Staff> GetStaffsList();
+        List<Staff> GetStaffsList(int id);
 
         Staff GetStaff(int id);
 

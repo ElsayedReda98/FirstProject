@@ -78,7 +78,7 @@ namespace ConsoleAppTestProject
         {
             IStockDataAccess stockDataAccess = new EFStockDataAccess();
 
-            var stock = stockDataAccess.GetStock(1,1);
+            var stock = stockDataAccess.GetStock(1,2);
 
 
             var result = stockDataAccess.UpdateStock(stock);

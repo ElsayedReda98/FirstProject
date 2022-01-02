@@ -10,12 +10,12 @@ namespace ConsoleApp1.Interfaces
     {
         List<OrderItem> GetOrderItemList();
 
-        OrderItem GetOrderItem(int id);
+        OrderItem GetOrderItem(int ordeId,int itemId);
 
         bool AddOrderItem(OrderItem orderItem);
 
         bool UPdateOrderItem(OrderItem orderItem);
 
-        bool DeleteOrderItem(int id);
+        bool DeleteOrderItem(int orderId, int itemId);
     }
 }

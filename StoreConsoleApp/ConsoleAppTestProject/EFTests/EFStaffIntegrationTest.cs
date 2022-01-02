@@ -20,7 +20,7 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "0100897985",
                 // must change
-                Email = "sayed.com2",
+                Email = $"{Guid.NewGuid}@sayed",
                 Active = 1,
                 ManagerId = 1,
                 StoreId = 2
@@ -40,7 +40,7 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "01008927985",
                 // must change
-                Email = "hhhhfff.com",
+                Email = $"{Guid.NewGuid}@h",
                 Active = 1,
                 ManagerId = 1,
                 // must change every cycle
@@ -77,9 +77,9 @@ namespace ConsoleAppTestProject
         {
             //arrange
             IStaffDataAccess staffDataAccess = new EFStaffDataAccess();
-
+            int id = 2;
             //act
-            var staffs =staffDataAccess.GetStaffsList();
+            var staffs =staffDataAccess.GetStaffsList(id);
 
             //assert
             Assert.NotEmpty(staffs);
@@ -90,7 +90,7 @@ namespace ConsoleAppTestProject
         {
             //arrange
             IStaffDataAccess staffDataAccess = new EFStaffDataAccess();
-            var staff = staffDataAccess.GetStaff(1);
+            var staff = staffDataAccess.GetStaff(2);
 
             //act
             var result = staffDataAccess.UpdateStaff(staff);

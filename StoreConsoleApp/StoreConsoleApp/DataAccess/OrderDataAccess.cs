@@ -101,7 +101,7 @@ WHERE  order_id="+id;
                     
                     OrderId = Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
-                    OrderStatus = Convert.ToInt32(reader["order_status"]),
+                    OrderStatus = Convert.ToByte(reader["order_status"]),
                     OrderDate=Convert.ToDateTime(reader["order_date"]),
                     RequiredDate=Convert.ToDateTime(reader["required_date"]),
                     ShippedDate=Convert.ToDateTime(reader["shipped_date"]),
@@ -142,10 +142,10 @@ FROM sales.orders
                     
                     OrderId=Convert.ToInt32(reader["order_id"]),
                     CustomerId = Convert.ToInt32(reader["customer_id"]),
-                    OrderStatus = Convert.ToInt32(reader["order_status"]),
+                    OrderStatus = Convert.ToByte(reader["order_status"]),
                     OrderDate = Convert.ToDateTime(reader["order_date"]),
                     RequiredDate = Convert.ToDateTime(reader["required_date"]),
-                    ShippedDate = Convert.ToDateTime(reader["shipped_date"]),
+                    ShippedDate = reader["shipped_date"] == null || reader["shipped_date"] == DBNull.Value? null: Convert.ToDateTime(reader["shipped_date"]),
                     StoreId = Convert.ToInt32(reader["store_id"]),
                     StaffId = Convert.ToInt32(reader["staff_id"])
                     

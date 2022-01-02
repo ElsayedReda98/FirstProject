@@ -98,7 +98,7 @@ VALUES
                         ProductName = Convert.ToString(reader["product_name"]),
                         BrandId = Convert.ToInt32(reader["product_id"]),
                         CategoryId = Convert.ToInt32(reader["product_id"]),
-                        ModelYear = Convert.ToInt32(reader["product_id"]),
+                        ModelYear = Convert.ToInt16(reader["product_id"]),
                         ListPrice = Convert.ToInt32(reader["product_id"]),
 
                     };
@@ -108,7 +108,7 @@ VALUES
                 return product;
             }
 
-            public List<Product> GetProductsList()
+            public List<Product> GetProductList()
             {
                 string sqlstm = @"SELECT 
                     product_id,
@@ -134,7 +134,7 @@ VALUES
                         ProductName = Convert.ToString(reader["product_name"]),
                         BrandId = Convert.ToInt32(reader["product_id"]),
                         CategoryId = Convert.ToInt32(reader["product_id"]),
-                        ModelYear = Convert.ToInt32(reader["product_id"]),
+                        ModelYear = Convert.ToInt16(reader["product_id"]),
                         ListPrice = Convert.ToInt32(reader["product_id"]),
 
                     });

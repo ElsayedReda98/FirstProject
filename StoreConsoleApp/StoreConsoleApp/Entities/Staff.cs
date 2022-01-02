@@ -13,7 +13,7 @@ namespace ConsoleApp1
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public int Active { get; set; }
+        public byte Active { get; set; }
         //public int StoreId { get; set; }
       
 

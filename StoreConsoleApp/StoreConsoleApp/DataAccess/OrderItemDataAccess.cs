@@ -63,11 +63,12 @@ namespace ConsoleApp1.DataAccess
 
         }
 
-        public bool DeleteOrderItem(int id)
+        public bool DeleteOrderItem(int orderId,int itemId)
         {
-            string sqlstm = @"DELETE 
+            string sqlstm = $@"DELETE 
                              FROM sales.order_items
-                             WHERE item_id=" + id;
+                             WHERE order_id = {orderId}
+                             AND    item_id = {itemId }" ;
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -79,9 +80,9 @@ namespace ConsoleApp1.DataAccess
 
         }
 
-        public OrderItem GetOrderItem(int id)
+        public OrderItem GetOrderItem(int orderId,int itemId)
         {
-            string sqlstm = @"SELECT 
+            string sqlstm = $@"SELECT 
                 
                 item_id,                
                 order_id,
@@ -91,7 +92,8 @@ namespace ConsoleApp1.DataAccess
                 discount
                 
                 FROM sales.order_items 
-                WHERE item_id=" + id;
+                WHERE order_id = {orderId} 
+                AND   item_id = {itemId}" ;
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
 
@@ -141,7 +143,7 @@ namespace ConsoleApp1.DataAccess
             {
                 orderItems.Add(new OrderItem()
                 {
-                    OrderId = Convert.ToInt32(reader["order_id"]),
+                    OrderId = Convert.ToInt32( reader["order_id"]),
                     ItemId = Convert.ToInt32(reader["item_id"]),
                     ProductId = Convert.ToInt32(reader["product_id"]),
                     Quantity = Convert.ToInt32(reader["quantity"]),
