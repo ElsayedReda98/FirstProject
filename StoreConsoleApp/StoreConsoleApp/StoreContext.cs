@@ -81,10 +81,10 @@ namespace StoreConsoleApp
             {
                 builder.ToTable("order_items", "sales");
                 builder.Property(oi => oi.ItemId).HasColumnName("item_id")
-                    .HasDefaultValue(2);
-                    
+                  .ValueGeneratedOnAdd();
+
                 builder.Property(oi => oi.OrderId).HasColumnName("order_id")
-                 .HasDefaultValue(201);
+                  .ValueGeneratedOnAdd();
                 builder.Property(oi => oi.Quantity).HasColumnName("quantity");
                 builder.Property(oi => oi.Discount).HasColumnName("discount");
                 builder.Property(oi => oi.ListPrice).HasColumnName("list_price");
