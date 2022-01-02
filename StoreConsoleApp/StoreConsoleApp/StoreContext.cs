@@ -81,19 +81,15 @@ namespace StoreConsoleApp
             {
                 builder.ToTable("order_items", "sales");
                 builder.Property(oi => oi.ItemId).HasColumnName("item_id")
-                    ;//.UseIdentityColumn(seed :200,increment :5);    
-                //.ValueGeneratedOnAddOrUpdate()
-                    //.Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
-                // .HasDefaultValue(Guid.NewGuid());
+                    .HasDefaultValue(2);
+                    
+                builder.Property(oi => oi.OrderId).HasColumnName("order_id")
+                 .HasDefaultValue(201);
                 builder.Property(oi => oi.Quantity).HasColumnName("quantity");
                 builder.Property(oi => oi.Discount).HasColumnName("discount");
                 builder.Property(oi => oi.ListPrice).HasColumnName("list_price");
-                builder.Property(oi => oi.OrderId).HasColumnName("order_id")
-                    //.UseIdentityColumn(seed: 111, increment: 10)    
-                //.ValueGeneratedOnAddOrUpdate()
-                   // .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
-                .HasDefaultValue(201);
-                builder.Property(oi => oi.ProductId).HasColumnName("product_id"); 
+                builder.Property(oi => oi.ProductId).HasColumnName("product_id");
+
             });
             modelBuilder.Entity<Store>(builder =>
             {
