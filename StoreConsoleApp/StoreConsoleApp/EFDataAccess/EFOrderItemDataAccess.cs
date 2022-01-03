@@ -31,7 +31,7 @@ namespace ConsoleApp1.DataAccess
         {
             var orderItem = _dbContext.OrderItems.Find(orderId,itemId);
             if (orderItem == null)
-                throw new ArgumentOutOfRangeException("id", $"There is no orderItem with id '{orderId} or {itemId}'");
+                throw new ArgumentOutOfRangeException(" id ", $"There is no orderItem with id '{orderId} '");
 
             _dbContext.OrderItems.Remove(orderItem);
             var affectedRows = _dbContext.SaveChanges();

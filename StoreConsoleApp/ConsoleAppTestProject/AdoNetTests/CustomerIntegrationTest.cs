@@ -66,6 +66,7 @@ namespace ConsoleAppTestProject
             Assert.NotEmpty(customer.City);
             Assert.NotEmpty(customer.State);
             Assert.NotEmpty(customer.ZipCode);
+
             Assert.Equal(id, customer.Id);
         }
         [Fact]
@@ -85,7 +86,7 @@ namespace ConsoleAppTestProject
         }
 
         [Fact]
-        public void Get_BrandList_Will_Return_Collection()
+        public void Get_CustomerList_Will_Return_Collection()
         {
             ICustomerDataAccess customerDataAccess = new CustomerDataAccess();
 

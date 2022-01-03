@@ -40,6 +40,11 @@ namespace StoreConsoleApp
                 builder.Property(p => p.ListPrice).HasColumnName("list_price");
                
             });
+
+            // pk for stock
+            modelBuilder.Entity<Stock>()
+                .HasKey(sk => new { sk.ProductId, sk.StoreId });
+
             modelBuilder.Entity<Stock>(builder =>
             {
                 builder.ToTable("stocks", "production");
@@ -80,11 +85,11 @@ namespace StoreConsoleApp
             modelBuilder.Entity<OrderItem>(builder =>
             {
                 builder.ToTable("order_items", "sales");
-                builder.Property(oi => oi.ItemId).HasColumnName("item_id")
-                  .UseIdentityColumn(seed: 200, increment: 5);
+                builder.Property(oi => oi.ItemId).HasColumnName("item_id");
 
-                builder.Property(oi => oi.OrderId).HasColumnName("order_id")
-                  .UseIdentityColumn(seed: 200, increment: 5);
+
+                builder.Property(oi => oi.OrderId).HasColumnName("order_id");
+                  
                 builder.Property(oi => oi.Quantity).HasColumnName("quantity");
                 builder.Property(oi => oi.Discount).HasColumnName("discount");
                 builder.Property(oi => oi.ListPrice).HasColumnName("list_price");
@@ -179,8 +184,8 @@ namespace StoreConsoleApp
             modelBuilder.Entity<Stock>()
                 .HasOne<Store>(sc => sc.Store)
                 .WithMany(sr => sr.Stocks)
-                .HasForeignKey(sc => sc.StoreId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(sc => sc.StoreId);
+
 
 
             //one to many rshp between to stocks & Products
@@ -189,8 +194,8 @@ namespace StoreConsoleApp
             modelBuilder.Entity<Stock>()
                 .HasOne<Product>(sk => sk.Product)
                 .WithMany(p => p.Stocks)
-                .HasForeignKey(sk => sk.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(sk => sk.ProductId);
+                
 
             //one to many rshp between to stores & staffs
             //staffs is many
@@ -211,9 +216,7 @@ namespace StoreConsoleApp
             //     .HasForeignKey(sf => sf.StoreId);
 
             
-            // pk for stock
-            modelBuilder.Entity<Stock>()
-                .HasKey(sk => new { sk.ProductId, sk.StoreId });
+           
 
             // pk for staff
             //modelBuilder.Entity<Staff>()

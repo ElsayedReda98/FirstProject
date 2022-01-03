@@ -10,16 +10,35 @@ namespace ConsoleAppTestProject
 {
     public class StockIntegrationTest
     {
+        
+        private Product Add_Product()
+        {
+            IProductDataAccess productDataAccess = new EFProductDataAccess();
+            
+            var newProduct = new Product()
+            {
+                ProductName = "sayed",
+                BrandId = 7,
+                CategoryId = 7,
+                ModelYear = 2022,
+                ListPrice = 1300
+            };
+
+            productDataAccess.AddProduct(newProduct);
+            return newProduct;
+        }
+
         [Fact]
         public void Add_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
-
+            
+            var product = Add_Product();
             var newStock = new Stock()
             {
 
                 StoreId = 4,
-                ProductId = 5,
+                ProductId = product.ProductId,
                 Quantity = 500
             };
 
@@ -31,26 +50,34 @@ namespace ConsoleAppTestProject
         public void Get_Stock_With_Valid_Id_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
-            Random random = new();
-            var stock = new Stock()
+
+            var product = Add_Product();
+
+            var newStock = new Stock()
             {
                 
-                StoreId = 1 ,
-                ProductId = 3,
-                Quantity = 500
+                StoreId = 3 ,
+                ProductId = product.ProductId,
+                Quantity = 450
             };
 
-            var result = stockDataAccess.AddStock(stock);
+            var result = stockDataAccess.AddStock(newStock);
 
             Assert.True(result);
-            Assert.NotEqual(0, stock.StoreId);
-            int storeId = stock.StoreId,productId =stock.ProductId;
 
-            stock = stockDataAccess.GetStock(storeId,productId);
+            Assert.NotEqual(0, newStock.StoreId);
+            Assert.NotEqual(0, product.ProductId);
 
-            Assert.NotNull(stock);
-            Assert.Equal(storeId, stock.StoreId);
-            Assert.Equal(productId, stock.ProductId);
+            int storeId = newStock.StoreId;
+            int productId =product.ProductId;
+
+            //Act
+            // Ordering is very important why??
+            newStock = stockDataAccess.GetStock(storeId,productId);
+
+            Assert.NotNull(newStock);
+            Assert.Equal(storeId, newStock.StoreId);
+            Assert.Equal(productId, product.ProductId);
         }
         [Fact]
         public void Get_Stock_With_Invalid_Id_Will_Null()
@@ -71,14 +98,14 @@ namespace ConsoleAppTestProject
 
             var stock = stockDataAccess.GetStocksList();
 
-            Assert.NotNull(stock);
+            Assert.NotEmpty(stock);
         }
         [Fact]
         public void Update_Stock_Will_Return_True()
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
-            var stock = stockDataAccess.GetStock(3,3);
+            var stock = stockDataAccess.GetStock(2,4);
 
 
             var result = stockDataAccess.UpdateStock(stock);
@@ -90,21 +117,23 @@ namespace ConsoleAppTestProject
         {
             IStockDataAccess stockDataAccess = new StockDataAccess();
 
-            var stock = new Stock()
-            {
-                StoreId = 4,
-                ProductId = 6,
+            var product = Add_Product();
 
+            var newStock = new Stock()
+            {
+                StoreId = 5,
+                ProductId = product.ProductId,
                 Quantity = 500
             };
 
-            var result = stockDataAccess.AddStock(stock);
+            var result = stockDataAccess.AddStock(newStock);
 
             Assert.True(result);
-            Assert.NotEqual(0, stock.StoreId);
-            Assert.NotEqual(0, stock.ProductId);
+            Assert.NotEqual(0, newStock.StoreId);
+            Assert.NotEqual(0, product.ProductId);
 
-            result = stockDataAccess.DeleteStock(stock.StoreId,stock.ProductId);
+            // Ordering is important why ??
+            result = stockDataAccess.DeleteStock(newStock.StoreId,product.ProductId);
 
             Assert.True(result);
 

@@ -20,7 +20,7 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "0100897985",
                 // must change
-                Email = $"{Guid.NewGuid}@sayed",
+                Email = $"{Guid.NewGuid()}",
                 Active = 1,
                 ManagerId = 1,
                 StoreId = 2
@@ -40,7 +40,7 @@ namespace ConsoleAppTestProject
                 LastName = "Reda",
                 Phone = "01008927985",
                 // must change
-                Email = $"{Guid.NewGuid}@h",
+                Email = $"{Guid.NewGuid()}",
                 Active = 1,
                 ManagerId = 1,
                 // must change every cycle
@@ -105,11 +105,18 @@ namespace ConsoleAppTestProject
             IStaffDataAccess staffDataAccess = new EFStaffDataAccess();
             var staff = new Staff()
             {
-                FirstName = "Elsayed Staff",
-                LastName = "REda staff"
+                FirstName = "sayed",
+                LastName = "Reda",
+                Phone = "01008927985",
+                // must change
+                Email = $"{Guid.NewGuid()}@h",
+                Active = 1,
+                ManagerId = 1,
+                // must change every cycle
+                StoreId = 1
             };
 
-            var result = staffDataAccess.UpdateStaff(staff);
+            var result = staffDataAccess.AddStaff(staff);
             Assert.True(result);
             Assert.NotEqual(0, staff.StaffId);
 

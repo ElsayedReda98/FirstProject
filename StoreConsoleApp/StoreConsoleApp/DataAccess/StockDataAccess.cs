@@ -105,11 +105,11 @@ namespace ConsoleApp1.DataAccess
 
         public bool UpdateStock(Stock stock)
         {
-            string sqlstm = @"
+            string sqlstm = $@"
                update production.stocks
                set quantity=@Quantity
-             where store_id =@StoreId
-              AND product_id=@ProductId      ";
+             where store_id ={stock.StoreId}
+              AND product_id={stock.ProductId}      ";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@Quantity", stock.Quantity);
@@ -125,7 +125,7 @@ namespace ConsoleApp1.DataAccess
             string sqlstm = @$"DELETE 
                     FROM production.stocks
                     WHERE store_id={storeId}
-                    AND   preoduct_id={productId}";
+                    AND   product_id={productId}";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             connection.Open();

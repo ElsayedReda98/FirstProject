@@ -53,7 +53,7 @@ namespace ConsoleApp1.DataAccess
             // open a connection
             connection.Open();
             orderItem.OrderId = Convert.ToInt32(command.ExecuteScalar());
-            orderItem.ItemId = Convert.ToInt32(command.ExecuteScalar());
+            //orderItem.ItemId = Convert.ToInt32(command.ExecuteScalar());
             
             //close connnection
             connection.Close();
@@ -63,12 +63,12 @@ namespace ConsoleApp1.DataAccess
 
         }
 
-        public bool DeleteOrderItem(int orderId,int itemId)
+        public bool DeleteOrderItem(int orderId, int itemId)
         {
             string sqlstm = $@"DELETE 
                              FROM sales.order_items
                              WHERE order_id = {orderId}
-                             AND    item_id = {itemId }" ;
+                             " ;
 
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
@@ -158,14 +158,20 @@ namespace ConsoleApp1.DataAccess
 
         public bool UPdateOrderItem(OrderItem orderItem)
         {
-            string sqlstm = @"
+            string sqlstm = $@"
                update sales.order_items
-               set discount=@Discount
-             where item_id =@ItemId";
+               set discount=@Discount,
+                   quantity =@Quantity,
+                   list_price =@ListPrice
+             where item_id ={orderItem.ItemId}
+             And   order_id = {orderItem.OrderId}";
             SqlCommand command = connection.CreateCommand();
             command.CommandText = sqlstm;
             command.Parameters.AddWithValue("@Discount", orderItem.Discount);
+            command.Parameters.AddWithValue("@Quantity",orderItem.Quantity);
+            command.Parameters.AddWithValue("@ListPrice",orderItem.ListPrice);
             command.Parameters.AddWithValue("@ItemId", orderItem.ItemId);
+            command.Parameters.AddWithValue("@OrderId", orderItem.OrderId);
             connection.Open();
             int effectedRows = command.ExecuteNonQuery();
             connection.Close();

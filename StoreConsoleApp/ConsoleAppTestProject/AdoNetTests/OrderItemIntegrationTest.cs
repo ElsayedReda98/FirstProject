@@ -10,15 +10,20 @@ namespace ConsoleAppTestProject
 {
     public class OrderItemIntegrationTest
     {
+        
+
         [Fact]
         public void Add_OrderItem_Will_Return_True()
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
+
+            var order = Add_Order();
+
             var newOrderItem = new OrderItem()
             {   
-                ItemId = 21,
-                OrderId = 10,
+                ItemId = 7,
+                OrderId = order.OrderId,
                 ProductId = 1,
                 Quantity = 1,
                 ListPrice = 600,
@@ -36,30 +41,33 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
+            var order = Add_Order();
             var orderItem = new OrderItem()
             {
-                ItemId= 5,
-                OrderId=10,
+                ItemId= 7,
+                OrderId = order.OrderId,
                 ProductId = 1,
                 Quantity = 1,
-                ListPrice = 600,
-                Discount = 3
+                ListPrice = 250,
+                Discount = 7
             };
 
             var result = orderItemDataAccess.AddOrderItem(orderItem);
             Assert.True(result);
-            Assert.NotEqual(0, orderItem.ItemId);
-            int itemId = orderItem.ItemId;
-            int orderId = orderItem.OrderId;
+            Assert.NotEqual(0,orderItem.ItemId);
+            Assert.NotEqual(0,order.OrderId);
+
+           int itemId = orderItem.ItemId;
+           int orderId = order.OrderId;
 
             //act
             orderItem = orderItemDataAccess.GetOrderItem(orderId,itemId);
 
             //assert
             Assert.NotNull(orderItem);
-            //Assert.NotEmpty(orderItem.OrderId);
+            
             Assert.Equal(itemId, orderItem.ItemId);
-            Assert.Equal(orderId, orderItem.OrderId);
+            Assert.Equal(orderId, order.OrderId);
         }
         [Fact]
         public void Get_OrdereItem_With_InValid_Id_Will_Null()
@@ -94,7 +102,8 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
-            var orderItem = orderItemDataAccess.GetOrderItem(1,2);
+            
+            var orderItem = orderItemDataAccess.GetOrderItem(2,2);
             //Act
             var result = orderItemDataAccess.UPdateOrderItem(orderItem);
 
@@ -107,12 +116,13 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new OrderItemDataAccess();
+            var order = Add_Order();
             var orderItem = new OrderItem()
             {
-                ItemId = 1,
-                OrderId = 50,
+                ItemId = 7,
+                OrderId = order.OrderId,
                 ProductId = 1,
-                Quantity = 1,
+                Quantity = 12,
                 ListPrice = 600,
                 Discount = 0.1m
             };
@@ -120,12 +130,34 @@ namespace ConsoleAppTestProject
             var result = orderItemDataAccess.AddOrderItem(orderItem);
             Assert.True(result);
             Assert.NotEqual(0, orderItem.ItemId);
+            Assert.NotEqual(0, order.OrderId);
 
             //Act
-            result = orderItemDataAccess.DeleteOrderItem(orderItem.OrderId,orderItem.ItemId);
+            result = orderItemDataAccess.DeleteOrderItem(order.OrderId, orderItem.ItemId);
+
 
             //Assert
             Assert.True(result);
         }
+        public static Order Add_Order()
+        {
+            //Arrange
+            IOrderDataAccess orderDataAccess = new EFOrderDataAccess();
+            var newOrder = new Order()
+            {
+
+                CustomerId = 100,
+                OrderDate = DateTime.Now,
+                OrderStatus = 4,
+                RequiredDate = DateTime.Today,
+                ShippedDate = DateTime.Today,
+                StaffId = 1,
+                StoreId = 1
+            };
+            orderDataAccess.AddOrder(newOrder);
+            return newOrder;
+        }
+
     }
+
 }

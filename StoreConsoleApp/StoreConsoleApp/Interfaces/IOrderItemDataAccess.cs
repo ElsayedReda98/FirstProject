@@ -16,6 +16,6 @@ namespace ConsoleApp1.Interfaces
 
         bool UPdateOrderItem(OrderItem orderItem);
 
-        bool DeleteOrderItem(int orderId, int itemId);
+        bool DeleteOrderItem(int orderId,int itemId);
     }
 }

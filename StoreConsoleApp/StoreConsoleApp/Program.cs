@@ -18,9 +18,38 @@ namespace StoreConsoleApp
             //InsertCustomer();
             //UpdateCustomer();
             //DeleteCustomer();
+            TestStock();
 
         }
+        private static void TestStock()
+        {
+            Console.WriteLine("=========================Test Stock ===============");
+            IStockDataAccess stockDataAccess = new StockDataAccess();
 
+            var newStock = new Stock()
+            {
+                StoreId = 1,
+                ProductId = 1,
+                Quantity = 200,
+            };
+            bool result = stockDataAccess.AddStock(newStock);
+            Console.WriteLine($"Add Stock Return: {result}");
+            Console.WriteLine("");
+
+            //Console.WriteLine("****** Get Stock *****");
+            // ERROR
+            var stock = stockDataAccess.GetStock(5, 5);
+            Console.WriteLine($"Get stock with quantity:{stock.Quantity}");
+            Console.WriteLine("");
+
+            var stockllist = stockDataAccess.GetStocksList();
+            Console.WriteLine($"Get stock list with {stockllist.Count} Items");
+            Console.WriteLine("");
+
+            //bool deleteStock = stockDataAccess.DeleteStock(8);
+            //Console.WriteLine($"Delete  Stock Return: {deleteStock}");
+
+        }
         private static void DeleteCustomer()
         {
             using (var context = new StoreContext())
@@ -131,33 +160,7 @@ namespace StoreConsoleApp
             //Console.WriteLine($"Delete  Store Return: {deleteStore}");
 
         }
-        private static void TestStock()
-        {
-            Console.WriteLine("=========================Test Stock ===============");
-            IStockDataAccess stockDataAccess = new StockDataAccess();
-
-            var newStock = new Stock()
-            {
-                Quantity = 200,
-            };
-            //bool result = stockDataAccess.AddStock(newStock);
-            //Console.WriteLine($"Add Stock Return: {result}");
-            Console.WriteLine("");
-
-            Console.WriteLine("****** Get Category *****");
-            // ERROR
-            var stock = stockDataAccess.GetStock(1,1);
-            Console.WriteLine($"Get stock with quantity:{stock.Quantity}");
-            Console.WriteLine("");
-
-            var stockllist = stockDataAccess.GetStocksList();
-            Console.WriteLine($"Get stock list with {stockllist.Count} Items");
-            Console.WriteLine("");
-
-            //bool deleteStock = stockDataAccess.DeleteStock(8);
-            //Console.WriteLine($"Delete  Stock Return: {deleteStock}");
-
-        }
+        
         private static void TestCategory() {
             Console.WriteLine("================== Test Category ===========================");
             ICategoryDataAccess  categoryDataAccess = new CategoryDataAccess();

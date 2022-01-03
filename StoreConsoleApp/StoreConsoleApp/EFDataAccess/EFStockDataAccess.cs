@@ -29,7 +29,7 @@ namespace ConsoleApp1.DataAccess
         {
             var stock = _dbContext.Stocks.Find(storeId,productId);
             if(stock == null)
-                throw new ArgumentOutOfRangeException("id", $"There is no brand with id '{storeId},{productId}'");
+                throw new ArgumentOutOfRangeException("id", $"There is no product with id ,{productId}");
             
             _dbContext.Stocks.Remove(stock);
             var deletedRows = _dbContext.SaveChanges();

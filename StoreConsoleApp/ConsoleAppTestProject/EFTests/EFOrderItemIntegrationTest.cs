@@ -10,18 +10,39 @@ namespace ConsoleAppTestProject
 {
     public class EFOrderItemIntegrationTest
     {
-        [Fact]
+        public  static Order Add_Order()
+        {
+            //Arrange
+            IOrderDataAccess orderDataAccess = new EFOrderDataAccess();
+            var newOrder = new Order()
+            {
+                
+                CustomerId = 100,
+                OrderDate = DateTime.Now,
+                OrderStatus = 4,
+                RequiredDate = DateTime.Today,
+                ShippedDate = DateTime.Today,
+                StaffId = 1,
+                StoreId = 1
+            };
+                orderDataAccess.AddOrder(newOrder);
+            return newOrder;
+        }
+
+         [Fact]
         public void Add_OrderItem_Will_Return_True()
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
-            
+
+            var order = Add_Order();
+
             var newOrderItem = new OrderItem()
             
             {
-                //ItemId =Convert.ToInt32({Guid.NewGuid()}),
-                OrderId =30,
-                ItemId = 50,
+                
+                OrderId =order.OrderId,
+                ItemId = 7,
                 ProductId = 1,
                 Quantity = 1,
                 ListPrice = 600,
@@ -39,10 +60,11 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
+            var order = Add_Order();
             var orderItem = new OrderItem()
             {
                 ItemId= 5,
-                OrderId=10,
+                OrderId=order.OrderId,
                 ProductId = 1,
                 Quantity = 1,
                 ListPrice = 600,
@@ -52,7 +74,7 @@ namespace ConsoleAppTestProject
             var result = orderItemDataAccess.AddOrderItem(orderItem);
             Assert.True(result);
             Assert.NotEqual(0, orderItem.ItemId);
-            int orderId = orderItem.OrderId ;
+            int orderId = order.OrderId ;
             int itemId = orderItem.ItemId;
             //act
             orderItem = orderItemDataAccess.GetOrderItem(orderId,itemId);
@@ -96,7 +118,7 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
-            var orderItem = orderItemDataAccess.GetOrderItem(1,2);
+            var orderItem = orderItemDataAccess.GetOrderItem(3,2);
             //Act
             var result = orderItemDataAccess.UPdateOrderItem(orderItem);
 
@@ -109,10 +131,11 @@ namespace ConsoleAppTestProject
         {
             //Arrange
             IOrderItemDataAccess orderItemDataAccess = new EFOrderItemDataAccess();
+            var order = Add_Order();
             var orderItem = new OrderItem()
             {
-                ItemId = 1,
-                OrderId = 50,
+                ItemId = 7,
+                OrderId = order.OrderId,
                 ProductId = 1,
                 Quantity = 1,
                 ListPrice = 600,
@@ -120,14 +143,18 @@ namespace ConsoleAppTestProject
             };
 
             var result = orderItemDataAccess.AddOrderItem(orderItem);
+
             Assert.True(result);
+            
+            Assert.NotEqual(0, order.OrderId);
             Assert.NotEqual(0, orderItem.ItemId);
 
             //Act
-            result = orderItemDataAccess.DeleteOrderItem(orderItem.ItemId,orderItem.OrderId);
+            result = orderItemDataAccess.DeleteOrderItem(order.OrderId,orderItem.ItemId);
 
             //Assert
             Assert.True(result);
         }
+       
     }
 }
